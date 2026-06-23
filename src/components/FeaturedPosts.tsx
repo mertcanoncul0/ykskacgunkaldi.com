@@ -26,6 +26,8 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
         <a
           className="font-label-md text-label-md uppercase tracking-widest flex items-center gap-2 hover:translate-x-2 transition-transform"
           href="/blog"
+          aria-label="Tüm blog yazılarını görüntüle"
+          title="Tüm blog yazılarını görüntüle"
         >
           Tümünü Gör
           <Icon name="arrow_forward" />
@@ -33,7 +35,7 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
         <article className="md:col-span-8 group">
-          <a href={`/blog/${major.slug}`} className="block">
+          <a href={`/blog/${major.slug}`} className="block" aria-label={major.title} title={major.title}>
             <div className="relative overflow-hidden aspect-[16/9] mb-6 border border-border-subtle bg-surface-container">
               {major.coverImage ? (
                 <img
@@ -69,7 +71,7 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
         <div className="md:col-span-4 flex flex-col gap-12">
           {side.map((post) => (
             <article key={post.slug} className="group">
-              <a href={`/blog/${post.slug}`} className="block">
+              <a href={`/blog/${post.slug}`} className="block" aria-label={post.title} title={post.title}>
                 <div className="aspect-[4/3] overflow-hidden border border-border-subtle mb-4 bg-surface-container">
                   {post.coverImage ? (
                     <img

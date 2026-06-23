@@ -11,16 +11,19 @@ const links = [
     label: "Sınav Takvimi",
     href: "/sinavlar",
     body: "Tüm sınavların güncel tarihlerini ve oturumlarını tek sayfada karşılaştırın.",
+    description: "Sınavlar sayfasını incele",
   },
   {
     label: "Puan Hesaplama",
     href: "/puan-hesaplama/yks",
     body: "TYT, AYT, LGS, DGS, ALES ve KPSS için puanınızı saniyeler içinde hesaplayın.",
+    description: "Puan hesaplama aracını incele",
   },
   {
     label: "Konu Dağılımı",
     href: "/konu-dagilimi",
     body: "Geçmiş yıllarda hangi dersten kaç soru çıktığını derslere göre inceleyin.",
+    description: "Konu dağılımı sayfasını incele",
   },
 ] as const;
 
@@ -32,7 +35,12 @@ export function QuickLinks() {
           <div key={l.href} className="border-t border-black-pure pt-8">
             <h3 className="font-label-md text-label-md uppercase tracking-widest mb-6">{l.label}</h3>
             <p className="font-body-md text-text-muted mb-6">{l.body}</p>
-            <a href={l.href} className="flex items-center gap-2 font-bold group" aria-label={`${l.label} – İncele`}>
+            <a
+              href={l.href}
+              className="flex items-center gap-2 font-bold group"
+              aria-label={l.description}
+              title={l.description}
+            >
               İNCELE
               <Icon name="north_east" className="group-hover:translate-x-1 transition-transform" />
             </a>

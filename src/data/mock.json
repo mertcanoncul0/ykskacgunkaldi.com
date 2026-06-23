@@ -46,11 +46,11 @@
         },
         {
           "heading": "YKS'ye Nasıl Hazırlanılır?",
-          "body": "Etkili bir hazırlık, konu eksiklerini erken tespit etmekle başlar. Düzenli deneme sınavı çözüp her denemeyi detaylı analiz etmek, hangi konularda tekrara ihtiyaç olduğunu netleştirir. Sitemizdeki <a href=\"/konu-dagilimi\">konu dağılımı</a> sayfasından son yılların soru dağılımını inceleyerek, en çok soru gelen konulara öncelik verebilirsiniz."
+          "body": "Etkili bir hazırlık, konu eksiklerini erken tespit etmekle başlar. Düzenli deneme sınavı çözüp her denemeyi detaylı analiz etmek, hangi konularda tekrara ihtiyaç olduğunu netleştirir. Sitemizdeki <a href=\"/konu-dagilimi\" aria-label=\"Konu dağılımı sayfasını incele\" title=\"Konu dağılımı sayfasını incele\">konu dağılımı</a> sayfasından son yılların soru dağılımını inceleyerek, en çok soru gelen konulara öncelik verebilirsiniz."
         },
         {
           "heading": "Puanım ve Sıralamam Ne Olur?",
-          "body": "TYT ve AYT netlerinizi girdiğinizde <a href=\"/puan-hesaplama/yks\">YKS puan hesaplama aracımız</a>, kılavuz katsayılarına dayalı tahmini SAY, EA, SÖZ ve DİL puanlarınızı anında hesaplar. Bu sayede tercih döneminden önce hangi bölümlere yönelebileceğiniz konusunda fikir sahibi olursunuz."
+          "body": "TYT ve AYT netlerinizi girdiğinizde <a href=\"/puan-hesaplama/yks\" aria-label=\"YKS puan hesaplama aracını kullan\" title=\"YKS puan hesaplama aracını kullan\">YKS puan hesaplama aracımız</a>, kılavuz katsayılarına dayalı tahmini SAY, EA, SÖZ ve DİL puanlarınızı anında hesaplar. Bu sayede tercih döneminden önce hangi bölümlere yönelebileceğiniz konusunda fikir sahibi olursunuz."
         }
       ],
       "nextExamDescription": "TYT, AYT ve YDT oturumlarının tamamı için canlı geri sayım ve oturum bazlı sayaç."

@@ -36,6 +36,8 @@ export function InfoCards({ exam }: { exam: Exam }) {
         <a
           href={`/?sinav=${exam.slug}`}
           className="inline-flex items-center gap-2 font-label-md text-label-md uppercase text-primary hover:text-text-muted transition-colors shrink-0"
+          aria-label={`${exam.name} detaylarını görüntüle`}
+          title={`${exam.name} detaylarını görüntüle`}
         >
           <span>{exam.name} Detaylarını Gör</span>
           <Icon name="arrow_forward" size={18} />

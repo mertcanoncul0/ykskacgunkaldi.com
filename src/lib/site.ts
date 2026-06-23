@@ -22,7 +22,24 @@ export const hubLinks = [
   { label: "İlanlar", href: "/ilanlar", icon: "ads_click" },
 ] as const;
 
+// "Sınavlar" grubu: header'daki mobil hamburger menü (ve içindeki açılır
+// panel) kullanıcı talebiyle kaldırıldığı için, küçük ekranlarda (<768px)
+// header artık sadece logo gösteriyor — Sınavlar/Puan Hesaplama/Blog/
+// Rehberlik gibi birincil gezinme hedeflerine mobilde ulaşmanın tek yolu
+// bu footer grubu (footer her sayfada, her breakpoint'te görünür, bkz.
+// Footer.tsx — `hidden` sınıfı yok). Masaüstü/tablet (≥768px) zaten üst
+// menüden, ≥1024px ayrıca SideNav'dan da bu sayfalara ulaşabiliyor.
 export const footerLinkGroups = [
+  {
+    title: "Sınavlar",
+    links: [
+      { label: "Sınav Takvimi", href: "/sinavlar" },
+      { label: "Puan Hesaplama", href: "/puan-hesaplama/yks" },
+      { label: "Konu Dağılımı", href: "/konu-dagilimi" },
+      { label: "Blog", href: "/blog" },
+      { label: "Rehberlik", href: "/rehberler" },
+    ],
+  },
   {
     title: "Kurumsal",
     links: [

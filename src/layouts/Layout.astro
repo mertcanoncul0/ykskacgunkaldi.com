@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import SideNav from '../components/SideNav.astro';
 import { site } from '../lib/site';
 import { getExams } from '../lib/pocketbase';
 
@@ -135,7 +136,8 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
   </head>
   <body class="font-body-md text-body-md text-on-surface bg-surface overflow-x-hidden">
     <Header client:load exams={navExams} />
-    <main class="pt-24">
+    <SideNav exams={navExams} />
+    <main class="lg:ml-64 pt-24">
       <slot />
     </main>
     <Footer />

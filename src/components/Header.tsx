@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { scoreCalculatorMenu } from "../data/score-calculators";
-import { site, hubLinks } from "../lib/site";
+import { site } from "../lib/site";
 import { Icon } from "../lib/icons";
 
 const examIcons: Record<string, string> = {
@@ -30,7 +30,7 @@ const mainLinks = [
   { to: "/hakkimizda", label: "Hakkımızda" },
 ] as const;
 
-type OpenMenu = null | "exams" | "calc" | "mobile";
+type OpenMenu = null | "exams" | "calc";
 
 const linkClass = (active: boolean) =>
   active
@@ -59,16 +59,6 @@ export function Header({ exams = [] }: { exams?: any[] }) {
       document.removeEventListener("mousedown", onDoc);
       window.removeEventListener("keydown", onKey);
     };
-  }, [open]);
-
-  useEffect(() => {
-    if (open === "mobile") {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = prev;
-      };
-    }
   }, [open]);
 
   const close = () => setOpen(null);
@@ -133,16 +123,6 @@ export function Header({ exams = [] }: { exams?: any[] }) {
             </a>
           ))}
         </div>
-
-        <button
-          type="button"
-          className="md:hidden text-primary"
-          aria-label={open === "mobile" ? "Menüyü kapat" : "Menüyü aç"}
-          aria-expanded={open === "mobile"}
-          onClick={() => toggle("mobile")}
-        >
-          <Icon name={open === "mobile" ? "close" : "menu"} />
-        </button>
       </nav>
 
       {/* Exams mega menu */}
@@ -190,93 +170,6 @@ export function Header({ exams = [] }: { exams?: any[] }) {
         </div>
       )}
 
-      {/* Mobile drawer */}
-      <div
-        className={`md:hidden fixed inset-0 top-16 bg-surface-container-lowest z-30 overflow-y-auto transition-transform duration-200 ${
-          open === "mobile" ? "translate-x-0" : "translate-x-full"
-        }`}
-        aria-hidden={open !== "mobile"}
-      >
-        <div className="flex flex-col px-margin-mobile py-6 gap-1">
-          <details className="border-b border-border-subtle py-2" open>
-            <summary className="flex justify-between items-center py-2 font-label-md text-label-md uppercase tracking-widest cursor-pointer list-none">
-              Sınavlar
-              <Icon name="expand_more" />
-            </summary>
-            <div className="flex flex-col gap-1 pb-3">
-              {exams.map((exam) => (
-                <a
-                  key={exam.slug}
-                  href={`/?sinav=${exam.slug}`}
-                  className="flex items-center gap-3 py-2 text-on-surface-variant"
-                  onClick={close}
-                >
-                  <Icon name={examIcons[exam.slug] || "edit_document"} />
-                  <span>
-                    <strong className="font-label-md text-label-md block">
-                      {examLabels[exam.slug] || exam.name}
-                    </strong>
-                  </span>
-                </a>
-              ))}
-            </div>
-          </details>
-
-          <details className="border-b border-border-subtle py-2">
-            <summary className="flex justify-between items-center py-2 font-label-md text-label-md uppercase tracking-widest cursor-pointer list-none">
-              Puan Hesaplama
-              <Icon name="expand_more" />
-            </summary>
-            <div className="flex flex-col gap-1 pb-3">
-              {scoreCalculatorMenu?.map((item) => (
-                <a
-                  key={item.slug}
-                  href={`/puan-hesaplama/${item.slug}`}
-                  className="flex items-center gap-3 py-2 text-on-surface-variant"
-                  onClick={close}
-                >
-                  <Icon name={item.icon} />
-                  <span className="font-label-md text-label-md">{item.label}</span>
-                </a>
-              ))}
-            </div>
-          </details>
-
-          <a
-            href="/blog"
-            className={`py-3 border-b border-border-subtle font-label-md text-label-md uppercase tracking-widest${
-              path === "/blog" || path.startsWith("/blog/") ? " text-primary font-bold" : ""
-            }`}
-            aria-current={path === "/blog" || path.startsWith("/blog/") ? "page" : undefined}
-            onClick={close}
-          >
-            Blog
-          </a>
-          {mainLinks.map((l) => (
-            <a
-              key={l.to}
-              href={l.to}
-              className={`py-3 border-b border-border-subtle font-label-md text-label-md uppercase tracking-widest${
-                path.startsWith(l.to) ? " text-primary font-bold" : ""
-              }`}
-              aria-current={path.startsWith(l.to) ? "page" : undefined}
-              onClick={close}
-            >
-              {l.label}
-            </a>
-          ))}
-
-          <div className="flex flex-col gap-1 mt-4">
-            <p className="font-label-sm text-label-sm text-text-muted uppercase tracking-widest mb-2">Hazırlık Rehberi</p>
-            {hubLinks.map((l) => (
-              <a key={l.href} href={l.href} className="flex items-center gap-3 py-3 text-on-surface-variant" onClick={close}>
-                <Icon name={l.icon} />
-                <span className="font-label-md text-label-md">{l.label}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
     </header>
   );
 }
