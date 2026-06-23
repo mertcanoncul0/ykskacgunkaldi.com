@@ -1,4 +1,5 @@
 import type { Exam } from "../lib/api";
+import { Icon } from "../lib/icons";
 
 // Not: Eski sürümdeki "Günün Sözü" (Robert Collier'e atfedilen alıntı) ve
 // "Günün Tavsiyesi" (statik Pomodoro ipucu) kartları PocketBase'de hiçbir
@@ -20,9 +21,7 @@ export function InfoCards({ exam }: { exam: Exam }) {
     <section className="mb-section-gap" aria-label="Sınav bilgileri">
       <div className="border border-border-subtle bg-white-pure p-8 md:p-10 flex flex-col md:flex-row md:items-center gap-8">
         <div className="flex items-center gap-4 md:flex-1">
-          <span className="material-symbols-outlined text-[32px] text-text-muted shrink-0" aria-hidden="true">
-            event_upcoming
-          </span>
+          <Icon name="event_upcoming" size={32} className="text-text-muted shrink-0" />
           <div>
             <span className="font-label-sm text-label-sm uppercase text-text-muted block mb-1">Sıradaki Sınav</span>
             <h3 className="font-headline-md text-headline-md text-primary">{exam.name}</h3>
@@ -39,9 +38,7 @@ export function InfoCards({ exam }: { exam: Exam }) {
           className="inline-flex items-center gap-2 font-label-md text-label-md uppercase text-primary hover:text-text-muted transition-colors shrink-0"
         >
           <span>{exam.name} Detaylarını Gör</span>
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
-            arrow_forward
-          </span>
+          <Icon name="arrow_forward" size={18} />
         </a>
       </div>
     </section>

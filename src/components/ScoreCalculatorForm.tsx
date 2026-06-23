@@ -11,6 +11,7 @@ import {
   isSnapshotEmpty,
 } from "../lib/calc-engine";
 import { CalcHistory } from "./CalcHistory";
+import { Icon } from "../lib/icons";
 
 const TARGET_PLACEHOLDERS: Record<string, string> = {
   yks: "450",
@@ -168,7 +169,7 @@ export function ScoreCalculatorForm({
     <div className="flex flex-col gap-8" data-calc-root>
       <div className="flex flex-wrap items-center gap-4 pb-6 border-b border-border-subtle" role="group" aria-label="Sınav yılı seçimi">
         <span className="flex items-center gap-2 font-label-sm text-label-sm uppercase text-text-muted">
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">event</span>
+          <Icon name="event" size={18} />
           Sınav Yılı
         </span>
         <div className="flex gap-2">
@@ -193,12 +194,10 @@ export function ScoreCalculatorForm({
         <div key={g.title} className="relative border border-border-subtle bg-white-pure p-8 pl-10 overflow-hidden">
           <span className="absolute inset-y-0 left-0 w-1.5 bg-black-pure" aria-hidden="true" />
           <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-            <h3 className="flex items-center gap-2 font-headline-md text-headline-md text-primary">
-              <span className="material-symbols-outlined text-text-muted text-[20px]" aria-hidden="true">
-                {g.icon}
-              </span>
+            <h2 className="flex items-center gap-2 font-headline-md text-headline-md text-primary">
+              <Icon name={g.icon} size={20} className="text-text-muted" />
               {g.title}
-            </h3>
+            </h2>
             <span className="font-label-sm text-label-sm uppercase border border-border-subtle px-2 py-1 text-text-muted">{g.badge}</span>
           </div>
           <div>
@@ -255,7 +254,7 @@ export function ScoreCalculatorForm({
                   </div>
                   {isOverflow ? (
                     <div className="col-span-4 flex items-center gap-1 font-label-sm text-label-sm text-error mt-1" role="alert">
-                      <span className="material-symbols-outlined text-[16px]" aria-hidden="true">warning</span>
+                      <Icon name="warning" size={16} />
                       Doğru + yanlış toplamı {f.max} soruyu aşıyor.
                     </div>
                   ) : null}
@@ -269,7 +268,7 @@ export function ScoreCalculatorForm({
       {config.diploma ? (
         <div className="border border-border-subtle bg-white-pure p-8">
           <div className="mb-6">
-            <h3 className="font-headline-md text-headline-md text-primary">{config.diploma.label}</h3>
+            <h2 className="font-headline-md text-headline-md text-primary">{config.diploma.label}</h2>
           </div>
           <div className="grid gap-3">
             <input
@@ -304,20 +303,16 @@ export function ScoreCalculatorForm({
 
       <div className="bg-black-pure text-white-pure p-8">
         <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-          <h3 className="flex items-center gap-2 font-headline-md text-headline-md text-white-pure">
-            <span className="material-symbols-outlined text-[20px]" aria-hidden="true">
-              flag
-            </span>
+          <h2 className="flex items-center gap-2 font-headline-md text-headline-md text-white-pure">
+            <Icon name="flag" size={20} />
             Hedef Puan
-          </h3>
+          </h2>
           {targetReached !== null ? (
             <span
               className={`inline-flex items-center gap-2 px-3 py-1 font-label-sm text-label-sm uppercase ${targetReached ? "bg-white-pure text-black-pure" : "border border-white-pure/40 text-white-pure"}`}
               role="status"
             >
-              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                {targetReached ? "check_circle" : "schedule"}
-              </span>
+              <Icon name={targetReached ? "check_circle" : "schedule"} size={16} />
               {targetReached
                 ? `Hedefe ulaştın (+${fmt(Math.abs(targetDelta || 0))})`
                 : `${fmt(Math.abs(targetDelta || 0))} puan kaldı`}
@@ -350,18 +345,18 @@ export function ScoreCalculatorForm({
           className="inline-flex items-center gap-2 border border-border-subtle px-6 py-3 font-label-md text-label-md uppercase text-on-surface hover:border-black-pure transition-colors"
           onClick={reset}
         >
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">refresh</span>
+          <Icon name="refresh" size={18} />
           Sıfırla
         </button>
         <a href="#calc-results" className="inline-flex items-center gap-2 bg-black-pure text-white-pure px-6 py-3 font-label-md text-label-md uppercase hover:bg-primary-container transition-colors">
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">bar_chart</span>
+          <Icon name="bar_chart" size={18} />
           Hesapla
         </a>
       </div>
 
       <div className="border-t-2 border-primary pt-8" id="calc-results">
         <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
-          <h3 className="font-headline-lg text-headline-lg text-primary">{config.resultTitle}</h3>
+          <h2 className="font-headline-lg text-headline-lg text-primary">{config.resultTitle}</h2>
           <span className="font-label-sm text-label-sm uppercase text-text-muted">{year} katsayıları</span>
         </div>
         <div
@@ -436,8 +431,8 @@ export function ScoreCalculatorForm({
         {chartData.length > 0 ? (
           <div className="border-t border-border-subtle pt-8 mt-8" aria-label="Net dağılımı grafiği">
             <div className="flex items-center gap-2 mb-6">
-              <span className="material-symbols-outlined text-text-muted" aria-hidden="true">bar_chart</span>
-              <h4 className="font-headline-md text-headline-md text-primary">Net Dağılımı</h4>
+              <Icon name="bar_chart" className="text-text-muted" />
+              <h3 className="font-headline-md text-headline-md text-primary">Net Dağılımı</h3>
             </div>
             <ul className="flex flex-col gap-4">
               {chartData.map((d) => (
@@ -463,7 +458,7 @@ export function ScoreCalculatorForm({
         {hasAnyInput ? (
           <div className="border-t border-border-subtle pt-8 mt-8 flex flex-col sm:flex-row sm:items-center gap-4" role="group" aria-label="Sonucu paylaş">
             <span className="flex items-center gap-2 font-label-sm text-label-sm uppercase text-text-muted">
-              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">share</span>
+              <Icon name="share" size={18} />
               Sonucu Paylaş
             </span>
             <div className="flex flex-wrap gap-2">
@@ -473,9 +468,7 @@ export function ScoreCalculatorForm({
                 onClick={handleCopy}
                 aria-label="Sonucu kopyala"
               >
-                <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                  {copied ? "check" : "content_copy"}
-                </span>
+                <Icon name={copied ? "check" : "content_copy"} size={16} />
                 {copied ? "Kopyalandı" : "Kopyala"}
               </button>
               <button
@@ -484,9 +477,7 @@ export function ScoreCalculatorForm({
                 onClick={handlePrint}
                 aria-label="PDF olarak yazdır"
               >
-                <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                  picture_as_pdf
-                </span>
+                <Icon name="picture_as_pdf" size={16} />
                 PDF / Yazdır
               </button>
               <a
@@ -496,7 +487,7 @@ export function ScoreCalculatorForm({
                 rel="noopener noreferrer"
                 aria-label="X (Twitter) üzerinde paylaş"
               >
-                <span className="material-symbols-outlined text-[16px]" aria-hidden="true">share</span>X
+                <Icon name="share" size={16} />X
               </a>
               <a
                 className="inline-flex items-center gap-2 border border-border-subtle px-4 py-2 font-label-sm text-label-sm uppercase text-on-surface hover:border-black-pure transition-colors"
@@ -505,7 +496,7 @@ export function ScoreCalculatorForm({
                 rel="noopener noreferrer"
                 aria-label="WhatsApp üzerinde paylaş"
               >
-                <span className="material-symbols-outlined text-[16px]" aria-hidden="true">chat</span>
+                <Icon name="chat" size={16} />
                 WhatsApp
               </a>
             </div>

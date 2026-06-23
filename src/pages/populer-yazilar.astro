@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { site } from '../lib/site';
 import { getPosts } from '../lib/pocketbase';
+import { Icon } from '../lib/icons';
 
 const posts = await getPosts();
 
@@ -55,7 +56,7 @@ const breadcrumbJsonLd = {
 
       {!spotlight && (
         <div class="border border-border-subtle bg-white-pure p-12 text-center text-text-muted">
-          <span class="material-symbols-outlined text-4xl" aria-hidden="true">auto_stories</span>
+          <Icon name="auto_stories" size={36} />
           <p class="font-body-md mt-4">Henüz yayınlanmış bir yazı bulunmuyor.</p>
         </div>
       )}
@@ -89,7 +90,7 @@ const breadcrumbJsonLd = {
                 <img class="w-full h-full object-cover grayscale" src={spotlight.coverImage} alt={spotlight.title} />
               ) : (
                 <div class="w-full h-full flex items-center justify-center text-text-muted">
-                  <span class="material-symbols-outlined text-[48px]" aria-hidden="true">trending_up</span>
+                  <Icon name="trending_up" size={48} />
                 </div>
               )}
             </div>
@@ -136,7 +137,7 @@ const breadcrumbJsonLd = {
             {mustRead.length > 0 && (
               <div class="bg-surface border border-border-subtle p-6">
                 <h3 class="font-headline-md text-headline-md text-primary mb-6 flex items-center gap-2">
-                  <span class="material-symbols-outlined" aria-hidden="true">bookmark</span>
+                  <Icon name="bookmark" />
                   Mutlaka Okunmalı
                 </h3>
                 <ul class="flex flex-col gap-4">

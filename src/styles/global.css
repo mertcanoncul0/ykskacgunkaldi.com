@@ -3,6 +3,30 @@
 @import "tw-animate-css";
 
 /*
+ * Hepta Slab — self-hosted via @fontsource/hepta-slab (npm) yerine
+ * Google Fonts'tan (fonts.googleapis.com + fonts.gstatic.com) yüklemek.
+ *
+ * Neden: önceki sürüm Layout.astro'da iki ayrı preconnect + bir CSS isteği
+ * + her ağırlık için ayrı bir font dosyası isteği üretiyordu — hepsi farklı
+ * bir origin'e (Google) gidiyordu, bu da DNS+TLS handshake + ek round-trip
+ * maliyeti demekti (mobil FCP/LCP'yi doğrudan etkiliyordu). Self-host
+ * etmek bu zinciri tamamen ortadan kaldırır: font dosyaları artık aynı
+ * origin'den (kendi build çıktımızdan) sıfır ekstra DNS/TLS maliyetiyle
+ * gelir ve middleware'deki immutable cache kuralından da yararlanır.
+ *
+ * Sadece sitede gerçekten kullanılan 5 ağırlık (400/500/600/700/800)
+ * import ediliyor — eski Google Fonts URL'i de aynı 5 ağırlığı
+ * istiyordu (wght@400;500;600;700;800), bu yüzden görsel olarak fark
+ * yok. Her ağırlık dosyası latin + latin-ext (Türkçe ı, ş, ğ vb. için
+ * gerekli) + vietnamese alt kümelerinin tümünü içeriyor.
+ */
+@import "@fontsource/hepta-slab/400.css";
+@import "@fontsource/hepta-slab/500.css";
+@import "@fontsource/hepta-slab/600.css";
+@import "@fontsource/hepta-slab/700.css";
+@import "@fontsource/hepta-slab/800.css";
+
+/*
  * Monochrome Editorial design tokens — copied 1:1 from the literal
  * tailwind config embedded in every new_ui mockup's source file (and
  * cross-checked against the monochrome_editorial design spec). Keeping
@@ -75,15 +99,15 @@
   --color-black-pure: #000000;
   --color-white-pure: #ffffff;
 
-  /* Typography — "Serif for Soul, Sans for Utility" */
-  --font-display-lg: "Playfair Display", Georgia, serif;
-  --font-display-lg-mobile: "Playfair Display", Georgia, serif;
-  --font-headline-lg: "Playfair Display", Georgia, serif;
-  --font-headline-md: "Playfair Display", Georgia, serif;
-  --font-label-sm: "Inter", system-ui, sans-serif;
-  --font-label-md: "Inter", system-ui, sans-serif;
-  --font-body-lg: "Inter", system-ui, sans-serif;
-  --font-body-md: "Inter", system-ui, sans-serif;
+  /* Typography — site genelinde tek aile: Hepta Slab (altyazi.net referansı) */
+  --font-display-lg: "Hepta Slab", Georgia, serif;
+  --font-display-lg-mobile: "Hepta Slab", Georgia, serif;
+  --font-headline-lg: "Hepta Slab", Georgia, serif;
+  --font-headline-md: "Hepta Slab", Georgia, serif;
+  --font-label-sm: "Hepta Slab", Georgia, serif;
+  --font-label-md: "Hepta Slab", Georgia, serif;
+  --font-body-lg: "Hepta Slab", Georgia, serif;
+  --font-body-md: "Hepta Slab", Georgia, serif;
 
   --text-display-lg: 48px;
   --text-display-lg--line-height: 1.1;

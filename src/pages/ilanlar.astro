@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { site } from '../lib/site';
 import { getPosts } from '../lib/pocketbase';
+import { Icon } from '../lib/icons';
 
 const posts = await getPosts();
 
@@ -49,7 +50,7 @@ const breadcrumbJsonLd = {
 
       {notices.length === 0 ? (
         <div class="border border-border-subtle bg-white-pure p-12 text-center text-text-muted">
-          <span class="material-symbols-outlined text-4xl" aria-hidden="true">campaign</span>
+          <Icon name="campaign" size={36} />
           <p class="font-body-md mt-4">
             Şu anda aktif bir duyuru bulunmuyor. Güncel sınav haberleri için <a class="underline text-primary" href="/blog">blog</a> sayfasına göz atabilirsin.
           </p>
@@ -65,13 +66,17 @@ const breadcrumbJsonLd = {
                   <span class="inline-block border border-primary text-primary px-2 py-1 font-label-sm text-label-sm uppercase">Sınav Haberi</span>
                 </div>
                 <div class="md:w-3/4 flex flex-col">
-                  <h3 class="font-headline-md text-headline-md text-primary mb-3 group-hover:underline decoration-1 underline-offset-4">
+                  <h2 class="font-headline-md text-headline-md text-primary mb-3 group-hover:underline decoration-1 underline-offset-4">
                     <a href={`/blog/${n.slug}`}>{n.title}</a>
-                  </h3>
+                  </h2>
                   {n.excerpt && <p class="font-body-md text-body-md text-text-muted mb-6 line-clamp-3">{n.excerpt}</p>}
-                  <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary uppercase hover:text-text-muted transition-colors mt-auto w-fit" href={`/blog/${n.slug}`}>
+                  <a
+                    class="inline-flex items-center gap-1 font-label-md text-label-md text-primary uppercase hover:text-text-muted transition-colors mt-auto w-fit"
+                    href={`/blog/${n.slug}`}
+                    aria-label={`${n.title} – Detayları Gör`}
+                  >
                     Detayları Gör
-                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_right_alt</span>
+                    <Icon name="arrow_right_alt" size={18} />
                   </a>
                 </div>
               </article>

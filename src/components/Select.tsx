@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { Icon } from "../lib/icons";
 
 export type SelectOption = {
   value: string;
@@ -146,25 +147,17 @@ export function Select({
         onClick={() => !disabled && setOpen((o) => !o)}
         onKeyDown={handleKey}
       >
-        {icon ? (
-          <span
-            className="material-symbols-outlined text-text-muted text-[20px]"
-            aria-hidden="true"
-          >
-            {icon}
-          </span>
-        ) : null}
+        {icon ? <Icon name={icon} size={20} className="text-text-muted" /> : null}
         <span
           className={`flex-1 text-left truncate${selected ? "" : " text-text-muted"}`}
         >
           {selected ? selected.label : placeholder}
         </span>
-        <span
-          className={`material-symbols-outlined text-text-muted text-[20px] transition-transform${open ? " rotate-180" : ""}`}
-          aria-hidden="true"
-        >
-          expand_more
-        </span>
+        <Icon
+          name="expand_more"
+          size={20}
+          className={`text-text-muted transition-transform${open ? " rotate-180" : ""}`}
+        />
       </button>
       {open ? (
         <ul
@@ -205,14 +198,7 @@ export function Select({
                 {opt.hint ? (
                   <span className="font-label-sm text-label-sm text-text-muted">{opt.hint}</span>
                 ) : null}
-                {isSelected ? (
-                  <span
-                    className="material-symbols-outlined text-[18px]"
-                    aria-hidden="true"
-                  >
-                    check
-                  </span>
-                ) : null}
+                {isSelected ? <Icon name="check" size={18} /> : null}
               </li>
             );
           })}

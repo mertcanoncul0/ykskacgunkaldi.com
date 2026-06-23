@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Icon } from "../lib/icons";
 
 interface FaqItem {
   id?: string | number;
@@ -33,9 +34,7 @@ export function FaqAccordion({ faqs, title = "Sıkça Sorulan Sorular" }: Props)
               onClick={() => setOpen(open === i ? null : i)}
             >
               <span>{f.question}</span>
-              <span className="material-symbols-outlined text-text-muted shrink-0" aria-hidden="true">
-                {open === i ? "expand_less" : "expand_more"}
-              </span>
+              <Icon name={open === i ? "expand_less" : "expand_more"} className="text-text-muted shrink-0" />
             </button>
             <div
               id={`faq-answer-${f.id ?? i}`}

@@ -1,4 +1,5 @@
 import type { Exam } from "../lib/api";
+import { Icon } from "../lib/icons";
 
 export function SeoGuideSection({ exam }: { exam: Exam }) {
   if (!exam.guideParagraphs?.length) return null;
@@ -15,14 +16,12 @@ export function SeoGuideSection({ exam }: { exam: Exam }) {
           <details key={i} className="group border-b border-border-subtle py-6 last:border-0" open={i === 0}>
             <summary className="flex items-center justify-between gap-4 cursor-pointer font-label-md text-label-md uppercase text-on-surface list-none [&::-webkit-details-marker]:hidden">
               {g.heading?.trim() || `${exam.name} Hazırlık Notu ${i + 1}`}
-              <span
-                className="material-symbols-outlined text-text-muted shrink-0 transition-transform group-open:rotate-180"
-                aria-hidden="true"
-              >
-                expand_more
-              </span>
+              <Icon name="expand_more" className="text-text-muted shrink-0 transition-transform group-open:rotate-180" />
             </summary>
-            <p className="font-body-md text-body-md text-text-muted mt-4 leading-relaxed">{g.body}</p>
+            <p
+              className="font-body-md text-body-md text-text-muted mt-4 leading-relaxed [&_a]:underline [&_a]:text-primary"
+              dangerouslySetInnerHTML={{ __html: g.body }}
+            />
           </details>
         ))}
       </div>

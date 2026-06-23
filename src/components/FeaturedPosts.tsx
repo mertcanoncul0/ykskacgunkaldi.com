@@ -1,4 +1,5 @@
 import type { Post } from "../lib/pocketbase";
+import { Icon } from "../lib/icons";
 
 function formatDate(d?: string) {
   if (!d) return "";
@@ -27,9 +28,7 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
           href="/blog"
         >
           Tümünü Gör
-          <span className="material-symbols-outlined" aria-hidden="true">
-            arrow_forward
-          </span>
+          <Icon name="arrow_forward" />
         </a>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
@@ -44,9 +43,7 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-text-muted">
-                  <span className="material-symbols-outlined text-[48px]" aria-hidden="true">
-                    menu_book
-                  </span>
+                  <Icon name="menu_book" size={48} />
                 </div>
               )}
               {major.category && (
@@ -82,9 +79,7 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-text-muted">
-                      <span className="material-symbols-outlined text-[32px]" aria-hidden="true">
-                        article
-                      </span>
+                      <Icon name="article" size={32} />
                     </div>
                   )}
                 </div>

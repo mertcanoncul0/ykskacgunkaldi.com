@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Post } from "../lib/pocketbase";
+import { Icon } from "../lib/icons";
 
 function readingTime(p: Post): number {
   const text = (p?.contentHtml || p?.excerpt || "") as string;
@@ -100,9 +101,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-text-muted">
-                      <span className="material-symbols-outlined text-[48px]" aria-hidden="true">
-                        menu_book
-                      </span>
+                      <Icon name="menu_book" size={48} />
                     </div>
                   )}
                   {featured.category && (
@@ -142,9 +141,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-text-muted">
-                      <span className="material-symbols-outlined text-[32px]" aria-hidden="true">
-                        article
-                      </span>
+                      <Icon name="article" size={32} />
                     </div>
                   )}
                 </div>
@@ -176,7 +173,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
               className="w-10 h-10 flex items-center justify-center border border-border-subtle hover:border-primary transition-colors disabled:opacity-30"
               aria-label="Önceki sayfa"
             >
-              <span className="material-symbols-outlined">chevron_left</span>
+              <Icon name="chevron_left" />
             </button>
             {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
               <button
@@ -197,7 +194,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
               className="w-10 h-10 flex items-center justify-center border border-border-subtle hover:border-primary transition-colors disabled:opacity-30"
               aria-label="Sonraki sayfa"
             >
-              <span className="material-symbols-outlined">chevron_right</span>
+              <Icon name="chevron_right" />
             </button>
           </div>
         )}

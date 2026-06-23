@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { Select } from "./Select";
+import { Icon } from "../lib/icons";
 
 export function KonuDagilimiClient({ exams, subjects, distributions }: { exams: any[], subjects: any[], distributions: any[] }) {
   const [examSlug, setExamSlug] = useState("yks");
@@ -151,7 +152,7 @@ export function KonuDagilimiClient({ exams, subjects, distributions }: { exams: 
                     <p className="font-body-md text-body-md text-text-muted mt-1">Yıllara göre ortalama soru sayısı ağırlıkları</p>
                   </div>
                   <span className="inline-flex items-center gap-2 border border-border-subtle px-3 py-1 font-label-sm text-label-sm uppercase text-text-muted whitespace-nowrap">
-                    <span className="material-symbols-outlined text-[16px]" aria-hidden="true">trending_up</span>
+                    <Icon name="trending_up" size={16} />
                     Güncel Veri
                   </span>
                 </div>
@@ -165,9 +166,7 @@ export function KonuDagilimiClient({ exams, subjects, distributions }: { exams: 
                         <div className="flex items-baseline justify-between mb-2 gap-4">
                           <span className="font-body-md text-body-md flex items-center gap-2">
                             {t.name}
-                            {accent && (
-                              <span className="material-symbols-outlined text-[14px] text-primary" aria-hidden="true" title="Önemli konu">flag</span>
-                            )}
+                            {accent && <Icon name="flag" size={14} className="text-primary" title="Önemli konu" />}
                           </span>
                           <span className={`font-label-sm text-label-sm whitespace-nowrap ${accent ? "text-primary font-bold" : "text-text-muted"}`}>
                             ~{Math.round(t.avg)} Soru
@@ -234,7 +233,7 @@ export function KonuDagilimiClient({ exams, subjects, distributions }: { exams: 
             <aside className="lg:col-span-4">
               {topTopic && (
                 <article className="bg-black-pure text-white-pure p-8">
-                  <span className="material-symbols-outlined text-[32px] mb-4 block" aria-hidden="true">flag</span>
+                  <Icon name="flag" size={32} className="mb-4 block" />
                   <h3 className="font-headline-md text-headline-md mb-3">Strateji Önerisi</h3>
                   <p className="font-body-md text-body-md text-white-pure/80 leading-relaxed">
                     <strong className="text-white-pure">{topTopic.name}</strong> konusu {subjectName} testinin yaklaşık %{topPct}'unu oluşturuyor. Günlük rutin çözüm planlayın.

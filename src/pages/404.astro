@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { hubLinks } from '../lib/site';
+import { Icon } from '../lib/icons';
 
 Astro.response.status = 404;
 ---
@@ -12,7 +13,7 @@ Astro.response.status = 404;
 >
   <div class="px-margin-mobile md:px-margin-desktop">
     <div class="max-w-3xl mx-auto py-section-gap text-center">
-      <span class="material-symbols-outlined text-[64px] text-text-muted" aria-hidden="true">search_off</span>
+      <Icon name="search_off" size={64} className="text-text-muted" />
       <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mt-6 mb-4">404</h1>
       <p class="font-headline-md text-headline-md text-black-pure mb-2">Sayfa Bulunamadı</p>
       <p class="font-body-lg text-body-lg text-text-muted mb-12 max-w-xl mx-auto">
@@ -24,21 +25,21 @@ Astro.response.status = 404;
           href="/"
           class="inline-flex items-center gap-2 bg-black-pure text-white-pure px-6 py-3 font-label-md uppercase hover:bg-primary transition-colors"
         >
-          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">home</span>
+          <Icon name="home" size={18} />
           Ana Sayfa
         </a>
         <a
           href="/sinavlar"
           class="inline-flex items-center gap-2 border border-border-subtle px-6 py-3 font-label-md uppercase hover:bg-surface-container-high transition-colors"
         >
-          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">calendar_month</span>
+          <Icon name="calendar_month" size={18} />
           Sınav Takvimi
         </a>
         <a
           href="/sayac"
           class="inline-flex items-center gap-2 border border-border-subtle px-6 py-3 font-label-md uppercase hover:bg-surface-container-high transition-colors"
         >
-          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">timer</span>
+          <Icon name="timer" size={18} />
           Sınav Sayacı
         </a>
       </div>

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { site } from '../lib/site';
 import { getExams } from '../lib/pocketbase';
+import { Icon } from '../lib/icons';
 
 const exams = await getExams();
 
@@ -85,7 +86,7 @@ const breadcrumbJsonLd = {
 
       {rows.length === 0 ? (
         <div class="border border-border-subtle bg-white-pure p-12 text-center text-text-muted">
-          <span class="material-symbols-outlined text-4xl" aria-hidden="true">calendar_month</span>
+          <Icon name="calendar_month" size={36} />
           <p class="font-body-md mt-4">Sınav bilgisi bulunamadı.</p>
         </div>
       ) : (
@@ -112,7 +113,7 @@ const breadcrumbJsonLd = {
                     <td class="py-6 px-2 font-body-md text-body-md text-text-muted">
                       {past ? (
                         <span class="inline-flex items-center gap-1 bg-surface-container-high px-3 py-1 font-label-sm text-label-sm uppercase">
-                          <span class="material-symbols-outlined text-[14px]" aria-hidden="true">task_alt</span>
+                          <Icon name="task_alt" size={14} />
                           Tamamlandı
                         </span>
                       ) : r.isEstimated ? (
@@ -125,7 +126,11 @@ const breadcrumbJsonLd = {
                       {past ? (
                         <span class="font-label-md text-label-md uppercase text-text-muted whitespace-nowrap">Geçti</span>
                       ) : (
-                        <a class="font-label-md text-label-md uppercase text-primary hover:text-text-muted transition-colors whitespace-nowrap" href={`/?sinav=${r.examSlug}`}>
+                        <a
+                          class="font-label-md text-label-md uppercase text-primary hover:text-text-muted transition-colors whitespace-nowrap"
+                          href={`/?sinav=${r.examSlug}`}
+                          aria-label={`${r.examName}${r.sessionName ? ` ${r.sessionName}` : ""} – Detayları Gör`}
+                        >
                           Detayları Gör →
                         </a>
                       )}

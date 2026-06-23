@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { scoreCalculatorMenu } from "../data/score-calculators";
 import { site, hubLinks } from "../lib/site";
+import { Icon } from "../lib/icons";
 
 const examIcons: Record<string, string> = {
   yks: "school",
@@ -97,9 +98,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
             onClick={() => toggle("exams")}
           >
             Sınavlar
-            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
-              expand_more
-            </span>
+            <Icon name="expand_more" size={18} />
           </button>
 
           <button
@@ -110,9 +109,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
             onClick={() => toggle("calc")}
           >
             Puan Hesaplama
-            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
-              expand_more
-            </span>
+            <Icon name="expand_more" size={18} />
           </button>
 
           <a
@@ -139,12 +136,12 @@ export function Header({ exams = [] }: { exams?: any[] }) {
 
         <button
           type="button"
-          className="md:hidden material-symbols-outlined text-primary"
+          className="md:hidden text-primary"
           aria-label={open === "mobile" ? "Menüyü kapat" : "Menüyü aç"}
           aria-expanded={open === "mobile"}
           onClick={() => toggle("mobile")}
         >
-          {open === "mobile" ? "close" : "menu"}
+          <Icon name={open === "mobile" ? "close" : "menu"} />
         </button>
       </nav>
 
@@ -159,9 +156,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
                 className="flex items-start gap-4 p-4 hover:bg-surface-container-high transition-colors"
                 onClick={close}
               >
-                <span className="material-symbols-outlined text-primary" aria-hidden="true">
-                  {examIcons[exam.slug] || "edit_document"}
-                </span>
+                <Icon name={examIcons[exam.slug] || "edit_document"} className="text-primary" />
                 <span className="flex flex-col">
                   <strong className="font-label-md text-label-md text-primary">
                     {examLabels[exam.slug] || exam.name}
@@ -187,9 +182,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
                 className="flex items-center gap-3 px-4 py-3 hover:bg-surface-container-high transition-colors font-label-md text-label-md"
                 onClick={close}
               >
-                <span className="material-symbols-outlined text-primary text-[20px]" aria-hidden="true">
-                  {item.icon}
-                </span>
+                <Icon name={item.icon} size={20} className="text-primary" />
                 <span>{item.label}</span>
               </a>
             ))}
@@ -208,9 +201,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
           <details className="border-b border-border-subtle py-2" open>
             <summary className="flex justify-between items-center py-2 font-label-md text-label-md uppercase tracking-widest cursor-pointer list-none">
               Sınavlar
-              <span className="material-symbols-outlined" aria-hidden="true">
-                expand_more
-              </span>
+              <Icon name="expand_more" />
             </summary>
             <div className="flex flex-col gap-1 pb-3">
               {exams.map((exam) => (
@@ -220,9 +211,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
                   className="flex items-center gap-3 py-2 text-on-surface-variant"
                   onClick={close}
                 >
-                  <span className="material-symbols-outlined" aria-hidden="true">
-                    {examIcons[exam.slug] || "edit_document"}
-                  </span>
+                  <Icon name={examIcons[exam.slug] || "edit_document"} />
                   <span>
                     <strong className="font-label-md text-label-md block">
                       {examLabels[exam.slug] || exam.name}
@@ -236,9 +225,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
           <details className="border-b border-border-subtle py-2">
             <summary className="flex justify-between items-center py-2 font-label-md text-label-md uppercase tracking-widest cursor-pointer list-none">
               Puan Hesaplama
-              <span className="material-symbols-outlined" aria-hidden="true">
-                expand_more
-              </span>
+              <Icon name="expand_more" />
             </summary>
             <div className="flex flex-col gap-1 pb-3">
               {scoreCalculatorMenu?.map((item) => (
@@ -248,9 +235,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
                   className="flex items-center gap-3 py-2 text-on-surface-variant"
                   onClick={close}
                 >
-                  <span className="material-symbols-outlined" aria-hidden="true">
-                    {item.icon}
-                  </span>
+                  <Icon name={item.icon} />
                   <span className="font-label-md text-label-md">{item.label}</span>
                 </a>
               ))}
@@ -285,9 +270,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
             <p className="font-label-sm text-label-sm text-text-muted uppercase tracking-widest mb-2">Hazırlık Rehberi</p>
             {hubLinks.map((l) => (
               <a key={l.href} href={l.href} className="flex items-center gap-3 py-3 text-on-surface-variant" onClick={close}>
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  {l.icon}
-                </span>
+                <Icon name={l.icon} />
                 <span className="font-label-md text-label-md">{l.label}</span>
               </a>
             ))}

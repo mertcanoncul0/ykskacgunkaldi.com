@@ -5,6 +5,7 @@ import { ScoreCalculatorForm } from '../../components/ScoreCalculatorForm';
 import { CalcExamCountdown } from '../../components/CalcExamCountdown';
 import { site } from '../../lib/site';
 import { getExams } from '../../lib/pocketbase';
+import { Icon } from '../../lib/icons';
 
 const { slug } = Astro.params;
 const config = getScoreCalculatorConfig(slug as string);
@@ -60,20 +61,20 @@ const structuredData = [
     <div class="max-w-container-max mx-auto py-section-gap">
       <nav class="flex items-center gap-2 mb-8 font-label-sm text-text-muted" aria-label="Breadcrumb">
         <a class="hover:text-primary transition-colors" href="/">Ana Sayfa</a>
-        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
+        <Icon name="chevron_right" size={16} />
         <a class="hover:text-primary transition-colors" href="/puan-hesaplama/yks">Puan Hesaplama</a>
-        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
+        <Icon name="chevron_right" size={16} />
         <span class="text-on-surface line-clamp-1" aria-current="page">{config.title}</span>
       </nav>
 
       <header class="mb-12">
         <div class="flex flex-wrap items-center gap-2 mb-6">
           <span class="inline-flex items-center gap-2 bg-black-pure text-white-pure px-3 py-1 font-label-sm text-label-sm uppercase">
-            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">calculate</span>
+            <Icon name="calculate" size={16} />
             Güncel Katsayılar
           </span>
           <span class="inline-flex items-center gap-2 border border-border-subtle px-3 py-1 font-label-sm text-label-sm uppercase text-text-muted">
-            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">verified</span>
+            <Icon name="verified" size={16} />
             ÖSYM/MEB Kılavuzu
           </span>
         </div>
@@ -87,7 +88,7 @@ const structuredData = [
 
           <article class="border border-border-subtle bg-white-pure p-8">
             <h2 class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-4">
-              <span class="material-symbols-outlined" aria-hidden="true">info</span>
+              <Icon name="info" />
               Nasıl Hesaplanır?
             </h2>
             <p class="font-body-md text-body-md text-text-muted leading-relaxed">{config.formulaNote}</p>
@@ -96,7 +97,7 @@ const structuredData = [
           {faqs.length > 0 && (
             <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="calc-faq-title">
               <h2 id="calc-faq-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">
-                <span class="material-symbols-outlined" aria-hidden="true">help</span>
+                <Icon name="help" />
                 Sıkça Sorulan Sorular
               </h2>
               <div class="flex flex-col">
@@ -104,7 +105,7 @@ const structuredData = [
                   <details class="group border-b border-border-subtle py-4 last:border-0">
                     <summary class="flex items-center justify-between gap-4 cursor-pointer font-label-md text-label-md text-on-surface list-none [&::-webkit-details-marker]:hidden">
                       {f.q}
-                      <span class="material-symbols-outlined text-text-muted shrink-0 transition-transform group-open:rotate-180" aria-hidden="true">expand_more</span>
+                      <Icon name="expand_more" className="text-text-muted shrink-0 transition-transform group-open:rotate-180" />
                     </summary>
                     <p class="font-body-md text-body-md text-text-muted mt-4 leading-relaxed">{f.a}</p>
                   </details>
@@ -115,12 +116,12 @@ const structuredData = [
 
           <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="calc-related-title">
             <h2 id="calc-related-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">
-              <span class="material-symbols-outlined" aria-hidden="true">explore</span>
+              <Icon name="explore" />
               İlgili Sayfalar
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <a href="/blog" class="group flex items-start gap-4 border border-border-subtle p-4 hover:border-black-pure transition-colors">
-                <span class="material-symbols-outlined text-text-muted" aria-hidden="true">article</span>
+                <Icon name="article" className="text-text-muted" />
                 <div>
                   <strong class="block font-label-md text-on-surface group-hover:text-primary transition-colors">Rehberler &amp; Blog</strong>
                   <span class="font-body-md text-body-md text-text-muted">Sınavlara dair detaylı bilgilere ulaş.</span>
@@ -144,7 +145,7 @@ const structuredData = [
               {others.map((o) => (
                 <li>
                   <a class="flex items-center gap-2 py-2 font-body-md text-body-md text-on-surface hover:text-primary transition-colors" href={`/puan-hesaplama/${o.slug}`}>
-                    <span class="material-symbols-outlined text-[18px] text-text-muted" aria-hidden="true">{o.icon}</span>
+                    <Icon name={o.icon} size={18} className="text-text-muted" />
                     {o.label}
                   </a>
                 </li>

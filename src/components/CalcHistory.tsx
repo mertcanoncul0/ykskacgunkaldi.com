@@ -8,6 +8,7 @@ import {
   isSnapshotEmpty,
 } from "../lib/calc-engine";
 import { useCalcHistory, type CalcAttempt } from "../hooks/useCalcHistory";
+import { Icon } from "../lib/icons";
 
 interface Props {
   config: ScoreCalculatorConfig;
@@ -78,7 +79,7 @@ export function CalcHistory({
     <section className="border border-border-subtle bg-white-pure p-8" aria-labelledby="calc-history-title">
       <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
         <h3 id="calc-history-title" className="flex items-center gap-2 font-headline-md text-headline-md text-primary">
-          <span className="material-symbols-outlined" aria-hidden="true">history</span>
+          <Icon name="history" />
           Son Denemelerim
         </h3>
         {items.length > 0 ? (
@@ -90,7 +91,7 @@ export function CalcHistory({
             }}
             aria-label="Tüm geçmişi sil"
           >
-            <span className="material-symbols-outlined text-[16px]" aria-hidden="true">delete_sweep</span>
+            <Icon name="delete_sweep" size={16} />
             Temizle
           </button>
         ) : null}
@@ -113,7 +114,7 @@ export function CalcHistory({
           onClick={handleSave}
           disabled={empty}
         >
-          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">bookmark_add</span>
+          <Icon name="bookmark_add" size={18} />
           Denememi Kaydet
         </button>
       </div>
@@ -167,7 +168,7 @@ export function CalcHistory({
                     aria-label={`${it.label} yükle`}
                     title="Forma yükle"
                   >
-                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">upload</span>
+                    <Icon name="upload" size={18} />
                   </button>
                   <button
                     type="button"
@@ -176,7 +177,7 @@ export function CalcHistory({
                     aria-label={`${it.label} sil`}
                     title="Sil"
                   >
-                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span>
+                    <Icon name="delete" size={18} />
                   </button>
                 </div>
               </li>
@@ -220,7 +221,7 @@ function CompareTable({
   return (
     <div className="border-t border-border-subtle pt-8 mt-8">
       <div className="flex items-center gap-2 mb-6">
-        <span className="material-symbols-outlined text-text-muted" aria-hidden="true">compare_arrows</span>
+        <Icon name="compare_arrows" className="text-text-muted" />
         <h4 className="font-headline-md text-headline-md text-primary">Karşılaştırma</h4>
       </div>
       <div className="grid grid-cols-2 gap-3">

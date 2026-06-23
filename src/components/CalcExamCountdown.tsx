@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getDaysLeft } from "../lib/countdown";
+import { Icon } from "../lib/icons";
 
 interface Props {
   targetDate: string;
@@ -20,7 +21,7 @@ export function CalcExamCountdown({ targetDate, label, href, isEstimated }: Prop
   const content = (
     <>
       <div className="flex items-center justify-center gap-2 font-label-sm text-label-sm uppercase text-text-muted mb-3">
-        <span className="material-symbols-outlined text-[18px]" aria-hidden="true">schedule</span>
+        <Icon name="schedule" size={18} />
         <span>{label}</span>
       </div>
       <div className="flex flex-col items-center">

@@ -7,6 +7,7 @@ import { FaqAccordion } from "./FaqAccordion";
 import { FeaturedPosts } from "./FeaturedPosts";
 import { QuickLinks } from "./QuickLinks";
 import type { Post } from "../lib/pocketbase";
+import { Icon } from "../lib/icons";
 
 export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; posts: Post[] }) {
   const [activeSlug, setActiveSlug] = useState(exams[0]?.slug || "");
@@ -132,9 +133,7 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
               rel="noopener noreferrer"
             >
               Çıkmış Soruları Çöz
-              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
-                north_east
-              </span>
+              <Icon name="north_east" size={18} />
             </a>
           </div>
         </section>

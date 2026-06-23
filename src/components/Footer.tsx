@@ -2,7 +2,7 @@ import { footerLinkGroups, site } from "../lib/site";
 
 export function Footer() {
   return (
-    <footer className="bg-surface-container-lowest border-t border-primary lg:ml-64">
+    <footer className="bg-surface-container-lowest border-t border-primary">
       <div className="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-start gap-gutter">
         <div className="flex flex-col gap-4">
           <div className="font-headline-md text-headline-md text-primary font-bold tracking-tighter uppercase">
@@ -18,7 +18,7 @@ export function Footer() {
         <div className="flex flex-wrap gap-12">
           {footerLinkGroups.map((group) => (
             <div key={group.title} className="flex flex-col gap-4">
-              <h6 className="font-label-md text-label-md uppercase tracking-widest">{group.title}</h6>
+              <p className="font-label-md text-label-md uppercase tracking-widest">{group.title}</p>
               {group.links.map((link) => (
                 <a
                   key={link.href}

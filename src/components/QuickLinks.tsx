@@ -4,6 +4,8 @@
 // mobile app), so they'd be fabricated UI promising functionality that
 // doesn't work. Same three-column editorial rhythm, pointed at the three
 // real tools the site actually has instead.
+import { Icon } from "../lib/icons";
+
 const links = [
   {
     label: "Sınav Takvimi",
@@ -28,13 +30,11 @@ export function QuickLinks() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
         {links.map((l) => (
           <div key={l.href} className="border-t border-black-pure pt-8">
-            <h5 className="font-label-md text-label-md uppercase tracking-widest mb-6">{l.label}</h5>
+            <h3 className="font-label-md text-label-md uppercase tracking-widest mb-6">{l.label}</h3>
             <p className="font-body-md text-text-muted mb-6">{l.body}</p>
-            <a href={l.href} className="flex items-center gap-2 font-bold group">
+            <a href={l.href} className="flex items-center gap-2 font-bold group" aria-label={`${l.label} – İncele`}>
               İNCELE
-              <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">
-                north_east
-              </span>
+              <Icon name="north_east" className="group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
         ))}

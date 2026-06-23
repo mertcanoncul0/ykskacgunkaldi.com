@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { site } from '../../lib/site';
 import { getDaysLeft } from '../../lib/countdown';
 import { getPosts, getExams } from '../../lib/pocketbase';
+import { Icon } from '../../lib/icons';
 
 const { slug } = Astro.params;
 const [posts, exams] = await Promise.all([getPosts(), getExams()]);
@@ -104,9 +105,9 @@ const structuredData = [
     <div class="max-w-container-max mx-auto py-section-gap">
       <nav class="flex items-center gap-2 mb-8 font-label-sm text-text-muted" aria-label="Breadcrumb">
         <a class="hover:text-primary transition-colors" href="/">Anasayfa</a>
-        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
+        <Icon name="chevron_right" size={16} />
         <a class="hover:text-primary transition-colors" href="/blog">Blog</a>
-        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
+        <Icon name="chevron_right" size={16} />
         <span class="text-on-surface line-clamp-1">{post.title}</span>
       </nav>
 
@@ -130,8 +131,13 @@ const structuredData = [
                   {post.publishedAt && <p class="text-text-muted font-label-sm">{formatDate(post.publishedAt)}</p>}
                 </div>
                 <div class="ml-auto flex gap-4">
-                  <button id="share-btn" class="material-symbols-outlined text-text-muted hover:text-black-pure transition-colors" aria-label="Paylaş" type="button" data-title={post.title} data-url={articleUrl}>share</button>
-                  <button id="save-btn" class="material-symbols-outlined text-text-muted hover:text-black-pure transition-colors" aria-label="Kaydet" type="button" data-slug={post.slug}>bookmark</button>
+                  <button id="share-btn" class="text-text-muted hover:text-black-pure transition-colors" aria-label="Paylaş" type="button" data-title={post.title} data-url={articleUrl}>
+                    <Icon name="share" />
+                  </button>
+                  <button id="save-btn" class="text-text-muted hover:text-black-pure transition-colors" aria-label="Kaydet" type="button" data-slug={post.slug}>
+                    <span class="save-icon-default"><Icon name="bookmark" /></span>
+                    <span class="save-icon-active hidden"><Icon name="bookmark_added" /></span>
+                  </button>
                 </div>
               </div>
             </header>
@@ -142,7 +148,7 @@ const structuredData = [
               </div>
             ) : (
               <div class="w-full aspect-[16/9] mb-12 overflow-hidden bg-surface-container border border-border-subtle flex items-center justify-center text-text-muted">
-                <span class="material-symbols-outlined text-[64px]" aria-hidden="true">menu_book</span>
+                <Icon name="menu_book" size={64} />
               </div>
             )}
 
@@ -164,10 +170,10 @@ const structuredData = [
         <aside class="lg:col-span-4 mt-16 lg:mt-0 space-y-8">
           {top.length > 0 && (
             <div class="bg-white-pure border border-border-subtle p-6">
-              <h3 class="flex items-center gap-2 font-label-md uppercase mb-6">
-                <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
+              <h2 class="flex items-center gap-2 font-label-md uppercase mb-6">
+                <Icon name="trending_up" />
                 En Çok Okunanlar
-              </h3>
+              </h2>
               <ol class="space-y-4">
                 {top.map((p, i) => (
                   <li>
@@ -186,15 +192,15 @@ const structuredData = [
 
           {targetExam && daysLeft !== null && (
             <div class="bg-black-pure text-white-pure p-6 text-center">
-              <span class="material-symbols-outlined" aria-hidden="true">timer</span>
-              <h4 class="font-label-md uppercase mt-2 mb-4">{targetExam.name}</h4>
+              <Icon name="timer" />
+              <h3 class="font-label-md uppercase mt-2 mb-4">{targetExam.name}</h3>
               <div class="flex items-baseline justify-center gap-2 mb-6">
                 <strong class="font-display-lg text-[40px] leading-none">{daysLeft}</strong>
                 <span class="font-label-sm uppercase">Gün Kaldı</span>
               </div>
               <a class="inline-flex items-center gap-2 border border-white-pure px-4 py-2 font-label-sm uppercase hover:bg-white-pure hover:text-black-pure transition-colors" href={`/puan-hesaplama/${targetExam.slug}`}>
                 Hemen Planla
-                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                <Icon name="arrow_forward" size={16} />
               </a>
             </div>
           )}
@@ -212,7 +218,7 @@ const structuredData = [
                     <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.title} loading="lazy" />
                   ) : (
                     <div class="w-full h-full flex items-center justify-center text-text-muted">
-                      <span class="material-symbols-outlined text-[32px]" aria-hidden="true">article</span>
+                      <Icon name="article" size={32} />
                     </div>
                   )}
                 </div>
@@ -272,12 +278,15 @@ const structuredData = [
           return [];
         }
       };
+      const defaultIcon = saveBtn.querySelector('.save-icon-default');
+      const activeIcon = saveBtn.querySelector('.save-icon-active');
       const applyState = (saved: string[]) => {
         const isSaved = saved.includes(slug);
         saveBtn.classList.toggle('text-black-pure', isSaved);
         saveBtn.classList.toggle('text-text-muted', !isSaved);
         saveBtn.setAttribute('aria-pressed', String(isSaved));
-        saveBtn.textContent = isSaved ? 'bookmark_added' : 'bookmark';
+        defaultIcon?.classList.toggle('hidden', isSaved);
+        activeIcon?.classList.toggle('hidden', !isSaved);
       };
       applyState(readSaved());
       saveBtn.addEventListener('click', () => {
