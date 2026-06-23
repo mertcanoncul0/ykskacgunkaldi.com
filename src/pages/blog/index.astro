@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { BlogClient } from '../../components/BlogClient';
+import { site } from '../../lib/site';
+import { getPosts } from '../../lib/pocketbase';
+
+const posts = await getPosts();
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${site.url}/blog` },
+  ],
+};
+---
+
+<Layout
+  title="Blog | Sınav Hazırlık Rehberleri ve Çalışma Taktikleri"
+  description="YKS, TYT, AYT ve diğer sınavlar için uzman yazarlardan hazırlık rehberleri, motivasyon ve çalışma taktikleri."
+  structuredData={breadcrumbJsonLd}
+>
+  <BlogClient client:load posts={posts} />
+</Layout>

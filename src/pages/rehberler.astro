@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/site';
+import { getExams } from '../lib/pocketbase';
+
+const exams = await getExams();
+
+const examIcons: Record<string, string> = {
+  yks: 'school',
+  lgs: 'menu_book',
+  dgs: 'trending_up',
+  kpss: 'work',
+  ales: 'psychology',
+  msu: 'military_tech',
+};
+
+// Her sınavın gerçek "guideTitle"/"guideParagraphs" alanları (PocketBase'de
+// zaten ana sayfanın SEO rehber bölümünde kullanılıyor) burada strateji
+// kartlarına dönüştürülür. Mockup'taki danışmanlık formu sahte bir başarı
+// durumu simüle ediyordu (setTimeout) ve sahte bir e-posta/telefon
+// listeliyordu; bunların yerine gerçek /iletisim sayfasına yönlendirilen tek
+// bir CTA kullanılıyor.
+const guides = exams
+  .filter((e) => e.guideTitle && e.guideParagraphs && e.guideParagraphs.length > 0)
+  .map((e) => ({
+    slug: e.slug,
+    name: e.name,
+    title: e.guideTitle!,
+    summary: e.guideParagraphs![0]?.body || e.heroDescription,
+    icon: examIcons[e.slug] || 'auto_stories',
+  }));
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Rehberlik', item: `${site.url}/rehberler` },
+  ],
+};
+---
+
+<Layout
+  title="Rehberlik | Sınav Stratejileri ve Danışmanlık | YKS Kaç Gün Kaldı"
+  description="Sınavlara hazırlanırken izlenecek stratejiler, sınav rehberleri ve uzman danışmanlığı."
+  structuredData={breadcrumbJsonLd}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-container-max mx-auto py-section-gap">
+      <section class="mb-section-gap">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-end">
+          <div class="md:col-span-8">
+            <span class="font-label-sm text-label-sm text-text-muted uppercase tracking-[0.2em] mb-4 block">Akademik Yol Haritası</span>
+            <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">Rehberlik &amp; Danışmanlık</h1>
+            <p class="font-body-lg text-body-lg text-text-muted max-w-2xl">
+              Sınavına göre hazırlanmış stratejik rehberler ve uzman desteğiyle hazırlık sürecini doğru yönet.
+            </p>
+          </div>
+        </div>
+        <div class="h-px bg-border-subtle mt-12"></div>
+      </section>
+
+      {guides.length === 0 ? (
+        <div class="border border-border-subtle bg-white-pure p-12 text-center text-text-muted mb-section-gap">
+          <span class="material-symbols-outlined text-4xl" aria-hidden="true">school</span>
+          <p class="font-body-md mt-4">Rehber içerikleri yakında eklenecek.</p>
+        </div>
+      ) : (
+        <section class="mb-section-gap">
+          <h3 class="font-label-sm text-label-sm text-text-muted uppercase tracking-[0.2em] mb-10">Stratejik Rehberler</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {guides.map((g) => (
+              <a href={`/?sinav=${g.slug}`} class="group border border-border-subtle bg-white-pure p-8 transition-all hover:border-black-pure block">
+                <div class="aspect-video mb-6 overflow-hidden bg-surface-container flex items-center justify-center">
+                  <span class="material-symbols-outlined text-text-muted text-[48px]" aria-hidden="true">{g.icon}</span>
+                </div>
+                <div class="flex justify-between items-start mb-4">
+                  <span class="font-label-sm text-label-sm text-text-muted uppercase">{g.name}</span>
+                  <span class="material-symbols-outlined text-sm" aria-hidden="true">north_east</span>
+                </div>
+                <h4 class="font-headline-md text-headline-md mb-3">{g.title}</h4>
+                <p class="font-body-md text-text-muted text-sm line-clamp-3">{g.summary}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter border-t border-black-pure pt-section-gap">
+        <div class="lg:col-span-5">
+          <h2 class="font-headline-lg text-headline-lg mb-6">Uzman Danışmanlığı</h2>
+          <p class="font-body-md text-body-md text-text-muted leading-relaxed">
+            Sınav stratejin, çalışma planın veya bölüm seçimin hakkında sorularını ekibimize iletebilirsin.
+          </p>
+        </div>
+        <div class="lg:col-span-6 lg:col-start-7 flex items-start">
+          <a
+            class="inline-flex items-center gap-3 bg-black-pure text-white-pure px-12 py-4 font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors"
+            href="/iletisim"
+          >
+            İletişime Geç
+            <span class="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>

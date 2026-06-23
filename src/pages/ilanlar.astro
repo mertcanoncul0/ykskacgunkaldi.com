@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/site';
+import { getPosts } from '../lib/pocketbase';
+
+const posts = await getPosts();
+
+// Not: PocketBase'de ayrı bir "duyurular/ilanlar" koleksiyonu bulunmuyor ve
+// post.category gerçek ama opsiyonel bir alan. Önceki sürüm, kategorisi boş
+// olan yazılara slug'dan türetilmiş sahte bir kategori atıyordu (pickCategory)
+// — bu, gerçek-ama-boş bir alana uydurma bir değer yazmak olduğu için
+// kaldırıldı. Bu sayfa artık sadece PocketBase'de gerçekten
+// category === 'Sınav Haberleri' olarak işaretlenmiş yazıları duyuru olarak
+// listeler; kategorisi olmayan veya başka kategorideki yazılar burada
+// görünmez (blog'da görünmeye devam eder).
+const notices = posts.filter((p) => p.category === 'Sınav Haberleri');
+
+function formatDay(d?: string) {
+  if (!d) return { day: '--', month: '', year: '' };
+  const date = new Date(d);
+  return {
+    day: date.toLocaleDateString('tr-TR', { day: '2-digit' }),
+    month: date.toLocaleDateString('tr-TR', { month: 'long' }).toLocaleUpperCase('tr-TR'),
+    year: date.toLocaleDateString('tr-TR', { year: 'numeric' }),
+  };
+}
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'İlanlar', item: `${site.url}/ilanlar` },
+  ],
+};
+---
+
+<Layout
+  title="İlanlar ve Duyurular | YKS Kaç Gün Kaldı"
+  description="YKS, TYT, AYT ve diğer sınavlarla ilgili güncel duyurular ve sınav haberleri."
+  structuredData={breadcrumbJsonLd}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-4xl mx-auto py-section-gap">
+      <header class="mb-12 border-b-2 border-primary pb-6">
+        <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-2">Güncel İlanlar</h1>
+        <p class="font-body-lg text-body-lg text-text-muted">Sınav takvimleriyle ilgili güncel haberler ve duyurular.</p>
+      </header>
+
+      {notices.length === 0 ? (
+        <div class="border border-border-subtle bg-white-pure p-12 text-center text-text-muted">
+          <span class="material-symbols-outlined text-4xl" aria-hidden="true">campaign</span>
+          <p class="font-body-md mt-4">
+            Şu anda aktif bir duyuru bulunmuyor. Güncel sınav haberleri için <a class="underline text-primary" href="/blog">blog</a> sayfasına göz atabilirsin.
+          </p>
+        </div>
+      ) : (
+        <div class="flex flex-col">
+          {notices.map((n) => {
+            const { day, month, year } = formatDay(n.publishedAt);
+            return (
+              <article class="flex flex-col md:flex-row py-8 border-b border-border-subtle group">
+                <div class="md:w-1/4 mb-4 md:mb-0 flex flex-col items-start pr-6">
+                  <span class="font-label-sm text-label-sm text-text-muted mb-2">{day} {month} {year}</span>
+                  <span class="inline-block border border-primary text-primary px-2 py-1 font-label-sm text-label-sm uppercase">Sınav Haberi</span>
+                </div>
+                <div class="md:w-3/4 flex flex-col">
+                  <h3 class="font-headline-md text-headline-md text-primary mb-3 group-hover:underline decoration-1 underline-offset-4">
+                    <a href={`/blog/${n.slug}`}>{n.title}</a>
+                  </h3>
+                  {n.excerpt && <p class="font-body-md text-body-md text-text-muted mb-6 line-clamp-3">{n.excerpt}</p>}
+                  <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary uppercase hover:text-text-muted transition-colors mt-auto w-fit" href={`/blog/${n.slug}`}>
+                    Detayları Gör
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_right_alt</span>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,67 @@
+---
+// Persistent left sidebar — drawn identically (4 items: Geri Sayım /
+// Popüler Yazılar / Rehberlik / İlanlar) on every single new_ui mockup
+// (ana_sayfa, blog listesi, blog detayı, sınav takvimi, ilanlar, popüler
+// yazılar, rehberlik). This is the site's global secondary navigation,
+// rendered once from Layout.astro on every page — not just a "hub" subset.
+//
+// Active state follows the dominant mockup pattern (5 of 6 mockups): a
+// full bg-primary fill on the active row. Active item is derived from the
+// real route so it's always correct, instead of copying each mockup's
+// occasionally-mismatched "active" choice.
+import type { Exam } from '../lib/api';
+
+interface Props {
+  exams?: Exam[];
+}
+
+const { exams = [] } = Astro.props;
+const { pathname } = Astro.url;
+
+const items = [
+  { key: 'sayac', href: '/sayac', label: 'Geri Sayım', icon: 'timer' },
+  { key: 'populer-yazilar', href: '/populer-yazilar', label: 'Popüler Yazılar', icon: 'trending_up' },
+  { key: 'rehberler', href: '/rehberler', label: 'Rehberlik', icon: 'school' },
+  { key: 'ilanlar', href: '/ilanlar', label: 'İlanlar', icon: 'ads_click' },
+] as const;
+
+function isActive(href: string) {
+  if (href === '/sayac') return pathname === '/' || pathname.startsWith('/sayac') || pathname.startsWith('/sinavlar');
+  return pathname.startsWith(href);
+}
+
+// Sidebar eyebrow ("YKS 2027" gibi) önceden sabit kodlanmıştı ve gerçek YKS
+// tarihinden (2027) bağımsız, her yıl elle güncellenmesi gereken bir
+// "2026" değeriydi — gerçek veriyle çelişen, yanlış bir bilgiydi. Artık
+// gerçek `yks` sınavının countdownLabel alanından türetiliyor.
+const yksExam = exams.find((e) => e.slug === 'yks');
+const eyebrowLabel = yksExam?.countdownLabel || 'Hazırlık Rehberi';
+---
+
+<aside class="hidden lg:flex flex-col fixed left-0 top-16 h-full w-64 bg-surface border-r border-border-subtle py-8 z-40">
+  <div class="px-6 mb-10">
+    <h2 class="font-headline-md text-headline-md text-primary mb-1">{eyebrowLabel}</h2>
+    <p class="font-label-sm text-label-sm text-text-muted uppercase tracking-widest">Hazırlık Rehberi</p>
+  </div>
+  <nav class="flex flex-col" aria-label="Rehber menüsü">
+    {items.map((item) => {
+      const active = isActive(item.href);
+      return (
+        <a
+          href={item.href}
+          class={active
+            ? 'bg-primary text-on-primary font-bold px-6 py-4 flex items-center gap-4 transition-opacity'
+            : 'text-on-surface-variant hover:bg-surface-container-high px-6 py-4 flex items-center gap-4 transition-colors'}
+          aria-current={active ? 'page' : undefined}
+        >
+          <span
+            class="material-symbols-outlined"
+            style={active ? "font-variation-settings: 'FILL' 1;" : undefined}
+            aria-hidden="true"
+          >{item.icon}</span>
+          <span class="font-label-md text-label-md">{item.label}</span>
+        </a>
+      );
+    })}
+  </nav>
+</aside>

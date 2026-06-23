@@ -1,0 +1,621 @@
+{
+  "exams": [
+    {
+      "slug": "yks",
+      "name": "YKS",
+      "h1": "2027 YKS'ye Kaç Gün Kaldı?",
+      "heroDescription": "2027 YKS (Yükseköğretim Kurumları Sınavı) için geri sayım sayacı.",
+      "targetDate": "2027-06-19T07:15:00.000Z",
+      "countdownLabel": "YKS 2027",
+      "isEstimated": true,
+      "detailCta": "YKS Detayları",
+      "sessions": [
+        {
+          "slug": "tyt",
+          "name": "TYT",
+          "targetDate": "2027-06-19T07:15:00.000Z",
+          "countdownLabel": "TYT 2027",
+          "isEstimated": true
+        },
+        {
+          "slug": "ayt",
+          "name": "AYT",
+          "targetDate": "2027-06-20T07:15:00.000Z",
+          "countdownLabel": "AYT 2027",
+          "isEstimated": true
+        },
+        {
+          "slug": "ydt",
+          "name": "YDT",
+          "targetDate": "2027-06-20T12:45:00.000Z",
+          "countdownLabel": "YDT 2027",
+          "isEstimated": true
+        }
+      ],
+      "featureTitle": "YKS Hazırlığında İhtiyacınız Olan Her Şey",
+      "featureDescription": "YKS'ye kaç gün kaldığını canlı takip edin, TYT/AYT puanınızı hesaplayın ve konu dağılımına göre çalışın.",
+      "guideTitle": "YKS Kaç Gün Kaldı? 2027 YKS Hazırlık Rehberi",
+      "guideParagraphs": [
+        {
+          "heading": "YKS Ne Zaman Yapılır?",
+          "body": "YKS (Yükseköğretim Kurumları Sınavı), TYT'nin cumartesi, AYT ve YDT'nin ise pazar günü uygulandığı iki günlük bir sınav sürecidir. Sayfanın en üstündeki sayaç, YKS'ye kaç gün kaldığını saniye hassasiyetinde gösterir; ÖSYM kılavuzu yayımlandıkça tarih otomatik olarak güncellenir."
+        },
+        {
+          "heading": "TYT ve AYT Arasındaki Fark Nedir?",
+          "body": "TYT, tüm adayların girdiği ve Türkçe, sosyal bilimler, temel matematik ve fen bilimlerini kapsayan temel bir sınavdır. AYT ise yalnızca dört yıllık lisans programlarını hedefleyen adayların girdiği, sayısal, eşit ağırlık, sözel ve dil alanlarına yönelik daha derin bir sınavdır. TYT puanı tek başına ön lisans ve bazı bölümler için yeterli olabilirken, lisans programlarının büyük çoğunluğu AYT netlerini de gerektirir."
+        },
+        {
+          "heading": "YKS'ye Nasıl Hazırlanılır?",
+          "body": "Etkili bir hazırlık, konu eksiklerini erken tespit etmekle başlar. Düzenli deneme sınavı çözüp her denemeyi detaylı analiz etmek, hangi konularda tekrara ihtiyaç olduğunu netleştirir. Sitemizdeki <a href=\"/konu-dagilimi\">konu dağılımı</a> sayfasından son yılların soru dağılımını inceleyerek, en çok soru gelen konulara öncelik verebilirsiniz."
+        },
+        {
+          "heading": "Puanım ve Sıralamam Ne Olur?",
+          "body": "TYT ve AYT netlerinizi girdiğinizde <a href=\"/puan-hesaplama/yks\">YKS puan hesaplama aracımız</a>, kılavuz katsayılarına dayalı tahmini SAY, EA, SÖZ ve DİL puanlarınızı anında hesaplar. Bu sayede tercih döneminden önce hangi bölümlere yönelebileceğiniz konusunda fikir sahibi olursunuz."
+        }
+      ],
+      "nextExamDescription": "TYT, AYT ve YDT oturumlarının tamamı için canlı geri sayım ve oturum bazlı sayaç."
+    },
+    {
+      "slug": "lgs",
+      "name": "LGS",
+      "h1": "2027 LGS'ye Kaç Gün Kaldı?",
+      "heroDescription": "2027 LGS (Liselere Geçiş Sistemi) için geri sayım sayacı.",
+      "targetDate": "2027-06-06T06:30:00.000Z",
+      "countdownLabel": "LGS 2027",
+      "isEstimated": true,
+      "detailCta": "LGS Detayları",
+      "featureTitle": "LGS'ye Hazırlananlar İçin Pratik Araçlar",
+      "featureDescription": "LGS'ye kaç gün kaldığını takip edin, sözel ve sayısal netlerinizle tahmini puanınızı hesaplayın.",
+      "guideTitle": "LGS Kaç Gün Kaldı? Liselere Geçiş Sınavı Rehberi",
+      "guideParagraphs": [
+        {
+          "heading": "LGS Nedir, Kimler Girer?",
+          "body": "LGS (Liselere Geçiş Sistemi), ortaokul 8. sınıf öğrencilerinin fen liseleri, sosyal bilimler liseleri ve proje okulları gibi tercihli liselere yerleşebilmesi için MEB tarafından merkezi olarak yapılan bir sınavdır. Sınav tek gün ve tek oturumda uygulanır."
+        },
+        {
+          "heading": "LGS'de Hangi Dersler Sorulur?",
+          "body": "Sınav, sözel bölüm (Türkçe, T.C. İnkılap Tarihi, Din Kültürü, İngilizce) ve sayısal bölüm (Matematik, Fen Bilimleri) olmak üzere iki ana bölümden oluşur. Toplam soru sayısı ve süre MEB kılavuzunda her yıl ilan edilir."
+        },
+        {
+          "heading": "LGS Puanı Nasıl Hesaplanır?",
+          "body": "MEB, doğru ve yanlış sayılarınızı kılavuzdaki ağırlıklarla çarparak ham puanı hesaplar. <a href=\"/puan-hesaplama/lgs\">LGS puan hesaplama aracımızla</a> netlerinizi girip tahmini MSP (Merkezi Sınav Puanı) değerinizi görebilirsiniz."
+        }
+      ],
+      "nextExamDescription": "LGS'ye kalan süreyi gösteren canlı sayaç; sınav tarihi MEB kılavuzuyla otomatik güncellenir."
+    },
+    {
+      "slug": "kpss-lisans",
+      "name": "KPSS Lisans",
+      "h1": "2026 KPSS Lisans'a Kaç Gün Kaldı?",
+      "heroDescription": "Kamu Personel Seçme Sınavı Lisans oturumu sayacı.",
+      "targetDate": "2026-09-06T07:15:00.000Z",
+      "countdownLabel": "KPSS Lisans 2026",
+      "isEstimated": false,
+      "detailCta": "KPSS Detayları",
+      "sessions": [
+        {
+          "slug": "genel-yetenek",
+          "name": "Genel Yetenek - Genel Kültür",
+          "targetDate": "2026-09-06T07:15:00.000Z",
+          "countdownLabel": "KPSS GY-GK 2026",
+          "isEstimated": false
+        },
+        {
+          "slug": "egitim-bilimleri",
+          "name": "Eğitim Bilimleri",
+          "targetDate": "2026-09-06T11:45:00.000Z",
+          "countdownLabel": "KPSS Eğitim Bilimleri 2026",
+          "isEstimated": false
+        },
+        {
+          "slug": "oabt",
+          "name": "ÖABT",
+          "targetDate": "2026-09-12T07:15:00.000Z",
+          "countdownLabel": "KPSS ÖABT 2026",
+          "isEstimated": false
+        }
+      ],
+      "featureTitle": "KPSS Lisans Adayları İçin Sayaç ve Puan Hesaplama",
+      "featureDescription": "Genel Yetenek-Genel Kültür ve alan oturumlarına kaç gün kaldığını görün, P3 puanınızı tahmin edin.",
+      "guideTitle": "KPSS Lisans Kaç Gün Kaldı? Hazırlık Rehberi",
+      "guideParagraphs": [
+        {
+          "heading": "KPSS Lisans Hangi Oturumlardan Oluşur?",
+          "body": "KPSS Lisans; Genel Yetenek-Genel Kültür (GY-GK), Eğitim Bilimleri ve Alan Bilgisi Testi (ÖABT) olmak üzere farklı tarihlerde uygulanan ayrı oturumlardan oluşur. Memurluk kadrolarına başvuracak adaylar genellikle sadece GY-GK oturumuna girer; öğretmenlik için ise eğitim bilimleri ve ÖABT de gereklidir."
+        },
+        {
+          "heading": "P puan türleri (P1, P2, P3...) ne anlama gelir?",
+          "body": "ÖSYM, mezun olunan eğitim seviyesine ve atanmak istenen kadroya göre farklı P puan türleri hesaplar. Lisans mezunları için en yaygın kullanılan puan türü P3'tür ve sadece GY-GK netlerine dayanır."
+        },
+        {
+          "heading": "KPSS'ye Nasıl Çalışılmalı?",
+          "body": "Genel yetenek bölümünde Türkçe ve matematik ağırlıklı sorular, genel kültürde ise tarih, coğrafya, vatandaşlık ve güncel bilgiler ön plana çıkar. Düzenli deneme çözüp <a href=\"/puan-hesaplama/kpss-lisans\">KPSS puan hesaplama aracıyla</a> netlerinizi tahmini puana çevirerek hedef kadronuza olan uzaklığınızı takip edebilirsiniz."
+        }
+      ],
+      "nextExamDescription": "GY-GK, Eğitim Bilimleri ve ÖABT oturumları için ayrı ayrı geri sayım."
+    },
+    {
+      "slug": "kpss-onlisans",
+      "name": "KPSS Önlisans",
+      "h1": "2026 KPSS Önlisans'a Kaç Gün Kaldı?",
+      "heroDescription": "2 yılda bir yapılan KPSS Önlisans sayacı.",
+      "targetDate": "2026-10-04T07:15:00.000Z",
+      "countdownLabel": "KPSS Önlisans 2026",
+      "isEstimated": false,
+      "detailCta": "KPSS Detayları",
+      "featureTitle": "KPSS Önlisans İçin Geri Sayım ve Hazırlık",
+      "featureDescription": "İki yılda bir yapılan KPSS Önlisans sınavına kaç gün kaldığını takip edin.",
+      "guideTitle": "KPSS Önlisans Kaç Gün Kaldı? Bilinmesi Gerekenler",
+      "guideParagraphs": [
+        {
+          "heading": "KPSS Önlisans Ne Sıklıkla Yapılır?",
+          "body": "KPSS Önlisans, lisans ve ortaöğretim oturumlarının aksine her yıl değil, iki yılda bir yapılır. Bu nedenle ön lisans mezunu adaylar için doğru sınav döneminin kaçırılmaması büyük önem taşır."
+        },
+        {
+          "heading": "Sınav İçeriği Nasıldır?",
+          "body": "Sınav, Genel Yetenek ve Genel Kültür testlerinden oluşur; içerik olarak lisans oturumuna benzer ancak soru sayısı ve zorluk seviyesi ön lisans adaylarına göre düzenlenmiştir."
+        },
+        {
+          "heading": "Hazırlık İçin Öneriler",
+          "body": "İki yılda bir yapılması nedeniyle uzun bir hazırlık süresi planlamak mümkündür. Güncel kadro ilanlarını takip ederek hangi puan türünün (P93, P94 vb.) sizin için geçerli olduğunu önceden netleştirmeniz, çalışma stratejinizi doğru kurmanıza yardımcı olur."
+        }
+      ],
+      "nextExamDescription": "İki yılda bir yapılan sınava kalan süreyi gösteren canlı sayaç."
+    },
+    {
+      "slug": "kpss-ortaogretim",
+      "name": "KPSS Ortaöğretim",
+      "h1": "2026 KPSS Ortaöğretim'e Kaç Gün Kaldı?",
+      "heroDescription": "2 yılda bir yapılan KPSS Ortaöğretim sayacı.",
+      "targetDate": "2026-10-25T07:15:00.000Z",
+      "countdownLabel": "KPSS Ortaöğretim 2026",
+      "isEstimated": false,
+      "detailCta": "KPSS Detayları",
+      "featureTitle": "KPSS Ortaöğretim İçin Geri Sayım ve Hazırlık",
+      "featureDescription": "İki yılda bir yapılan KPSS Ortaöğretim sınavına kaç gün kaldığını takip edin.",
+      "guideTitle": "KPSS Ortaöğretim Kaç Gün Kaldı? Bilinmesi Gerekenler",
+      "guideParagraphs": [
+        {
+          "heading": "KPSS Ortaöğretim Kimler İçin Yapılır?",
+          "body": "KPSS Ortaöğretim, lise mezunu olup ön lisans veya lisans diploması bulunmayan adayların kamu kurumlarındaki ortaöğretim düzeyi kadrolara başvurabilmesi için iki yılda bir düzenlenen bir sınavdır."
+        },
+        {
+          "heading": "Sınav Kapsamı Nedir?",
+          "body": "Genel Yetenek ve Genel Kültür testlerinden oluşan sınav, lisans ve ön lisans oturumlarıyla aynı genel mantıkla işler; ancak adayların eğitim seviyesine uygun bir zorluk derecesinde hazırlanır."
+        },
+        {
+          "heading": "Hazırlanırken Neye Dikkat Edilmeli?",
+          "body": "Sınavın iki yılda bir yapılması, hazırlık takviminizi kaçırmamanız açısından kritik bir uyarı niteliğindedir. Hedeflediğiniz kadronun puan türünü (P94 ve benzerleri) önceden öğrenip, deneme sınavlarıyla seviyenizi düzenli olarak ölçmeniz tavsiye edilir."
+        }
+      ],
+      "nextExamDescription": "İki yılda bir yapılan sınava kalan süreyi gösteren canlı sayaç."
+    },
+    {
+      "slug": "dgs",
+      "name": "DGS",
+      "h1": "2026 DGS'ye Kaç Gün Kaldı?",
+      "heroDescription": "Dikey Geçiş Sınavı sayacı.",
+      "targetDate": "2026-07-19T07:15:00.000Z",
+      "countdownLabel": "DGS 2026",
+      "isEstimated": false,
+      "detailCta": "DGS Detayları",
+      "featureTitle": "DGS Adayları İçin Sayaç ve Puan Hesaplama",
+      "featureDescription": "Ön lisanstan lisansa geçiş sınavına kaç gün kaldığını görün, DGS puanınızı hesaplayın.",
+      "guideTitle": "DGS Kaç Gün Kaldı? Dikey Geçiş Sınavı Rehberi",
+      "guideParagraphs": [
+        {
+          "heading": "DGS Nedir?",
+          "body": "DGS (Dikey Geçiş Sınavı), ön lisans programından mezun olan veya mezun olacak adayların dört yıllık lisans programlarına geçiş yapabilmesi için ÖSYM tarafından yılda bir kez düzenlenen merkezi bir sınavdır."
+        },
+        {
+          "heading": "Sınav Yapısı Nasıldır?",
+          "body": "DGS, sayısal ve sözel bölümlerden oluşan tek oturumluk bir testtir. Adayın sınav puanına ek olarak ön lisans diploma notu (ÖBP) da DGS yerleştirme puanına dahil edilir, bu nedenle ön lisans dönemindeki başarı da önemlidir."
+        },
+        {
+          "heading": "DGS Puanı Nasıl Hesaplanır?",
+          "body": "<a href=\"/puan-hesaplama/dgs\">DGS puan hesaplama aracımıza</a> sayısal ve sözel netlerinizi ve ön lisans diploma notunuzu girerek DGS-SAY, DGS-SÖZ ve DGS-EA puan türlerinde tahmini sonucunuzu görebilirsiniz."
+        }
+      ],
+      "nextExamDescription": "DGS sınavına kalan süreyi gösteren canlı sayaç."
+    },
+    {
+      "slug": "ales",
+      "name": "ALES",
+      "h1": "2026 ALES/2'ye Kaç Gün Kaldı?",
+      "heroDescription": "Akademik Personel ve Lisansüstü Eğitimi Giriş Sınavı.",
+      "targetDate": "2026-07-26T07:15:00.000Z",
+      "countdownLabel": "ALES/2 2026",
+      "isEstimated": false,
+      "detailCta": "ALES Detayları",
+      "featureTitle": "ALES Adayları İçin Sayaç ve Puan Hesaplama",
+      "featureDescription": "Akademik kadro ve lisansüstü eğitim için ALES'e kaç gün kaldığını takip edin.",
+      "guideTitle": "ALES Kaç Gün Kaldı? Akademik Personel Sınavı Rehberi",
+      "guideParagraphs": [
+        {
+          "heading": "ALES Kimler İçin Gereklidir?",
+          "body": "ALES (Akademik Personel ve Lisansüstü Eğitimi Giriş Sınavı), üniversitelerde araştırma görevlisi/öğretim görevlisi kadrolarına başvuracak adaylar ile yüksek lisans veya doktora programlarına başvuracak adaylar için gerekli olan bir sınavdır."
+        },
+        {
+          "heading": "ALES Yılda Kaç Kez Yapılır?",
+          "body": "ALES, ÖSYM tarafından yılda iki kez (genellikle nisan ve kasım aylarında) uygulanır. Adaylar sayısal, sözel veya eşit ağırlık puan türlerinden başvurdukları program ya da kadroya uygun olanı esas alır."
+        },
+        {
+          "heading": "ALES Puanı Nasıl Hesaplanır?",
+          "body": "Sayısal ve sözel netleriniz <a href=\"/puan-hesaplama/ales\">ALES puan hesaplama aracımızda</a> ilgili ağırlıklarla çarpılarak ALES-SAY, ALES-SÖZ ve ALES-EA puan türlerinde tahmini sonucunuzu anında hesaplar."
+        }
+      ],
+      "nextExamDescription": "Yılın bir sonraki ALES oturumuna kalan süreyi gösteren canlı sayaç."
+    },
+    {
+      "slug": "yds",
+      "name": "YDS",
+      "h1": "2026 YDS/2'ye Kaç Gün Kaldı?",
+      "heroDescription": "Yabancı Dil Bilgisi Seviye Tespit Sınavı.",
+      "targetDate": "2026-11-22T07:15:00.000Z",
+      "countdownLabel": "YDS/2 2026",
+      "isEstimated": false,
+      "detailCta": "YDS Detayları",
+      "featureTitle": "YDS Adayları İçin Geri Sayım",
+      "featureDescription": "Yabancı dil yeterliliğinizi belgeleyecek YDS'ye kaç gün kaldığını takip edin.",
+      "guideTitle": "YDS Kaç Gün Kaldı? Yabancı Dil Sınavı Rehberi",
+      "guideParagraphs": [
+        {
+          "heading": "YDS Nedir?",
+          "body": "YDS (Yabancı Dil Bilgisi Seviye Tespit Sınavı), kamu personeli ve akademisyenlerin yabancı dil yeterliliğini ölçmek amacıyla ÖSYM tarafından düzenlenen, dil bilgisi, kelime bilgisi ve okuduğunu anlama sorularından oluşan bir sınavdır."
+        },
+        {
+          "heading": "YDS Hangi Dillerde Yapılır?",
+          "body": "Sınav İngilizce, Almanca, Fransızca gibi farklı dillerde, genellikle yılda iki kez (ilkbahar ve sonbahar dönemlerinde) uygulanır; adaylar başvuru sırasında hangi dilden sınava gireceklerini seçer."
+        },
+        {
+          "heading": "YDS Sonucu Nerelerde Kullanılır?",
+          "body": "YDS puanı; akademik kadrolara atanma, yabancı dil tazminatı, lisansüstü eğitime başvuru ve bazı kamu kurumlarındaki görevlendirmeler için resmi bir yabancı dil yeterlilik belgesi olarak kabul edilir."
+        }
+      ],
+      "nextExamDescription": "Bir sonraki YDS oturumuna kalan süreyi gösteren canlı sayaç."
+    },
+    {
+      "slug": "msu",
+      "name": "MSÜ",
+      "h1": "2027 MSÜ'ye Kaç Gün Kaldı?",
+      "heroDescription": "Milli Savunma Üniversitesi Askeri Öğrenci Aday Belirleme Sınavı.",
+      "targetDate": "2027-03-28T07:15:00.000Z",
+      "countdownLabel": "MSÜ 2027",
+      "isEstimated": true,
+      "detailCta": "MSÜ Detayları",
+      "featureTitle": "MSÜ Adaylığı İçin Geri Sayım",
+      "featureDescription": "Milli Savunma Üniversitesi askeri öğrenci adaylık sınavına kaç gün kaldığını takip edin.",
+      "guideTitle": "MSÜ Kaç Gün Kaldı? Askeri Öğrenci Aday Belirleme Sınavı",
+      "guideParagraphs": [
+        {
+          "heading": "MSÜ Nedir?",
+          "body": "MSÜ (Milli Savunma Üniversitesi) Askeri Öğrenci Aday Belirleme Sınavı, harp okulları ve astsubay meslek yüksekokullarına girmek isteyen adayların girdiği, YKS ile benzer içerikte ancak ayrı bir tarihte uygulanan merkezi bir sınavdır."
+        },
+        {
+          "heading": "MSÜ ile YKS Arasındaki Benzerlikler ve Farklar",
+          "body": "Her iki sınav da TYT ve AYT tarzı sayısal, sözel ve eşit ağırlık sorularını içerir; ancak MSÜ'ye girecek adayların ayrıca fiziki yeterlilik ve mülakat aşamalarından da geçmesi gerekir. Akademik sınav başarısı tek başlı başına yeterli değildir."
+        },
+        {
+          "heading": "MSÜ'ye Nasıl Hazırlanılır?",
+          "body": "Akademik hazırlığın yanı sıra fiziki yeterlilik testlerine de erken başlamak önemlidir. <a href=\"/puan-hesaplama/msu\">MSÜ puan hesaplama aracımızla</a> netlerinizi tahmini puana çevirip akademik hazırlığınızın seviyesini ölçebilirsiniz."
+        }
+      ],
+      "nextExamDescription": "MSÜ sınavına kalan süreyi gösteren canlı sayaç."
+    },
+    {
+      "slug": "tus",
+      "name": "TUS",
+      "h1": "2026 TUS/2'ye Kaç Gün Kaldı?",
+      "heroDescription": "Tıpta Uzmanlık Eğitimi Giriş Sınavı.",
+      "targetDate": "2026-08-23T07:15:00.000Z",
+      "countdownLabel": "TUS/2 2026",
+      "isEstimated": false,
+      "detailCta": "TUS Detayları",
+      "featureTitle": "TUS Adayları İçin Geri Sayım",
+      "featureDescription": "Tıpta uzmanlık eğitimine giriş sınavı TUS'a kaç gün kaldığını takip edin.",
+      "guideTitle": "TUS Kaç Gün Kaldı? Tıpta Uzmanlık Sınavı Rehberi",
+      "guideParagraphs": [
+        {
+          "heading": "TUS Nedir?",
+          "body": "TUS (Tıpta Uzmanlık Eğitimi Giriş Sınavı), tıp fakültesi mezunlarının uzmanlık eğitimi alabilecekleri klinik branşlara yerleşebilmesi için ÖSYM tarafından yılda iki kez düzenlenen merkezi bir sınavdır."
+        },
+        {
+          "heading": "TUS'un İçeriği Nasıldır?",
+          "body": "Sınav, temel tıp bilimleri ve klinik tıp bilimleri olmak üzere iki bölümden oluşur; adaylar tercih ettikleri uzmanlık alanına göre bu iki puan türünden birini veya ikisini birlikte değerlendirmeye sokabilir."
+        },
+        {
+          "heading": "TUS Sonrası Süreç Nasıl İşler?",
+          "body": "TUS puanınız ve tercihleriniz, ÖSYM'nin yaptığı merkezi yerleştirme ile klinik branşlara dağıtılır. Yüksek puan ve doğru tercih stratejisi, istenen branşa yerleşme şansını doğrudan etkiler."
+        }
+      ],
+      "nextExamDescription": "Bir sonraki TUS oturumuna kalan süreyi gösteren canlı sayaç."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "YKS kaç gün kaldı?",
+      "answer": "Sayfanın en üstündeki canlı sayaç, YKS'ye kalan gün, saat, dakika ve saniyeyi anlık olarak gösterir. 2027 YKS için TYT, AYT ve YDT oturumlarının tarihleri ÖSYM tarafından açıklandığında sayaç otomatik olarak güncellenir."
+    },
+    {
+      "question": "2027 YKS ne zaman yapılacak?",
+      "answer": "ÖSYM, YKS tarihlerini genellikle sınav yılının başında yayımladığı YKS kılavuzuyla açıklar. Sitemizdeki sayaç, resmi takvime göre güncellenen tahmini ve kesinleşen tarihleri aynı anda yansıtır; kesin tarih açıklanana kadar gösterilen değer önceki yılların takvimine dayalı tahmini bir tarihtir."
+    },
+    {
+      "question": "TYT ve AYT aynı gün mü yapılır?",
+      "answer": "Hayır. TYT cumartesi günü, AYT ise ertesi gün pazar günü yapılır. Yabancı Dil Testi (YDT) de AYT ile aynı pazar günü, öğleden sonraki oturumda uygulanır."
+    },
+    {
+      "question": "LGS kaç gün kaldı, ne zaman yapılır?",
+      "answer": "LGS (Liselere Geçiş Sistemi) her yıl haziran ayının ilk haftasında, tek oturumda ve tek günde yapılır. Güncel geri sayımı /sayac sayfasındaki LGS sayacından takip edebilirsiniz."
+    },
+    {
+      "question": "KPSS Lisans ne zaman yapılır?",
+      "answer": "KPSS Lisans Genel Yetenek-Genel Kültür oturumu her yıl temmuz ayında yapılır; eğitim bilimleri ve alan bilgisi oturumları ise takip eden haftalarda ayrı tarihlerde uygulanır. ÖABT gibi alan sınavları farklı bir tarihte gerçekleşir."
+    },
+    {
+      "question": "DGS ne zaman yapılır?",
+      "answer": "DGS (Dikey Geçiş Sınavı) ön lisans öğrencilerinin lisans programlarına geçişi için her yıl temmuz ayında, tek oturumda yapılan merkezi bir sınavdır."
+    },
+    {
+      "question": "ALES yılda kaç kez yapılır?",
+      "answer": "ALES yılda iki kez, genellikle nisan ve kasım aylarında yapılır. Akademik kadroya başvuracaklar ve lisansüstü eğitime geçmek isteyen adaylar bu iki oturumdan birine girebilir."
+    },
+    {
+      "question": "Puanım otomatik olarak nasıl hesaplanır?",
+      "answer": "Sitemizdeki <a href=\"/puan-hesaplama/yks\">puan hesaplama araçlarına</a> doğru ve yanlış sayılarınızı girdiğinizde, ÖSYM/MEB kılavuzlarındaki katsayılara dayalı tahmini puanınız anında hesaplanır. Bu değerler resmi sonuç açıklanana kadar size yaklaşık bir öngörü sağlar."
+    },
+    {
+      "question": "Sayaçtaki tarihler kesin mi, tahmini mi?",
+      "answer": "ÖSYM veya MEB resmi kılavuzunda tarih henüz ilan edilmediyse sayaç, önceki yılların takvim düzenine göre hesaplanan tahmini bir tarih gösterir ve bu durum sayaç üzerinde belirtilir. Resmi kılavuz yayımlandığında tarih otomatik olarak güncellenir."
+    },
+    {
+      "question": "Sınav tarihleri her yıl değişir mi?",
+      "answer": "Sınav tarihleri ÖSYM ve MEB tarafından her yıl yeniden belirlenir, ancak genellikle aynı ay ve benzer hafta aralığında sabitlenir. Bu yüzden sitemizdeki tahmini tarihler, kılavuz yayımlanana kadar yüksek doğrulukla yol gösterici olur."
+    }
+  ],
+  "settings": {
+    "homepage_seo_title": "YKS Kaç Gün Kaldı? | 2027 YKS, TYT, AYT Canlı Sınav Sayacı",
+    "homepage_seo_description": "YKS kaç gün kaldı? 2027 YKS, TYT, AYT, LGS, KPSS, DGS ve ALES sınavlarına kalan süreyi canlı sayaçla anında takip edin, puan hesaplayın ve hazırlık rehberlerini inceleyin."
+  },
+  "pages": {
+    "hakkimizda": {
+      "title": "Hakkımızda",
+      "description": "YKS Kaç Gün Kaldı, YKS, TYT, AYT, LGS, KPSS, DGS, ALES ve diğer merkezi sınavlar için canlı geri sayım, puan hesaplama ve hazırlık rehberleri sunan bağımsız bir platformdur.",
+      "contentHtml": "<p>YKS Kaç Gün Kaldı, adaylarının sınav sürecini daha planlı ve daha az stresli geçirmesine yardımcı olmak amacıyla kurulmuş bağımsız bir bilgilendirme platformudur. Sitemizde YKS (TYT, AYT, YDT), LGS, KPSS (Lisans, Önlisans, Ortaöğretim), DGS, ALES, YDS, MSÜ ve TUS gibi Türkiye'deki başlıca merkezi sınavlar için canlı geri sayım sayaçları, tahmini puan hesaplama araçları ve konu dağılımı analizleri bulabilirsiniz.</p><h2>Amacımız Nedir?</h2><p>Sınav tarihini takip etmek, hangi konudan kaç soru geldiğini bilmek ve elindeki netlerle tahmini puanını görmek, hazırlık sürecinin en pratik ama zaman alan parçalarıdır. Biz bu bilgileri tek bir yerde, sade ve hızlı bir arayüzle sunarak adayların zamanını kitap ve soru çözmeye ayırmasını hedefliyoruz.</p><h2>Sunduğumuz Araçlar</h2><ul><li>Tüm önemli sınavlar için saniye saniye güncellenen canlı geri sayım sayaçları.</li><li>ÖSYM ve MEB kılavuzlarındaki katsayılara dayalı tahmini puan hesaplama araçları.</li><li>Yıllara göre konu ve soru dağılımı analizleri.</li><li>Çalışma teknikleri, motivasyon ve tercih dönemine dair uzman rehberlik içerikleri.</li></ul><h2>Önemli Not</h2><p>Sitemizdeki tüm tarihler ve puan hesaplamaları, ÖSYM/MEB tarafından yayımlanan kılavuzlara dayanan tahmini değerlerdir; resmi ve bağlayıcı bilgi için her zaman <a href=\"https://www.osym.gov.tr\" target=\"_blank\" rel=\"noopener noreferrer\">ÖSYM</a> ve <a href=\"https://www.meb.gov.tr\" target=\"_blank\" rel=\"noopener noreferrer\">MEB</a>'in resmi kaynaklarını esas almanızı öneririz.</p>"
+    },
+    "iletisim": {
+      "title": "İletişim",
+      "description": "Soru, öneri veya iş birliği talepleriniz için YKS Kaç Gün Kaldı ekibiyle iletişime geçin.",
+      "contentHtml": "<p>Görüş, öneri, hata bildirimi veya iş birliği talepleriniz için bizimle aşağıdaki kanaldan iletişime geçebilirsiniz.</p><h2>E-posta</h2><p>Genel sorularınız için: <a href=\"mailto:admin@ykskacgunkaldi.com\">admin@ykskacgunkaldi.com</a></p><h2>Hata ve Tarih Güncellemesi Bildirimi</h2><p>Sitede yer alan bir sınav tarihinin veya katsayının güncel kılavuzla uyuşmadığını fark ederseniz, lütfen kaynağıyla birlikte bize e-posta ile bildirin; en kısa sürede inceleyip güncelleriz.</p><h2>Yanıt Süresi</h2><p>Mesajlarınızı genellikle 2-3 iş günü içinde yanıtlamaya çalışıyoruz. Yoğun sınav dönemlerinde bu süre uzayabilir.</p>"
+    },
+    "gizlilik-politikasi": {
+      "title": "Gizlilik Politikası",
+      "description": "YKS Kaç Gün Kaldı platformunda kişisel verilerin işlenmesi, çerez kullanımı ve üçüncü taraf reklam/analiz hizmetleri hakkında bilgi.",
+      "contentHtml": "<p>Bu gizlilik politikası, ykskacgunkaldi.com ('Site') ziyaretçilerinin kişisel verilerinin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar. Siteyi kullanarak bu politikada açıklanan uygulamaları kabul etmiş olursunuz.</p><h2>Topladığımız Bilgiler</h2><p>Sitemiz, puan hesaplama araçlarına girdiğiniz net sayıları gibi verileri sunucularımıza kaydetmez; bu hesaplamalar tarayıcınızda anlık olarak yapılır. Site kullanımı sırasında tarayıcınız tarafından otomatik olarak iletilen IP adresi, tarayıcı türü, ziyaret edilen sayfalar ve oturum süresi gibi standart teknik veriler, performans ve güvenlik amacıyla analiz araçları tarafından toplanabilir.</p><h2>Çerezler (Cookies)</h2><p>Sitemiz; tema tercihinizi (açık/koyu mod) hatırlamak, site kullanım istatistiklerini ölçmek ve reklam hizmetlerini yönetmek amacıyla çerezler kullanabilir. Tarayıcı ayarlarınızdan çerezleri devre dışı bırakabilir veya silebilirsiniz; bu durumda sitenin bazı özellikleri beklendiği gibi çalışmayabilir.</p><h2>Üçüncü Taraf Hizmetler</h2><p>Sitemizde, ziyaretçi davranışlarını anlamak için Google Analytics benzeri analiz hizmetleri ve site içeriğini ücretsiz sunabilmek için Google AdSense gibi reklam ağları kullanılabilir. Bu hizmet sağlayıcılar, kendi gizlilik politikaları kapsamında çerezler aracılığıyla veri toplayabilir. Google'ın reklamcılıkta kullandığı verilerle ilgili tercihlerinizi <a href=\"https://adssettings.google.com\" target=\"_blank\" rel=\"noopener noreferrer\">Google Reklam Ayarları</a> sayfasından yönetebilirsiniz.</p><h2>Kişisel Verilerin Korunması Kanunu (KVKK)</h2><p>6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında, kişisel verilerinizin işlenmesine ilişkin haklarınız bulunmaktadır. Verilerinizin işlenmesiyle ilgili bilgi talebi, düzeltme veya silme talebiniz için <a href=\"/iletisim\">iletişim sayfamızdan</a> bize ulaşabilirsiniz.</p><h2>Çocukların Gizliliği</h2><p>Sitemiz LGS gibi sınavlara hazırlanan genç kullanıcılar tarafından da ziyaret edilebilmektedir. Reşit olmayan kullanıcılardan bilerek hassas kişisel veri talep etmiyoruz ve veli/vasilerin denetimini önemsiyoruz.</p><h2>Politika Değişiklikleri</h2><p>Bu gizlilik politikası zaman zaman güncellenebilir. Güncel sürüm her zaman bu sayfada yayımlanır.</p>"
+    },
+    "kullanim-kosullari": {
+      "title": "Kullanım Koşulları",
+      "description": "YKS Kaç Gün Kaldı sitesini kullanmadan önce bilgi doğruluğu, sorumluluk sınırları ve içerik hakları hakkında okumanız gereken koşullar.",
+      "contentHtml": "<p>ykskacgunkaldi.com ('Site') adresine erişerek ve siteyi kullanarak aşağıdaki kullanım koşullarını kabul etmiş olursunuz. Bu koşulları kabul etmiyorsanız lütfen siteyi kullanmayınız.</p><h2>Bilgilerin Niteliği</h2><p>Sitemizde yer alan sınav tarihleri, geri sayım sayaçları, puan hesaplama sonuçları ve konu dağılımı verileri; ÖSYM ve MEB tarafından yayımlanan kılavuz ve istatistiklere dayanılarak hazırlanan <strong>tahmini</strong> bilgilerdir. Bu bilgiler resmi ve bağlayıcı nitelikte değildir. Kesin ve güncel bilgi için her zaman ÖSYM ve MEB'in resmi kaynaklarına başvurmanız gerekir.</p><h2>Sorumluluğun Sınırlandırılması</h2><p>Sitemizdeki tahmini puan hesaplama sonuçları ile gerçek sınav sonuçları arasında farklılıklar olabilir. Bu farklılıklardan veya sitedeki bilgilere dayanılarak alınan kararlardan (tercih, başvuru vb.) doğabilecek doğrudan veya dolaylı zararlardan Site sorumlu tutulamaz.</p><h2>Fikri Mülkiyet</h2><p>Sitede yayımlanan rehber, makale ve görsel içeriklerin telif hakları Site'ye aittir. İçeriklerin kaynak gösterilmeden ticari amaçla çoğaltılması veya dağıtılması yasaktır.</p><h2>Üçüncü Taraf Bağlantılar</h2><p>Sitemiz, ÖSYM ve MEB gibi resmi kurumların sayfalarına bağlantılar içerebilir. Bu üçüncü taraf sitelerin içeriğinden Site sorumlu değildir.</p><h2>Değişiklikler</h2><p>Site, bu kullanım koşullarını önceden bildirimde bulunmaksızın güncelleme hakkını saklı tutar. Güncel koşullar her zaman bu sayfada yer alır.</p>"
+    },
+    "rehberler": {
+      "title": "Rehberler",
+      "description": "YKS, TYT, AYT, LGS, KPSS, DGS ve ALES adayları için çalışma teknikleri, motivasyon, tercih dönemi ve puan hesaplama rehberlerine tek sayfadan ulaşın.",
+      "contentHtml": "<p>Sınav hazırlık sürecinde ihtiyaç duyabileceğiniz tüm rehber içeriklerini, araçları ve sayaçları aşağıdan kategorilere göre bulabilirsiniz.</p><h2>Çalışma Teknikleri ve Verimlilik</h2><p><a href=\"/blog\">Blog sayfamızda</a> çalışma programı hazırlama, tekrar teknikleri, deneme analizi ve sınav kaygısıyla baş etme gibi konularda uzman yazarlardan hazırlanmış rehberler bulabilirsiniz.</p><h2>Puan Hesaplama Araçları</h2><p><a href=\"/puan-hesaplama/yks\">YKS</a>, <a href=\"/puan-hesaplama/lgs\">LGS</a>, <a href=\"/puan-hesaplama/kpss-lisans\">KPSS</a>, <a href=\"/puan-hesaplama/dgs\">DGS</a> ve <a href=\"/puan-hesaplama/ales\">ALES</a> için netlerinizi girip tahmini puanınızı saniyeler içinde görün.</p><h2>Sınav Sayaçları</h2><p><a href=\"/sayac\">Sayaç sayfamızdan</a> tüm sınavlar için canlı geri sayımı, <a href=\"/sinavlar\">sınavlar sayfamızdan</a> ise Türkiye'deki tüm önemli sınavların genel bilgilerini inceleyebilirsiniz.</p><h2>Konu Dağılımı</h2><p><a href=\"/konu-dagilimi\">Konu dağılımı sayfamızda</a>, geçmiş yıllarda hangi dersten kaç soru geldiğini inceleyerek çalışma planınızı en çok soru gelen konulara göre şekillendirebilirsiniz.</p>"
+    }
+  },
+  "posts": [
+    {
+      "slug": "yks-tercih-donemi-rehberi",
+      "title": "YKS Tercih Dönemi: Üniversite ve Bölüm Seçerken Dikkat Edilmesi Gerekenler",
+      "category": "Üniversite Tercihleri",
+      "publishedAt": "2026-06-22T09:00:00Z",
+      "excerpt": "YKS sınavları bittiğine göre sıra tercih listesine geldi. Taban puan, kontenjan ve şehir tercihini doğru dengelemek için bilmeniz gereken her şey bu rehberde.",
+      "authorName": "Eğitim Danışmanı",
+      "tags": ["YKS", "Tercih", "Üniversite", "Taban Puan"],
+      "contentHtml": "\n<p>TYT ve AYT oturumları geride kaldı, şimdi binlerce adayın aklındaki soru aynı: tercih listesi nasıl hazırlanmalı? Sınav sürecinde harcanan onca emek, doğru bir tercih stratejisi kurulmazsa istenmeyen bir bölümde ya da şehirde sonuçlanabilir. Bu yüzden tercih dönemi, sınav kadar ciddiye alınması gereken bir aşamadır. Aşağıdaki başlıklar, YKS tercih listesi oluştururken izlemeniz gereken yol haritasını özetliyor.</p>\n\n<h2>Taban Puan ve Başarı Sıralamasını Doğru Okumak</h2>\n<p>Tercih kılavuzunda yer alan taban puanlar her yıl değişkenlik gösterir; bir bölümün geçen yılki taban puanı bu yıl için kesin bir garanti değildir. Bunun yerine başarı sıralamasına bakmak çok daha güvenilir bir yöntemdir, çünkü sıralama o yılki kontenjan ve katılımcı sayısından bağımsız olarak bölümün gerçek rekabet seviyesini gösterir. Son üç yılın sıralama verilerini karşılaştırarak bir bölümün yükselen mi yoksa düşen bir trendde mi olduğunu görebilirsiniz.</p>\n\n<h2>Şehir mi, Bölüm mü? Önceliklendirme Yapın</h2>\n<p>Pek çok öğrenci tercih listesi hazırlarken şehir ve bölüm arasında kararsız kalır. Burada doğru yaklaşım, önce kariyer hedefinizi netleştirmektir. Eğer net bir mesleki hedefiniz varsa bölüm önceliğiniz olmalı; sosyal hayat, aile yakınlığı veya bütçe gibi faktörler ön plandaysa şehir tercihini de hesaba katmalısınız. Önemli olan, listeyi rastgele değil bilinçli bir öncelik sıralamasıyla doldurmaktır.</p>\n\n<h2>Kontenjan ve Doluluk Oranlarına Dikkat Edin</h2>\n<p>Bir bölümün kontenjanı arttıkça taban puanı genellikle düşer, kontenjan azaldıkça rekabet sertleşir. Kılavuzdaki kontenjan değişimlerini incelemek, o bölüme olan talebi anlamanıza yardımcı olur. Ayrıca yeni açılan bölümlerde geçmiş veri bulunmadığı için tahmini taban puan hesaplamaları daha temkinli yapılmalıdır.</p>\n\n<h2>Sandviç Tekniği ile Tercih Sırası</h2>\n<p>Tercih listesi sıralarken kullanılan en bilinen yöntem sandviç tekniğidir. Listenin başına gerçekçi ama biraz hayalinizdeki, ortasına puanınıza denk gelen, sonuna ise kesin kazanacağınızdan emin olduğunuz garanti bölümleri yerleştirin. Böylece hem şansınızı zorlar hem de açıkta kalma riskinizi azaltırsınız.</p>\n\n<h2>Üniversitenin Akademik Kadrosunu ve Olanaklarını Araştırın</h2>\n<p>Sadece puan ve sıralama verilerine bakmak tercih sürecinin yalnızca bir kısmıdır. Tercih etmeyi düşündüğünüz bölümün staj imkânları, akademik kadrosu, laboratuvar ve kütüphane olanakları, mezunlarının iş bulma oranı gibi detaylar da uzun vadeli memnuniyetinizi belirler. Üniversitelerin kendi web sitelerinden bölüm tanıtımlarını okumak, mezun öğrencilerin deneyimlerini araştırmak ve mümkünse kampüs ziyareti yapmak, sadece bir puana göre değil bütün bir tabloya göre karar vermenizi sağlar. Burs ve yurt imkânlarını da bu araştırmaya dahil etmek, özellikle şehir dışına gidecek adaylar için bütçe planlamasını kolaylaştırır.</p>\n\n<h2>Tercih Robotlarına Tam Güvenmeyin</h2>\n<p>İnternet üzerinde yaygın olarak kullanılan tercih robotları, geçmiş yıl verilerine dayanarak öneriler sunar ve genel bir yön bulmak için faydalı olabilir. Ancak bu araçlar her zaman güncel kontenjan değişikliklerini veya yeni açılan bölümleri tam yansıtmayabilir. Robotun önerdiği listeyi olduğu gibi kabul etmek yerine, kendi araştırmanızla karşılaştırarak son kontrolü siz yapmalısınız.</p>\n\n<blockquote>Tercih listesi bir kerelik şans oyunu değildir; doğru veriyle desteklenen bir stratejidir. Acele etmeden, kılavuzu satır satır inceleyerek karar verin.</blockquote>\n\n<p>Son olarak, tercih döneminde puanınızı ve sıralamanızı net bir şekilde bilmek işin en kritik parçasıdır. Sitemizdeki <a href=\"/puan-hesaplama/yks\">YKS puan hesaplama aracını</a> kullanarak güncel netlerinizle tahmini puanınızı görebilir, listenizi bu verilere göre şekillendirebilirsiniz. Unutmayın, iyi hazırlanmış bir tercih listesi, sınavda harcadığınız emeğin karşılığını almanın son ve en önemli adımıdır.</p>\n"
+    },
+    {
+      "slug": "motivasyon-kaybi-ile-bas-etme",
+      "title": "Sınav Sürecinde Motivasyon Kaybıyla Nasıl Baş Edilir?",
+      "category": "Motivasyon",
+      "publishedAt": "2026-06-21T09:00:00Z",
+      "excerpt": "Çalışma isteğiniz bir anda kayboldu mu? Uzun sınav maratonunda motivasyon düşüşünün nedenlerini ve yeniden enerji bulmanın yollarını anlatıyoruz.",
+      "authorName": "Eğitim Koçu",
+      "tags": ["Motivasyon", "Sınav Süreci", "Psikoloji"],
+      "contentHtml": "\n<p>Sınava hazırlık sürecinin en doğal ama en sinsi düşmanlarından biri motivasyon kaybıdır. Aylarca düzenli çalışan bir öğrenci bile bir sabah uyanıp kitaplarına bakmak istemeyebilir. Bu durum tembellik değil, zihinsel ve duygusal yorgunluğun bir göstergesidir. Önemli olan bu düşüşü fark edip doğru şekilde yönetmektir.</p>\n\n<h2>Motivasyon Neden Düşer?</h2>\n<p>Uzun süreli çalışma temposu, kısa vadeli sonuç görememe, sürekli karşılaştırma yapma ve dinlenmeden çalışma motivasyon kaybının en sık görülen nedenleridir. Özellikle deneme sonuçlarının beklenen şekilde ilerlememesi, öğrencide ben bu işi yapamıyorum düşüncesini tetikleyebilir. Bu duygu, hiç önlem alınmazsa çalışma isteğini tamamen söndürebilir.</p>\n\n<h2>Küçük Hedeflere Bölün</h2>\n<p>Büyük ve uzak hedefler, ulaşılması güç görünen dağlar gibi hissettirir. Bunun yerine günlük ve haftalık küçük hedefler belirleyin. Bugün sadece bir konuyu bitirmek, bu hafta yirmi soru çözmek gibi ulaşılabilir hedefler, her tamamlandığında küçük bir başarı hissi yaratır ve bu his motivasyonu yeniden besler.</p>\n\n<h2>Kendinizi Başkalarıyla Kıyaslamayın</h2>\n<p>Her öğrencinin öğrenme hızı, başlangıç seviyesi ve koşulları farklıdır. Arkadaşınızın sizden daha hızlı ilerlediğini görmek cesaretinizi kırabilir, ama bu kıyaslama gerçekçi değildir. Kendi gelişiminizi yalnızca kendi geçmiş performansınızla karşılaştırmak, daha sağlıklı ve sürdürülebilir bir motivasyon kaynağıdır.</p>\n\n<h2>Dinlenmeyi Plana Dahil Edin</h2>\n<p>Sürekli çalışmak, paradoksal olarak verimliliği düşürür. Haftada en az yarım gün kendinize ayırdığınız, ders düşünmediğiniz bir zaman dilimi olmalı. Kısa yürüyüşler, sevdiğiniz bir hobiyle vakit geçirmek veya arkadaşlarla sohbet etmek, zihni dinlendirerek geri döndüğünüzde daha güçlü çalışmanızı sağlar.</p>\n\n<h2>Neden Önemini Hatırlamak</h2>\n<p>Motivasyon kaybının en etkili çözümlerinden biri, sınava neden hazırlandığınızı yeniden hatırlamaktır. Hangi bölümü, hangi şehri, hangi geleceği hayal ettiğinizi yazılı olarak masanızın önüne asmak, zor günlerde size çapa olur. Hedefinizi unuttuğunuzda günlük çalışma anlamsız bir tekrar haline gelir; oysa hedefi canlı tuttuğunuzda her soru çözümü o hedefe doğru atılan bir adım gibi hissettirir. Bazı öğrenciler için hedef üniversitenin kampüsünü ziyaret etmek, bazıları için ise mezun olmuş bir ablanın veya abinin deneyimini dinlemek bu motivasyonu yeniden tetikleyebilir.</p>\n\n<ul>\n<li>Çalışma ortamınızı zaman zaman değiştirin, monotonluğu kırın.</li>\n<li>Hedeflerinizi yazılı olarak görünür bir yere asın.</li>\n<li>Başarılarınızı, ne kadar küçük olursa olsun kutlayın.</li>\n<li>Gerektiğinde aileniz ya da rehber öğretmeninizle konuşmaktan çekinmeyin.</li>\n</ul>\n\n<blockquote>Motivasyon sabit bir duygu değildir, dalgalar halinde gelir. Önemli olan dalga çekildiğinde paniklemeden bir sonraki dalgayı beklemeyi bilmektir.</blockquote>\n\n<p>Motivasyon kaybı sınav sürecinin doğal bir parçasıdır ve neredeyse her aday bu duyguyla bir noktada karşılaşır. Kendinize karşı şefkatli olmayı, küçük adımlarla ilerlemeyi ve dinlenmeyi ihmal etmemeyi öğrendiğinizde, bu düşüşler kalıcı bir çöküşe dönüşmeden geçer ve çalışma temponuza yeniden dönebilirsiniz. Unutmayın, sınava giren her öğrenci bu inişli çıkışlı süreçten geçer; önemli olan düşüşün sizi durdurmasına izin vermemek ve bir sonraki güne yeniden, biraz daha sakin bir zihinle başlamaktır.</p>\n"
+    },
+    {
+      "slug": "uyku-duzeninin-basariya-etkisi",
+      "title": "Uyku Düzeninin Sınav Başarısına Etkisi",
+      "category": "Motivasyon",
+      "publishedAt": "2026-06-20T10:00:00Z",
+      "excerpt": "Günde kaç saat uyumalısınız, gece geç saatlere kadar çalışmak gerçekten işe yarar mı? Uyku ve sınav başarısı arasındaki bilimsel ilişkiyi inceliyoruz.",
+      "authorName": "Rehberlik Servisi",
+      "tags": ["Uyku", "Odaklanma", "Verimlilik"],
+      "contentHtml": "\n<p>Sınav dönemine yaklaşan birçok öğrenci, daha fazla çalışmak için uyku saatlerinden feragat etmeyi bir çözüm olarak görür. Oysa bilimsel araştırmalar, yetersiz uykunun öğrenme kapasitesini ciddi şekilde düşürdüğünü gösteriyor. Uyku, çalışılan bilginin kalıcı hafızaya aktarılmasında kritik bir görev üstlenir ve bu süreç atlandığında saatlerce çalışmanın getirisi büyük ölçüde azalır.</p>\n\n<h2>Beyin Uyurken de Çalışıyor</h2>\n<p>Gün içinde öğrenilen bilgiler, özellikle derin uyku ve REM evrelerinde kısa süreli hafızadan uzun süreli hafızaya taşınır. Bu işleme konsolidasyon denir ve yeterli uyku alınmadığında bu aktarım eksik kalır. Sonuç olarak gece yarılarına kadar çalışıp az uyuyan bir öğrenci, ertesi gün öğrendiklerini hatırlamakta zorlanır.</p>\n\n<h2>İdeal Uyku Süresi Ne Kadar?</h2>\n<p>Ergenlik dönemindeki öğrenciler için önerilen uyku süresi günde 8 ila 9 saat arasındadır. Bu süreden kısa uyuyanlarda dikkat dağınıklığı, sinirlilik ve odaklanma sorunları daha sık görülür. Sınav dönemi yaklaştıkça uyku süresini kısaltmak yerine, gün içindeki çalışma planını daha verimli organize etmek çok daha akıllıca bir tercihtir.</p>\n\n<h2>Gece Geç Saatlere Kadar Çalışmak Neden Yanıltıcı?</h2>\n<p>Geç saatlere kadar ders çalışmak, kısa vadede daha çok konu bitirilmiş hissi yaratabilir; ancak ertesi gün gelen yorgunluk, dikkat süresini ve soru çözme hızını düşürür. Uzun vadede bu döngü, hem fiziksel hem zihinsel tükenmişliğe yol açar. Düzenli bir uyku saati belirlemek, vücudun biyolojik saatini dengeleyerek gündüz daha dinç ve odaklı olmanızı sağlar.</p>\n\n<h2>Kısa Şekerlemelerin Gücü</h2>\n<p>Gece uykusu kadar olmasa da, gün içinde alınan yirmi dakikalık kısa bir şekerleme dikkat ve hafızayı tazeleyen etkili bir araçtır. Özellikle öğleden sonra yorgunluğunun bastığı saatlerde alınan kısa bir uyku, kahve içmekten çok daha kalıcı bir canlanma sağlar. Ancak bu şekerlemenin kırk beş dakikayı geçmemesi önemlidir, aksi halde derin uykuya geçilip uyanmak zorlaşır ve geri kalan gün daha yorgun hissedilir. Hafta sonları da dahil olmak üzere uyku ve uyanma saatlerini sabit tutmak, vücudun düzenli bir ritim kazanmasına yardımcı olur ve sınav haftasında ani uyku düzeni değişikliklerinin getirdiği performans düşüşünü önler.</p>\n\n<h2>Düzenli Uyku İçin Pratik Öneriler</h2>\n<ul>\n<li>Her gün aynı saatte yatıp aynı saatte kalkmaya özen gösterin.</li>\n<li>Yatmadan en az bir saat önce telefon ve ekran kullanımını azaltın.</li>\n<li>Akşam saatlerinde kafeinli içeceklerden uzak durun.</li>\n<li>Yatak odanızı sessiz, karanlık ve serin tutun.</li>\n</ul>\n\n<blockquote>Uyku, çalışmanın alternatifi değil, çalışmanın etkili olmasının ön koşuludur.</blockquote>\n\n<p>Sınav senesinde başarıyı sadece çalışma süresiyle ölçmek büyük bir yanılgıdır. Düzenli ve yeterli uyku, iyi planlanmış bir ders çalışma programı kadar belirleyicidir. Sayacımızdan <a href=\"/sayac\">sınavınıza kaç gün kaldığını</a> takip ederken, geri kalan günlerde uyku düzeninizi de bir çalışma stratejisi olarak ele almayı ihmal etmeyin. Kalan süreyi bilerek hareket etmek, hem çalışma hem uyku planınızı daha gerçekçi ve sürdürülebilir şekilde kurmanıza yardımcı olur.</p>\n"
+    },
+    {
+      "slug": "msu-ve-yks-benzerlikleri",
+      "title": "MSÜ ve YKS Arasındaki Benzerlikler Nelerdir?",
+      "category": "Sınav Haberleri",
+      "publishedAt": "2026-06-18T10:00:00Z",
+      "excerpt": "MSÜ sınavının YKS için neden gerçek bir prova niteliği taşıdığını, format ve içerik benzerliklerini detaylarıyla anlatıyoruz.",
+      "authorName": "Rehberlik Servisi",
+      "tags": ["MSÜ", "YKS", "TYT", "Rehberlik"],
+      "contentHtml": "\n<p>Milli Savunma Üniversitesi Askeri Öğrenci Aday Belirleme Sınavı, kısaca MSÜ, her yıl YKS takviminden önce yapıldığı için adaylar tarafından sıkça bir ısınma turu olarak değerlendirilir. Askeri okula gitmeyi düşünmeyen pek çok öğrenci bile, sınava girmenin kendilerine ne kazandıracağını sorgular. Bu yazıda MSÜ ile YKS arasındaki yapısal benzerliklere ve bu sınavın neden gerçek bir prova sayılabileceğine bakıyoruz.</p>\n\n<h2>Soru Formatı ve Müfredat Örtüşmesi</h2>\n<p>MSÜ sınavı, soru tarzı ve müfredat kapsamı açısından TYT ile büyük oranda örtüşür. Türkçe, matematik, fen bilimleri ve sosyal bilimler alanlarından sorulan sorular, YKS adaylarının zaten çalıştığı konuları kapsar. Bu örtüşme sayesinde MSÜ'ye hazırlanmak, ayrı bir müfredat öğrenmek anlamına gelmez; aksine TYT hazırlığının doğal bir uzantısı olarak görülebilir.</p>\n\n<h2>Gerçek Sınav Ortamını Deneyimleme</h2>\n<p>Evde yapılan denemeler ile gerçek bir sınav salonunda oturmak arasında büyük fark vardır. MSÜ, adaylara resmi bir sınav merkezinde, gerçek bir optik formla ve zaman baskısı altında sınava girme deneyimi sunar. Bu deneyim, asıl YKS gününde karşılaşılacak heyecanı ve stresi önceden tanımak için eşsiz bir fırsattır.</p>\n\n<h2>Süre Yönetimini Test Etme Fırsatı</h2>\n<p>TYT'de en büyük zorluklardan biri zamanı doğru kullanmaktır. MSÜ'nün süre kısıtlamaları da benzer bir baskı yaratır ve adayın hangi soru tiplerinde zaman kaybettiğini netleştirir. Sınav sonrası elde edilen sonuç karnesi incelenerek, asıl sınava kadar geliştirilmesi gereken alanlar daha somut şekilde belirlenebilir.</p>\n\n<h2>Başvuru ve Fiziki Yeterlilik Sürecini de Bilin</h2>\n<p>MSÜ'yü diğer denemelerden ayıran bir başka özellik, sınav sonrasında fiziki yeterlilik testi ve mülakat aşamalarının da bulunmasıdır. Askeri okulu bir kariyer hedefi olarak görmeyen adaylar bu aşamalarla ilgilenmese de, yalnızca yazılı sınava giren öğrenciler de sonuç karnelerini YKS hazırlığı için kullanabilir. Başvuru takviminin YKS başvuru sürecinden bağımsız ilerlediğini bilmek, iki sınavı aynı anda takip eden adayların kafa karışıklığı yaşamasını önler. Sınav merkezlerinin genellikle büyük şehirlerde yoğunlaşması nedeniyle, başvuru sırasında ulaşım ve konaklama planlamasını da erken yapmak faydalı olur.</p>\n\n<h2>Kimler MSÜ'ye Girmeli?</h2>\n<ul>\n<li>YKS öncesi gerçek sınav ortamını deneyimlemek isteyen tüm TYT adayları.</li>\n<li>Sınav kaygısını önceden test edip yönetmeyi öğrenmek isteyenler.</li>\n<li>Askeri okul kariyerini bir seçenek olarak değerlendirenler.</li>\n<li>Sonuç karnesini analiz ederek zayıf konularını belirlemek isteyen öğrenciler.</li>\n</ul>\n\n<blockquote>Gerçek bir sınav salonunda oturmuş olmak, asıl sınav günü kontrol edemeyeceğiniz birçok değişkeni önceden tanımanızı sağlar.</blockquote>\n\n<p>MSÜ'ye girmek askeri okulda okuma niyeti taşımayan bir öğrenci için bile zaman kaybı değildir; tam tersine YKS yolculuğunda değerli bir kontrol noktasıdır. Sınav sonrası alınan sonuçları dikkatle analiz ederek kalan günlerde hangi konulara daha çok zaman ayrılması gerektiğine karar verebilirsiniz. <a href=\"/sinavlar\">Sınav takvimini</a> takip ederek MSÜ ve YKS tarihlerini birlikte planlamanız, hazırlık sürecinizi daha verimli yönetmenize yardımcı olur.</p>\n"
+    },
+    {
+      "slug": "tyt-matematik-taktikleri",
+      "title": "TYT Matematik Çözme Taktikleri",
+      "category": "Çalışma Teknikleri",
+      "publishedAt": "2026-06-15T10:00:00Z",
+      "excerpt": "TYT matematik netlerinizi artırmak ve sınırlı süreyi daha verimli kullanmak için pratik, denenmiş çözüm taktiklerini derledik.",
+      "authorName": "Matematik Zümresi",
+      "tags": ["TYT", "Matematik", "Taktik"],
+      "contentHtml": "\n<p>TYT matematik testi, doğru stratejiyle yaklaşıldığında en çok net kazandırılabilecek alanlardan biridir. Ancak çoğu öğrenci için asıl sorun konu bilgisinden değil, zaman yönetiminden kaynaklanır. Kırk adet soruyu kısıtlı bir sürede çözmek, bilginin yanında hız ve strateji de gerektirir. Bu yazıda netlerinizi yukarı taşıyacak somut taktikleri ele alıyoruz.</p>\n\n<h2>Turlama Tekniğini Alışkanlık Haline Getirin</h2>\n<p>Sınav kâğıdını baştan sona tek seferde çözmeye çalışmak, takıldığınız bir soruda gereğinden fazla zaman harcamanıza yol açar. Bunun yerine testi iki veya üç tur halinde çözün. İlk turda kolay ve tanıdık soruları işaretleyip geçin, ikinci turda orta zorluktaki sorulara dönün, kalan zamanda ise en zor sorularla uğraşın. Bu yöntem hem moralinizi yüksek tutar hem de kolay soruları kaybetme riskinizi ortadan kaldırır.</p>\n\n<h2>Her Gün Düzenli Soru Çözümü Yapın</h2>\n<p>Matematik becerisi tekrarla gelişen bir kastır. Günde en az yirmi soru çözmeyi alışkanlık haline getiren öğrenciler, soru kalıplarını çok daha hızlı tanımaya başlar. Bu düzenli pratik, sınav anında soruyu görür görmez hangi yöntemin uygulanması gerektiğini fark etmenizi sağlar.</p>\n\n<h2>Hatalarınızı Bir Deftere Kaydedin</h2>\n<p>Yanlış yaptığınız her soruyu ayrı bir hata defterine not etmek, aynı yanlışı tekrarlama olasılığınızı büyük ölçüde azaltır. Haftalık olarak bu defteri gözden geçirmek, hangi konularda sistematik eksikleriniz olduğunu açıkça gösterir.</p>\n\n<h2>Şıkları Kullanarak Zamandan Tasarruf Edin</h2>\n<p>Bazı sorularda direkt çözüm yapmak yerine şıklardan geriye gitmek, özellikle problem türü sorularda büyük zaman kazandırır. Şıkları sınama tekniği, doğru kullanıldığında karmaşık denklem kurmaya gerek kalmadan doğru cevaba ulaşmanızı sağlayabilir.</p>\n\n<h2>Konu Ağırlıklarına Göre Çalışma Sıranızı Belirleyin</h2>\n<p>TYT matematik müfredatındaki her konu sınavda eşit oranda soru olarak çıkmaz. Temel kavramlar, üslü ve köklü sayılar, problemler gibi konular geçmiş yıllarda en yoğun soru gelen alanlar arasında yer alır. Çalışma sürenizi bu yüksek ağırlıklı konulara öncelik vererek planlamak, sınırlı zamanınızdan en yüksek getiriyi almanızı sağlar. Az soru gelen ama uzun zaman alan konulara aşırı zaman harcamak yerine, sıklıkla çıkan konularda ustalaşmak daha akıllıca bir yatırımdır. Geçmiş yılların soru dağılımını incelemek, bu önceliklendirmeyi yaparken size somut bir rehber sunar. Bu şekilde sınırlı çalışma sürenizi en yüksek getiriyi sağlayacak konulara yönlendirmiş olursunuz. Ayrıca her hafta hangi konuda kaç soru çözdüğünüzü not etmek, ağırlıklı konulara gerçekten yeterli zaman ayırıp ayırmadığınızı görmenizi sağlar.</p>\n\n<ul>\n<li>Zor bir soruda bir dakikadan fazla kalmayın, işaretleyip devam edin.</li>\n<li>İşlem hatalarını azaltmak için adımlarınızı kâğıt üzerinde net yazın.</li>\n<li>Konu tekrarını soru çözümünden ayırmayın, ikisini birlikte yürütün.</li>\n</ul>\n\n<blockquote>TYT matematikte bilgiden çok hız ve strateji belirleyicidir; doğru taktikle aynı bilgi birikimiyle çok daha yüksek net almak mümkündür.</blockquote>\n\n<p>Bu taktikleri düzenli olarak uygulayan öğrenciler, birkaç hafta içinde net artışını somut şekilde hissetmeye başlar. Gelişiminizi takip etmek için düzenli deneme çözmeyi ve <a href=\"/puan-hesaplama/yks\">puan hesaplama aracımızla</a> ilerlemenizi ölçmeyi unutmayın.</p>\n"
+    },
+    {
+      "slug": "tyt-turkce-paragraf-teknikleri",
+      "title": "TYT Türkçe Paragraf Sorularını Çözme Teknikleri",
+      "category": "Çalışma Teknikleri",
+      "publishedAt": "2026-06-12T10:00:00Z",
+      "excerpt": "TYT Türkçe testinin en yoğun konusu olan paragraf sorularında hız ve doğruluğu birlikte artırmanın yollarını öğrenin.",
+      "authorName": "Türkçe Zümresi",
+      "tags": ["TYT", "Türkçe", "Paragraf"],
+      "contentHtml": "\n<p>TYT Türkçe testinde paragraf soruları, toplam soru sayısının yarısına yakınını oluşturur ve bu nedenle netlerinizi en çok etkileyen alandır. Geçmiş yılların soru dağılımlarına bakıldığında paragraf konusundan düzenli olarak yirmiyi aşkın soru geldiği görülür. Bu kadar yüksek ağırlığa sahip bir konuda gelişim sağlamak, toplam Türkçe netinizi doğrudan yukarı çeker.</p>\n\n<h2>Hızlı ve Etkili Okuma Becerisi Geliştirin</h2>\n<p>Paragraf sorularında asıl zorluk, metni anlamaktan çok metni hızlı ve doğru anlamaktır. Kelime kelime okumak yerine cümle bütünlüğünü yakalamaya çalışın. Düzenli kitap okuma alışkanlığı, zamanla okuma hızınızı ve metni bir bütün olarak kavrama yeteneğinizi geliştirir.</p>\n\n<h2>Soru Kökünü Önce Okuyun</h2>\n<p>Paragrafı okumadan önce sorunun ne istediğini bilmek, okuma sırasında nereye odaklanmanız gerektiğini belirler. Ana düşünce mi, yardımcı düşünce mi, yoksa parçanın öncesi ya da sonrası mı soruluyor, bunu bilerek okumaya başlamak zaman kazandırır.</p>\n\n<h2>Anahtar Kelimeleri İşaretleyin</h2>\n<p>Ancak, fakat, bu nedenle, sonuç olarak gibi bağlaçlar genellikle paragrafın yön değiştirdiği veya vurgu yaptığı noktalardır. Bu kelimeleri okurken işaretlemek, sorunun cevabına götüren ipuçlarını çok daha hızlı yakalamanızı sağlar.</p>\n\n<h2>Yeni Nesil Sorulara Aşina Olun</h2>\n<p>Son yıllarda paragraf sorularının yanına grafik, tablo veya görsel yorumlama gerektiren yeni nesil sorular eklenmiştir. Bu soru tiplerini görmeden sınava girmek hazırlıksız kalmanıza neden olabilir, bu yüzden farklı kaynaklardan örnek sorular çözerek bu formata önceden alışmalısınız. Bu sorularda metin uzunluğu fazla olsa da, istenen bilgi genellikle metnin küçük bir bölümünde gizlidir; bu nedenle soruyu dikkatle okumak, gereksiz yere tüm metni tekrar taramaktan daha hızlı sonuç verir.</p>\n\n<h2>Şıkları Eleyerek İlerleme Yöntemi</h2>\n<p>Paragraf sorularında doğru cevaba doğrudan ulaşmak her zaman mümkün olmaz; bazı durumlarda en hızlı yol, açıkça yanlış olan şıkları elemektir. Metinde geçmeyen bir bilgiyi içeren, aşırı genelleme yapan veya metnin tonuyla çelişen şıklar genellikle yanlış cevaplardır. Bu şıkları hızla eleyerek geriye kalan iki seçenek arasında daha dikkatli bir karşılaştırma yapmak, zaman kaybını azaltır. Bu teknik özellikle ana düşünce ve yazarın amacını sorgulayan sorularda oldukça işe yarar, çünkü bu soru tiplerinde şıklar arasındaki farklar genellikle ince nüanslara dayanır.</p>\n\n<ul>\n<li>Günde en az bir uzun metin okuyarak okuma hızınızı artırın.</li>\n<li>Paragraf sorularını zamanlı çözerek gerçek sınav baskısını simüle edin.</li>\n<li>Yanlış yaptığınız soruların hangi alt başlığa ait olduğunu not edin.</li>\n</ul>\n\n<blockquote>Paragraf, TYT Türkçede şans eseri değil teknikle yükseltilebilecek en güvenilir nettir.</blockquote>\n\n<p>Paragraf sorularına ayıracağınız her ekstra dakika, doğru teknikle birleştiğinde net artışına dönüşür. Bu konuya gereken önemi vererek düzenli pratik yapmak, TYT Türkçe puanınızı belirgin şekilde yukarı taşıyacaktır. Unutmayın, paragraf sorularında ilerleme genellikle hızlı gelmez; ancak düzenli okuma ve soru çözme alışkanlığı birkaç hafta içinde fark edilir bir hıza ve doğruluğa dönüşür. Sabırla uygulanan bu teknikler, sınav gününde Türkçe testinin en güvenilir net kaynağı haline gelir.</p>\n"
+    },
+    {
+      "slug": "yks-calisma-programi",
+      "title": "YKS Çalışma Programı Nasıl Hazırlanır?",
+      "category": "Çalışma Teknikleri",
+      "publishedAt": "2026-06-10T10:00:00Z",
+      "excerpt": "Kendi seviyenize uygun bir YKS çalışma programını nasıl kuracağınızı, haftalık planlamadan esnekliğe kadar adım adım anlatıyoruz.",
+      "authorName": "Eğitim Danışmanı",
+      "tags": ["YKS", "Çalışma Programı", "Taktik"],
+      "contentHtml": "\n<p>Etkili bir YKS hazırlığının temeli, internetten indirilen hazır bir programı kopyalamak değil, kendi seviyenize ve hayatınıza uygun bir program kurmaktır. Herkes için aynı şekilde işleyen mucize bir plan yoktur; önemli olan kendi güçlü ve zayıf yönlerinizi tanıyıp buna göre esnek bir yapı oluşturmaktır.</p>\n\n<h2>İlk Adım: Mevcut Durumunuzu Belirleyin</h2>\n<p>Bir çalışma programına başlamadan önce nerede olduğunuzu bilmeniz gerekir. Bir deneme sınavı çözerek hangi derslerde ve hangi konularda eksikleriniz olduğunu somut olarak görün. Bu analiz, programınızın hangi derslere daha fazla zaman ayırması gerektiğini netleştirir.</p>\n\n<h2>Haftalık ve Aylık Hedefler Belirleyin</h2>\n<p>Günlük programlar tek başına yeterli değildir; bu günlük hedeflerin bağlı olduğu daha büyük haftalık ve aylık hedefler de olmalıdır. Örneğin bu ay matematik temel kavramları bitirmek, bu hafta paragraf sorularında belirli bir soru sayısına ulaşmak gibi ölçülebilir hedefler koyun. Hedefler net olduğunda günlük çalışma daha anlamlı hale gelir.</p>\n\n<h2>Dersler Arasında Doğru Dağılım Yapın</h2>\n<p>Sadece sevdiğiniz veya iyi olduğunuz derse zaman ayırmak kolay bir tuzaktır. Zayıf olduğunuz derslere daha fazla zaman ayırırken, güçlü olduğunuz dersleri de unutmadan netlerinizi koruyacak şekilde periyodik tekrar yapın. Konu ağırlıklarını da göz önünde bulundurarak, sınavda çok soru çıkan konulara öncelik verin.</p>\n\n<h2>Programınız Esnek Olsun</h2>\n<p>Çok sıkı ve esnek olmayan programlar genellikle birkaç gün içinde terk edilir. Beklenmedik bir yorgunluk günü veya aile etkinliği olduğunda programınızın kırılmaması için haftalık planda boşluk bırakın. Bir günü kaçırdığınızda kendinizi cezalandırmak yerine, programı o haftanın geri kalanına göre yeniden düzenleyin.</p>\n\n<h2>TYT ve AYT Dengesini Doğru Kurun</h2>\n<p>Özellikle sayısal ve eşit ağırlık alanındaki adaylar, TYT ve AYT çalışmasını doğru oranda dengelemek zorundadır. Sınav takviminde TYT'nin önce yapıldığını unutmadan, hazırlığın ilk aylarında TYT ağırlıklı, sınava yaklaşıldıkça AYT ağırlıklı bir programa kaymak mantıklıdır. Ancak TYT'yi tamamen bırakmak da risklidir, çünkü TYT netleri toplam puanın önemli bir kısmını oluşturur. Haftalık programınızda her iki sınava da düzenli olarak yer ayırarak, sınav günü hangi oturuma daha hazır olduğunuzu netleştirmiş olursunuz.</p>\n\n<ul>\n<li>Her gün için gerçekçi, fazla yüklü olmayan bir çalışma süresi belirleyin.</li>\n<li>Pomodoro gibi zaman bloklama tekniklerini deneyerek odaklanmanızı artırın.</li>\n<li>Haftanın bir gününü tamamen tekrar ve deneme analizine ayırın.</li>\n<li>Programınızı her ay deneme sonuçlarınıza göre güncelleyin.</li>\n</ul>\n\n<blockquote>En iyi çalışma programı, kâğıt üzerinde mükemmel görünen değil, gerçek hayatta uygulayabildiğiniz programdır.</blockquote>\n\n<p>Kendi ritminize uygun, esnek ama hedefli bir program kurduğunuzda, çalışma süreciniz çok daha sürdürülebilir hale gelir. <a href=\"/sayac\">Sınava kalan günleri</a> takip ederek programınızı zaman çizelgenize göre ayarlamak, motivasyonunuzu da yüksek tutmanıza yardımcı olur. Programınızı belirli aralıklarla gözden geçirip güncellemekten çekinmeyin; sınava giden yol boyunca ihtiyaçlarınız ve seviyeniz değiştikçe planınızın da buna paralel olarak değişmesi tamamen normal ve beklenen bir durumdur.</p>\n"
+    },
+    {
+      "slug": "yks-tekrar-programi-nasil-yapilir",
+      "title": "Etkili Tekrar Programı Nasıl Hazırlanır?",
+      "category": "Çalışma Teknikleri",
+      "publishedAt": "2026-06-08T10:00:00Z",
+      "excerpt": "Öğrendiğiniz konuları unutmadan sınava taşımak için aralıklı tekrar yöntemini ve haftalık tekrar planı kurmayı anlatıyoruz.",
+      "authorName": "Eğitim Koçu",
+      "tags": ["Tekrar Programı", "Verimlilik", "YKS"],
+      "contentHtml": "\n<p>Bir konuyu öğrenmek ile o konuyu sınav anına kadar hatırlamak çok farklı iki beceridir. Pek çok öğrenci konuları çalışır, anlar, hatta soru çözer; ama haftalar sonra sınav salonunda aynı konuyla karşılaştığında detayları hatırlayamaz. Bu sorunun çözümü, doğru kurulmuş bir tekrar programıdır.</p>\n\n<h2>Unutma Eğrisi Nedir?</h2>\n<p>Psikolojide unutma eğrisi olarak bilinen kavrama göre, öğrenilen bilginin büyük bir kısmı tekrar edilmediği takdirde ilk günlerde hızla unutulur. Bu eğriyi yavaşlatmanın tek yolu, bilgiyi belirli aralıklarla tekrar etmektir. Bu nedenle bir konuyu bir kez çalışıp bir kenara bırakmak, o bilginin kalıcılığını garanti etmez.</p>\n\n<h2>Aralıklı Tekrar Yöntemi</h2>\n<p>Aralıklı tekrar yönteminde bir konu önce öğrenildiği gün, ardından bir gün sonra, sonra bir hafta sonra ve son olarak bir ay sonra tekrar edilir. Bu artan aralıklarla yapılan tekrar, bilginin kısa süreli hafızadan uzun süreli hafızaya kalıcı şekilde geçmesini sağlar. Her tekrar, önceki tekrara göre daha az zaman alır çünkü bilgi zaten bir kez hafızada iz bırakmıştır.</p>\n\n<h2>Haftalık Tekrar Planı Nasıl Kurulur?</h2>\n<p>Haftanın belirli bir gününü, örneğin pazar gününü, sadece o hafta öğrenilen konuların tekrarına ayırın. Aylık olarak da bir gün, geçen ayın genel tekrarı için planlanmalıdır. Bu sistemli yapı, konuların birikip unutulmasını önler ve sınav öncesi son tekrar döneminde panik yaşamanızı engeller.</p>\n\n<h2>Tekrar İçin Aktif Yöntemler Kullanın</h2>\n<p>Sadece not defterini yeniden okumak pasif bir tekrar şeklidir ve etkisi sınırlıdır. Bunun yerine konuyu kendi kelimelerinizle özetlemek, soru çözerek tekrar etmek veya konuyu birine anlatmak gibi aktif yöntemler, bilginin çok daha kalıcı hale gelmesini sağlar.</p>\n\n<h2>Konu Kartları ile Hızlı Tekrar</h2>\n<p>Özellikle formül, tarih veya tanım ağırlıklı konularda küçük kartlara yazılan özet bilgiler, sınava yakın günlerde son hızlı tekrar için çok değerli bir araçtır. Her kartın bir yüzüne soru veya kavram, diğer yüzüne kısa cevap yazarak kendinizi sınayabilirsiniz. Bu kartları çanta veya cep telefonunuzda taşıyarak, otobüste, bekleme sırasında ya da ders arasında geçen küçük zaman dilimlerini bile etkili bir tekrara dönüştürebilirsiniz. Bu yöntem özellikle sınava son bir veya iki ay kala, yoğun konu tekrarından ziyade hızlı hatırlama pratiğine geçildiğinde büyük fayda sağlar.</p>\n\n<ul>\n<li>Her konunun yanına ilk öğrenildiği tarihi not edin.</li>\n<li>Tekrar takvimini fiziksel bir ajanda veya dijital uygulamada takip edin.</li>\n<li>Tekrar sırasında sadece okumak değil, soru çözmek de yapın.</li>\n</ul>\n\n<blockquote>Çalışmak bilgiyi edinmektir, tekrar etmek o bilgiyi sınav gününe kadar saklamaktır.</blockquote>\n\n<p>Düzenli bir tekrar programı kurduğunuzda, sınav öncesi son haftalarda yeni bir şey öğrenmek zorunda kalmaz, sadece güçlendirme yaparsınız. Bu da hem stresinizi azaltır hem de sınav gününe çok daha hazır girmenizi sağlar. Bu yüzden tekrar programını bir seçenek değil, çalışma planınızın ayrılmaz bir parçası olarak görmelisiniz.</p>\n"
+    },
+    {
+      "slug": "deneme-netleri-neden-artmiyor",
+      "title": "Deneme Netlerim Neden Artmıyor?",
+      "category": "Motivasyon",
+      "publishedAt": "2026-06-05T10:00:00Z",
+      "excerpt": "Çok çalışmanıza rağmen deneme netlerinizde bir ilerleme göremiyorsanız, asıl eksik olan adımı bu yazıda bulabilirsiniz.",
+      "authorName": "Eğitim Koçu",
+      "tags": ["Deneme Sınavı", "Motivasyon", "Verimlilik"],
+      "contentHtml": "\n<p>Haftalarca düzenli çalışan ama deneme netlerinde hiçbir ilerleme görmeyen öğrenci sayısı oldukça fazladır. Bu durum genellikle çalışmanın azlığından değil, çalışma şeklinin yanlışlığından kaynaklanır. Net artışının önündeki en büyük engel, çoğu zaman fark edilmeyen tek bir adımın atlanmasıdır: deneme analizi.</p>\n\n<h2>Deneme Çözmek Yeterli Değildir</h2>\n<p>Bir deneme sınavı çözmek, sadece o anki seviyenizi gösteren bir fotoğraftır; kendi başına netlerinizi artırmaz. Asıl gelişim, denemeyi çözdükten sonra yapılan analizde gerçekleşir. Deneme çözüp sonucu görüp bir kenara koyan öğrenciler, aynı hataları tekrar tekrar yapma riskiyle karşı karşıya kalır.</p>\n\n<h2>Yanlışlarınızla Gerçekten Yüzleşin</h2>\n<p>Her yanlış veya boş sorunun nedenini dürüstçe sorgulamak gerekir. Konuyu bilmiyor muydunuz, zamanınız mı yetmedi, yoksa dikkatsiz mi okudunuz? Bu üç neden birbirinden çok farklı çözümler gerektirir. Konu bilgisi eksikse o konuya geri dönmeli, zaman sorunuysa hız çalışması yapmalı, dikkat sorunuysa okuma alışkanlığınızı gözden geçirmelisiniz.</p>\n\n<h2>Aynı Hatayı Tekrarlamamak İçin Not Tutun</h2>\n<p>Bir hata defteri tutmak, hangi konularda sistematik olarak yanlış yaptığınızı görmenizi sağlar. Birkaç deneme sonra bu defteri incelediğinizde, belirli konuların tekrar tekrar karşınıza çıktığını fark edebilirsiniz. Bu, nereye odaklanmanız gerektiğini gösteren en açık işarettir.</p>\n\n<h2>Sonuç Odaklı Değil Süreç Odaklı Çalışın</h2>\n<p>Sadece net sayısına bakmak yerine, hangi konuda ne kadar geliştiğinize odaklanın. Net artışı bazen haftalar sonra aniden ortaya çıkar, çünkü öğrenme her zaman doğrusal ilerlemez. Sabırlı kalıp doğru analiz sürecini sürdürmek, er ya da geç net artışına dönüşür.</p>\n\n<h2>Farklı Yayınların Denemelerini Karşılaştırmayın</h2>\n<p>Bir hafta bir yayının denemesinden yüksek net alıp ertesi hafta başka bir yayının denemesinden düşük net almak, pek çok öğrencide gereksiz bir paniğe yol açar. Oysa her yayının soru zorluğu, üslubu ve kapsamı farklıdır; bu yüzden farklı yayınların netlerini doğrudan karşılaştırmak yanıltıcı olur. Gerçek ilerlemeyi görmek için mümkünse aynı yayının denemelerini zaman içinde karşılaştırın veya netlerinizi tek başlarına değil, o haftaki konu tekrarınızla birlikte değerlendirin. Net dalgalanmaları doğaldır ve tek bir denemeye göre kendinizi yargılamak, gerçek gelişiminizi gözden kaçırmanıza neden olabilir.</p>\n\n<ul>\n<li>Her denemeden sonra en az otuz dakika analiz yapmaya zaman ayırın.</li>\n<li>Yanlış ve boşları konu bazında kategorize edin.</li>\n<li>Aynı hatayı üçüncü kez yaptığınız konuları öncelikli çalışma listenize alın.</li>\n</ul>\n\n<blockquote>Deneme sınavı bir sınav değil, bir ayna gibidir; önemli olan o aynaya dürüstçe bakabilmektir.</blockquote>\n\n<p>Netlerinizin artmaması umutsuzluğa kapılmanız için bir neden değil, çalışma yönteminizi gözden geçirmeniz için bir uyarıdır. Deneme analizini sürece dahil ettiğinizde, daha önce fark etmediğiniz eksikler ortaya çıkacak ve net artışı doğal bir sonuç olarak gelecektir. Bu süreçte sabırlı olun; bazı haftalar net artışı görünmese de doğru analizle ilerleyen her öğrenci, er ya da geç bu emeğin karşılığını deneme sonuçlarında görür.</p>\n"
+    },
+    {
+      "slug": "lgs-puf-noktalari",
+      "title": "LGS Hazırlık Sürecinde Püf Noktalar",
+      "category": "Sınav Haberleri",
+      "publishedAt": "2026-05-12T10:00:00Z",
+      "excerpt": "8. sınıf öğrencileri LGS'ye hazırlanırken nelere dikkat etmeli, yeni nesil sorulara nasıl adapte olunur? İşte bilmeniz gereken püf noktalar.",
+      "authorName": "Rehber Öğretmen",
+      "tags": ["LGS", "Ortaokul", "Rehberlik"],
+      "contentHtml": "\n<p>Liselere Geçiş Sistemi, yani LGS, ortaokul öğrencilerinin akademik hayatındaki ilk büyük sınav deneyimidir. Bu sınav klasik ezbere dayalı bir ölçme yöntemi değildir; öğrencinin okuduğunu anlama, çıkarım yapma ve mantık yürütme becerilerini test eder. Bu nedenle LGS'ye hazırlık süreci, diğer sınavlardan biraz farklı bir yaklaşım gerektirir.</p>\n\n<h2>Asıl Ölçülen Şey Okuduğunu Anlama Becerisidir</h2>\n<p>LGS sorularının büyük bir kısmı uzun metinler, günlük hayat senaryoları veya grafik içeren sorulardan oluşur. Bu yüzden sadece konu bilgisine sahip olmak yetmez, o bilgiyi farklı bağlamlarda kullanabilmek gerekir. Düzenli kitap okuma alışkanlığı kazanmış öğrenciler, bu tarz soruları çok daha hızlı ve doğru çözer.</p>\n\n<h2>Yeni Nesil Sorulara Aşina Olun</h2>\n<p>Mantık muhakeme ağırlıklı yeni nesil sorular, ezber bilgiyle çözülemez. Bu soru tipine alışmanın en etkili yolu, Milli Eğitim Bakanlığının yayınladığı örnek soruları düzenli olarak çözmektir. Bu sorularla ne kadar erken tanışılırsa, sınav günü karşılaşılan şaşkınlık o kadar azalır.</p>\n\n<h2>Zaman Yönetimini Erken Öğrenin</h2>\n<p>LGS'de süre oldukça sıkıdır ve her dersin kendine ait bir zaman dilimi vardır. Deneme sınavlarını gerçek sınav süresine sadık kalarak çözmek, öğrencinin zaman algısını geliştirir. Süreyi önceden tahmin edebilen öğrenciler, gerçek sınavda paniğe kapılmadan ilerleyebilir.</p>\n\n<h2>Ailelerin Rolü de Önemlidir</h2>\n<p>Bu yaş grubundaki öğrenciler için aile desteği akademik başarıyı doğrudan etkiler. Aşırı baskı yapmadan, sınav sürecini birlikte takip eden, küçük başarıları da takdir eden bir aile tutumu, öğrencinin motivasyonunu yüksek tutar.</p>\n\n<h2>Tercih Döneminde Okul Türlerini Tanıyın</h2>\n<p>LGS puanı sadece bir sayı değildir, öğrencinin hangi lise türüne yerleşeceğini belirleyen bir anahtardır. Fen liseleri, sosyal bilimler liseleri, Anadolu liseleri ve mesleki teknik Anadolu liseleri arasındaki farkları sınav öncesinde tanımak, hem öğrencinin hem ailenin gerçekçi bir tercih listesi hazırlamasına yardımcı olur. Sadece puan kaygısıyla değil, öğrencinin ilgi alanları ve gelecekteki kariyer hedefleriyle uyumlu bir okul seçimi yapmak, lise yıllarının daha keyifli ve verimli geçmesini sağlar. Okul tanıtım günlerine katılmak ve mezunlarla konuşmak bu kararı netleştirmede oldukça faydalıdır.</p>\n\n<ul>\n<li>Her hafta en az bir uzun metin okuma alıştırması yapın.</li>\n<li>MEB örnek sorularını düzenli aralıklarla çözün.</li>\n<li>Deneme sınavlarını gerçek sınav koşullarında, süreye bağlı çözün.</li>\n<li>Konu eksiklerini deneme sonrası hemen not edip tekrar planına ekleyin.</li>\n</ul>\n\n<blockquote>LGS'de başarı, ezberlenen bilgiden çok o bilgiyi yeni bir soruda tanıyabilme becerisinden geçer.</blockquote>\n\n<p>LGS sürecinde sabırlı ve düzenli bir çalışma temposu, son haftalarda yapılan yoğun ama plansız bir çalışmadan çok daha etkilidir. <a href=\"/sinavlar\">Sınav takvimini</a> takip ederek geri sayımı bilmek, öğrencinin zaman planlamasını daha gerçekçi yapmasına yardımcı olur. Bu süreçte öğrencinin yanında olmak, baskı kurmadan destek olmak ve küçük gelişmeleri fark edip takdir etmek, hem akademik hem duygusal açıdan en kalıcı katkıyı sağlayan aile tutumudur.</p>\n"
+    },
+    {
+      "slug": "dgs-tercih-edilebilecek-bolumler",
+      "title": "DGS ile Geçiş Yapılabilecek En Popüler Bölümler",
+      "category": "Üniversite Tercihleri",
+      "publishedAt": "2026-04-20T10:00:00Z",
+      "excerpt": "Önlisans mezunlarının DGS ile en çok tercih ettiği dört yıllık bölümleri ve kontenjan eğilimlerini inceliyoruz.",
+      "authorName": "Eğitim Danışmanı",
+      "tags": ["DGS", "Üniversite", "Tercih"],
+      "contentHtml": "\n<p>Dikey Geçiş Sınavı, önlisans mezunlarına lisans eğitimine geçiş yapma fırsatı sunan önemli bir köprüdür. Her yıl yüz binlerce önlisans öğrencisi bu sınava girerek kendi alanlarında veya farklı bir alanda dört yıllık eğitime devam etme şansı yakalar. Ancak doğru bölüm seçimi, sınav başarısı kadar kritik bir karardır.</p>\n\n<h2>En Çok Tercih Edilen Bölümler</h2>\n<p>Bilgisayar mühendisliği, hukuk, hemşirelik ve ilahiyat, DGS adaylarının her yıl en yoğun ilgi gösterdiği bölümlerin başında gelir. Bu bölümlerin yüksek tercih edilme oranı, hem mezuniyet sonrası iş bulma kolaylığı hem de meslekteki saygınlık algısıyla ilişkilidir. Tercih oranı yüksek olduğu için bu bölümlerde rekabet de doğal olarak daha sert geçer.</p>\n\n<h2>Kendi Alanınızdan Geçiş Yapmanın Avantajı</h2>\n<p>Önlisans eğitiminizle aynı veya yakın bir alandaki lisans bölümüne geçiş yapmak, hem uyum sürecini kolaylaştırır hem de bazı derslerden muafiyet alma şansı sunabilir. Örneğin bir meslek yüksekokulu bilgisayar programları mezunu, bilgisayar mühendisliği veya yazılım mühendisliğine geçişte önemli bir avantaja sahip olur.</p>\n\n<h2>Kontenjanları Dikkatle İnceleyin</h2>\n<p>DGS kılavuzunda yer alan kontenjanlar yıldan yıla değişebilir. Bazı popüler bölümlerde kontenjan oldukça sınırlı olduğu için taban puanlar yükselir. Kılavuzu incelerken sadece bölüm adına değil, o bölümün son yıllardaki kontenjan ve taban puan değişimine de dikkat etmelisiniz.</p>\n\n<h2>Farklı Bir Alana Geçiş de Mümkün</h2>\n<p>DGS, sadece aynı alanda değil bazı şartlarla farklı bir alanda lisans eğitimine geçişe de izin verir. Bu durum, önlisans eğitiminden farklı bir kariyer hedefine yönelmek isteyen öğrenciler için önemli bir fırsat sunar. Ancak bu tür geçişlerde kontenjanların daha sınırlı olabileceğini göz önünde bulundurmalısınız.</p>\n\n<h2>Sınava Hazırlanırken Önlisans Bilgisini Avantaja Çevirin</h2>\n<p>DGS sınavı sayısal ve sözel olmak üzere iki ana bölümden oluşur ve içerik olarak lise müfredatına dayanır. Önlisans öğrencileri genellikle bu konulardan uzun süre uzak kaldığı için, sınava hazırlanırken temel matematik ve Türkçe konularını sıfırdan gözden geçirmek gerekebilir. Çalışma sürenizi günlük iş veya staj yükümlülüklerinizle dengelemek için kısa ama düzenli çalışma blokları oluşturmak, yoğun bir lisans öğrencisi takviminde bile sürdürülebilir bir hazırlık sağlar. Geçmiş yıl sorularını çözmek, sınavın soru tarzına aşina olmanın en pratik yoludur.</p>\n\n<ul>\n<li>Kılavuzdaki tüm bölüm seçeneklerini dikkatle okuyun, sadece bilinen bölümlerle sınırlı kalmayın.</li>\n<li>Geçiş yapılabilecek bölümlerin ders müfredatını önceden inceleyin.</li>\n<li>Kariyer hedefinize en uygun bölümü, sadece popülerliğe bakmadan seçin.</li>\n</ul>\n\n<blockquote>Popüler bir bölümü seçmek değil, kendi kariyer hedefinize uygun bölümü seçmek uzun vadede daha doğru bir karardır.</blockquote>\n\n<p>DGS tercih listesi hazırlarken hem güncel kontenjan verilerini hem de kendi kariyer planınızı dengelemek gerekir. <a href=\"/puan-hesaplama/dgs\">DGS puan hesaplama aracımızı</a> kullanarak tahmini puanınızı görebilir ve listenizi bu veriler üzerine kurabilirsiniz. Acele etmeden, kılavuzu dikkatle inceleyerek doğru kararı vermeniz, dört yıllık eğitim hayatınızın yönünü belirleyecektir.</p>\n"
+    },
+    {
+      "slug": "sinav-kaygisi-nasil-yenilir",
+      "title": "Sınav Kaygısı ve Stresle Baş Etme Yolları",
+      "category": "Motivasyon",
+      "publishedAt": "2026-03-15T10:00:00Z",
+      "excerpt": "Sınav anında elleriniz titriyor, bildiklerinizi unutuyorsanız bu nefes egzersizleri ve pratik yöntemler kaygınızı azaltmanıza yardımcı olabilir.",
+      "authorName": "Psikolojik Danışman",
+      "tags": ["Stres", "Kaygı", "Psikoloji"],
+      "contentHtml": "\n<p>Sınav kaygısı, hemen hemen her adayın bir noktada karşılaştığı son derece normal bir duygu durumudur. Hafif düzeyde kaygı, aslında dikkati artıran ve performansı destekleyen bir mekanizmadır. Ancak bu kaygı kontrol edilemediğinde, bilinen konuların unutulmasına, ellerin titremesine ve genel performans düşüşüne yol açabilir.</p>\n\n<h2>Kaygı Neden Bu Kadar Güçlü Hissettirir?</h2>\n<p>Beden, sınav gibi yüksek stresli durumları bir tehdit olarak algıladığında savaş ya da kaç tepkisi devreye girer. Kalp atışı hızlanır, nefes sıklaşır ve odaklanma yeteneği azalır. Bu fizyolojik tepki, ilkel bir hayatta kalma mekanizmasıdır ama sınav gibi bilişsel performans gerektiren bir ortamda işe yaramaz, aksine zarar verir.</p>\n\n<h2>4-7-8 Nefes Tekniği</h2>\n<p>Derin nefes egzersizleri, bedeni sakinleştirmenin en hızlı yollarından biridir. 4-7-8 kuralında dört saniye boyunca burundan nefes alınır, yedi saniye nefes tutulur ve sekiz saniye boyunca ağızdan yavaşça verilir. Bu döngü birkaç kez tekrarlandığında kalp atış hızı düşer ve zihin daha sakin bir duruma geçer.</p>\n\n<h2>Olumlu İçsel Diyalog Kurun</h2>\n<p>Sınav öncesi kendi kendinize söylediğiniz cümleler performansınızı doğrudan etkiler. Başaramayacağım gibi olumsuz düşünceler yerine, hazırlandım ve elimden geleni yapacağım gibi destekleyici cümleler kurmak, bedeni de zihni de daha sakin bir moda geçirir. Bu teknik basit görünse de düzenli uygulandığında kaygı seviyesini gözle görülür şekilde azaltır.</p>\n\n<h2>Hazırlık Kaygıyı En Çok Azaltan Faktördür</h2>\n<p>Kaygının en büyük kaynaklarından biri bilinmezliktir. Sınav formatına, soru tiplerine ve süreye aşina olmak, beyne bu durumun kontrol edilebilir olduğu mesajını verir. Düzenli deneme çözen öğrenciler, gerçek sınav gününde çok daha az kaygı yaşar çünkü ortam onlar için artık tanıdıktır.</p>\n\n<h2>Sınav Sabahı Yaşanan Ani Panikle Baş Etme</h2>\n<p>Bazı adaylar aylarca sakin kalsa da sınav sabahı aniden yoğun bir panik hissedebilir. Bu anlarda ilk yapılması gereken, o anki düşünceyi durdurmaya çalışmak değil, bedeni yavaşlatmaktır. Ayaklarınızı yere sıkıca basarak, etrafınızdaki beş nesneyi sessizce sayarak veya ellerinizi soğuk suyla yıkayarak bedeninizi şu ana geri çekebilirsiniz. Bu basit topraklama teknikleri, zihninizin gelecekteki olası başarısızlık senaryolarına kaymasını engelleyerek sizi tekrar sınava odaklanabilir hale getirir. Sınav öncesinde bu tekniği bir kez denemiş olmak, gerçek sınav anında çok daha hızlı uygulayabilmenizi sağlar.</p>\n\n<ul>\n<li>Sınav sabahı erken kalkarak aceleye gerek bırakmayın.</li>\n<li>Sınavdan önceki gece ağır çalışmak yerine hafif bir tekrar yapın.</li>\n<li>Nefes egzersizini sınav öncesinde, salona girmeden hemen önce uygulayın.</li>\n<li>Kaygınız çok yoğunsa bir rehber öğretmen veya uzmandan destek almaktan çekinmeyin.</li>\n</ul>\n\n<blockquote>Kaygıyı tamamen yok etmek hedef olmamalı; onu yönetilebilir bir seviyeye indirmek yeterlidir.</blockquote>\n\n<p>Sınav kaygısı, üzerinde çalışılabilen ve azaltılabilen bir durumdur. Nefes teknikleri, olumlu içsel konuşma ve düzenli deneme pratiği bir araya geldiğinde, sınav gününe çok daha sakin ve kontrollü bir şekilde girebilirsiniz.</p>\n"
+    },
+    {
+      "slug": "kpss-ile-yapilabilecek-meslekler",
+      "title": "KPSS ile Atanabileceğiniz Meslekler ve Kadrolar",
+      "category": "Sınav Haberleri",
+      "publishedAt": "2026-02-10T10:00:00Z",
+      "excerpt": "KPSS Lisans, Önlisans ve Ortaöğretim sonuçlarıyla hangi kamu kadrolarına atanabileceğinizi ve oturumlar arasındaki farkları anlatıyoruz.",
+      "authorName": "Kariyer Danışmanı",
+      "tags": ["KPSS", "Kamu Personeli", "Kariyer"],
+      "contentHtml": "\n<p>Kamu Personel Seçme Sınavı, kısaca KPSS, kamu kurumlarında çalışmak isteyen adaylar için en temel basamaktır. Sınav, mezuniyet düzeyine göre lisans, önlisans ve ortaöğretim olmak üzere üç ayrı oturumda yapılır ve her oturum farklı kadrolara ve farklı bir sınav içeriğine sahiptir. Hangi oturuma gireceğinizi ve hangi kadrolara başvurabileceğinizi bilmek, hazırlık sürecinizi doğru yönlendirmenize yardımcı olur.</p>\n\n<h2>KPSS Lisans ile Hangi Kadrolara Atanılır?</h2>\n<p>Dört yıllık lisans mezunları, genel yetenek ve genel kültür puanıyla memur kadrolarına, eğitim bilimleri puanıyla öğretmenliğe, alan bilgisi testi olan ÖABT ile ise branş öğretmenliğine başvurabilir. Ayrıca pek çok bakanlık ve kamu kurumu, lisans KPSS puanıyla uzman yardımcılığı ve benzeri kadrolar için ilan açar.</p>\n\n<h2>KPSS Önlisans ve Ortaöğretim Farkı</h2>\n<p>Önlisans mezunları memur, zabıta, polis memuru gibi kadrolara KPSS Önlisans puanıyla başvurabilir. Ortaöğretim mezunları için ise daha sınırlı sayıda ama yine de önemli kamu kadroları bulunur, özellikle yardımcı hizmetler sınıfı ve bazı teknik kadrolar bu kapsamdadır. Bu iki sınav, içerik olarak lisans oturumuna göre biraz daha sade bir yapıya sahiptir.</p>\n\n<h2>Eğitim Bilimleri ve ÖABT Önemi</h2>\n<p>Öğretmen olmayı hedefleyen adaylar için genel yetenek ve genel kültür puanı tek başına yeterli değildir. Eğitim bilimleri testi ve alana göre ÖABT sınavı, atama puanının belirlenmesinde belirleyici rol oynar. Bu nedenle öğretmenlik hedefleyen adayların hazırlık planında bu iki sınava ayrılan zaman, genel kültür kadar önemli olmalıdır.</p>\n\n<h2>Atama Sürecinde Puan Türünü Doğru Seçin</h2>\n<p>KPSS'de farklı puan türleri farklı kadrolara denk gelir. Başvuracağınız kadronun hangi puan türünü talep ettiğini önceden araştırmak, hazırlık sürecinde doğru testlere odaklanmanızı sağlar. Yanlış puan türüne göre hazırlanmak, sınav sonunda hedeflediğiniz kadroya başvuramamanıza neden olabilir.</p>\n\n<h2>Atama Takvimini ve İlan Süreçlerini Takip Edin</h2>\n<p>KPSS puanı almak işin yalnızca ilk yarısıdır; bu puanla başvurulacak kadro ilanlarının takvimini de yakından takip etmek gerekir. Merkezi atamalar genellikle yılda belirli dönemlerde açılırken, bazı kurumlar kendi ilanlarını ayrı zamanlarda yayınlar. Puanınızın geçerlilik süresi de kadro türüne göre değişebildiği için, sınava girdiğiniz yıl başvuru yapamazsanız puanınızın ne zaman geçerliliğini kaybedeceğini bilmek önemlidir. Tercih dönemi geldiğinde de tıpkı YKS'de olduğu gibi geçmiş yılların taban puanlarını ve atama sayılarını incelemek, hangi kadroya başvurmanın daha gerçekçi olduğunu görmenizi sağlar.</p>\n\n<ul>\n<li>Hedeflediğiniz kadronun ilan şartlarını ve istenen puan türünü erken araştırın.</li>\n<li>Öğretmenlik hedefliyorsanız eğitim bilimleri ve ÖABT'ye düzenli zaman ayırın.</li>\n<li>Genel kültür ve genel yetenek konularını güncel tutarak düzenli tekrar edin.</li>\n</ul>\n\n<blockquote>KPSS'de başarı, sadece çalışmakla değil doğru kadroya göre doğru puan türüne hazırlanmakla gelir.</blockquote>\n\n<p>KPSS hazırlığına başlamadan önce hedeflediğiniz kadroyu ve o kadronun puan türünü netleştirmek, çalışma sürecinizi gereksiz yere dağıtmadan doğru yöne kanalize etmenizi sağlar. <a href=\"/sinavlar\">Sınav takvimini</a> takip ederek hangi oturuma ne kadar süre kaldığını planlayabilirsiniz.</p>\n"
+    },
+    {
+      "slug": "ales-nedir-nasil-hazirlanir",
+      "title": "ALES Sınavı Nedir? Nasıl Hazırlanılır?",
+      "category": "Sınav Haberleri",
+      "publishedAt": "2026-01-20T10:00:00Z",
+      "excerpt": "Akademik kariyer hedefleyenler için ALES sınavının içeriğini, sözel ve sayısal bölüm dengesini ve etkili hazırlık yöntemlerini anlatıyoruz.",
+      "authorName": "Eğitim Danışmanı",
+      "tags": ["ALES", "Akademik Kariyer", "Lisansüstü"],
+      "contentHtml": "\n<p>Akademik Personel ve Lisansüstü Eğitimi Giriş Sınavı, kısaca ALES, yüksek lisans veya doktora yapmak isteyen ya da üniversitelerde araştırma görevlisi olmayı hedefleyen adaylar için zorunlu bir basamaktır. Sınav, lisans eğitimi sırasında edinilen temel sözel ve sayısal becerileri ölçer ve yılda birkaç kez farklı oturumlarla düzenlenir.</p>\n\n<h2>ALES Sınavının Yapısı</h2>\n<p>Sınav, sözel ve sayısal olmak üzere iki ana bölümden oluşur ve adaylar başvurdukları programın gerektirdiği puan türüne göre değerlendirilir. Sözel bölüm dil bilgisi, sözcük bilgisi ve mantıksal çıkarım sorularını içerirken, sayısal bölüm temel matematik ve problem çözme sorularından oluşur. Bazı programlar sözel, bazıları sayısal, bazıları ise eşit ağırlıklı puan talep eder.</p>\n\n<h2>Hangi Bölüme Daha Çok Çalışmalısınız?</h2>\n<p>Başvurmayı planladığınız yüksek lisans veya doktora programının hangi puan türünü kabul ettiğini erkenden öğrenmek, hazırlık sürecinizi büyük ölçüde kolaylaştırır. Örneğin sosyal bilimler alanındaki birçok program sözel puanı esas alırken, mühendislik ve fen bilimleri alanındaki programlar genellikle sayısal puanı önceliklendirir.</p>\n\n<h2>Lisans Bilgisi Üzerine Kurulu Bir Sınav</h2>\n<p>ALES, YKS gibi kapsamlı bir müfredat sınavı değildir; daha çok lisans eğitimi boyunca edinilmiş olması beklenen temel akıl yürütme ve sayısal işlem becerilerini ölçer. Bu nedenle yoğun bir konu çalışmasından çok, düzenli soru çözümü ve zaman yönetimi pratiği bu sınavda daha belirleyicidir.</p>\n\n<h2>Etkili Hazırlık İçin Öneriler</h2>\n<p>Sınav süresi sıkı olduğu için, soruları hızlı ve doğru çözebilmek pratikle gelişen bir beceridir. Düzenli aralıklarla örnek sınav çözmek, hem soru tipine alışmanızı hem de zaman yönetiminizi geliştirmenizi sağlar. Sözel bölümde paragraf ve sözcük ilişkileri, sayısal bölümde ise problem ve veri yorumlama soruları üzerinde daha fazla durmak faydalı olur.</p>\n\n<h2>Çalışan Adaylar İçin Zaman Planlaması</h2>\n<p>ALES'e hazırlanan adayların büyük bir kısmı aynı zamanda tam zamanlı çalışan profesyonellerdir, bu da çalışma sürecini YKS gibi tam zamanlı bir hazırlıktan farklılaştırır. Günde bir veya iki saatlik kısa ama düzenli çalışma blokları, hafta sonlarında yapılan daha uzun deneme çözümleriyle desteklendiğinde oldukça etkili bir tempo oluşturur. Sınav puanının iki yıl geçerli olduğunu bilmek, hazırlık sürecini gereksiz bir aceleye getirmeden, kendi temponuzda ama düzenli bir şekilde planlamanıza imkân tanır. Mobil uygulamalar üzerinden günlük birkaç soru çözmek bile, yoğun çalışma temposunda küçük ama sürekli bir ilerleme sağlar.</p>\n\n<ul>\n<li>Başvuracağınız programın istediği puan türünü mutlaka önceden öğrenin.</li>\n<li>Düzenli aralıklarla zamanlı deneme sınavı çözün.</li>\n<li>Sözel ve sayısal arasında dengeyi puan türünüze göre ayarlayın.</li>\n<li>Sınav tarihini takip ederek başvuru ve hazırlık sürenizi planlayın.</li>\n</ul>\n\n<blockquote>ALES, geniş bir müfredattan çok hız ve doğru akıl yürütme becerisini ölçen bir sınavdır; pratik yaptıkça performans hızla yükselir.</blockquote>\n\n<p>Akademik kariyer hedefleyen her aday için ALES, lisansüstü eğitime açılan önemli bir kapıdır. <a href=\"/sinavlar\">Sınav takvimini</a> düzenli takip ederek başvuru ve hazırlık sürecinizi zamanında planlamanız, sınav günü hazırlıksız yakalanmamanızı sağlar.</p>\n"
+    }
+  ],
+  "topics": [
+    {
+      "examSlug": "yks",
+      "course": "Matematik",
+      "subject": "Temel Kavramlar",
+      "weight": 5
+    }
+  ],
+  "subjects": [
+    {
+      "slug": "matematik",
+      "name": "Matematik",
+      "examSlug": "yks"
+    },
+    {
+      "slug": "turkce",
+      "name": "Türkçe",
+      "examSlug": "yks"
+    },
+    {
+      "slug": "fizik",
+      "name": "Fizik",
+      "examSlug": "yks"
+    }
+  ],
+  "topicDistributions": [
+    {
+      "examSlug": "yks",
+      "subjectSlug": "matematik",
+      "subjectName": "Matematik",
+      "topicName": "Temel Kavramlar",
+      "year": 2023,
+      "questionCount": 3,
+      "importance": "high"
+    },
+    {
+      "examSlug": "yks",
+      "subjectSlug": "matematik",
+      "subjectName": "Matematik",
+      "topicName": "Temel Kavramlar",
+      "year": 2022,
+      "questionCount": 2,
+      "importance": "high"
+    },
+    {
+      "examSlug": "yks",
+      "subjectSlug": "matematik",
+      "subjectName": "Matematik",
+      "topicName": "Üslü Sayılar",
+      "year": 2023,
+      "questionCount": 1,
+      "importance": "normal"
+    },
+    {
+      "examSlug": "yks",
+      "subjectSlug": "turkce",
+      "subjectName": "Türkçe",
+      "topicName": "Paragraf",
+      "year": 2023,
+      "questionCount": 20,
+      "importance": "high"
+    },
+    {
+      "examSlug": "yks",
+      "subjectSlug": "turkce",
+      "subjectName": "Türkçe",
+      "topicName": "Paragraf",
+      "year": 2022,
+      "questionCount": 22,
+      "importance": "high"
+    }
+  ]
+}

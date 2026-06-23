@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { CountdownTimer } from '../components/CountdownTimer';
+import { site } from '../lib/site';
+import { getExams } from '../lib/pocketbase';
+
+const exams = await getExams();
+
+// Sınav takvimi sayfasıyla aynı mantık: bir sınavın alt oturumları varsa
+// (örn. YKS → TYT/AYT/YDT) her oturum kendi sayacıyla ayrı ayrı gösterilir,
+// ve tüm kartlar PocketBase'deki keyfi `order` alanına göre değil, gerçek
+// sınav tarihine göre kronolojik sıralanır — aksi halde "kaç gün kaldı"
+// sayfasında en yakın sınav en altta görünebiliyordu.
+type Row = { key: string; targetDate: string; label: string; isEstimated?: boolean };
+
+const rows: Row[] = [];
+for (const e of exams) {
+  if (e.sessions && e.sessions.length > 0) {
+    for (const s of e.sessions) {
+      rows.push({
+        key: `${e.slug}-${s.name}`,
+        targetDate: s.targetDate,
+        label: s.countdownLabel,
+        isEstimated: s.isEstimated,
+      });
+    }
+  } else {
+    rows.push({
+      key: e.slug,
+      targetDate: e.targetDate,
+      label: e.countdownLabel,
+      isEstimated: e.isEstimated,
+    });
+  }
+}
+rows.sort((a, b) => new Date(a.targetDate).getTime() - new Date(b.targetDate).getTime());
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Sınav Sayacı', item: `${site.url}/sayac` },
+  ],
+};
+---
+
+<Layout
+  title="YKS Kaç Gün Kaldı? | Canlı Sınav Sayacı"
+  description="YKS kaç gün kaldı? TYT, AYT, LGS, KPSS, DGS ve ALES için saniye saniye güncellenen canlı geri sayım sayacı."
+  structuredData={breadcrumbJsonLd}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-container-max mx-auto py-section-gap">
+      <header class="mb-12">
+        <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">Sınav Sayaçları</h1>
+        <p class="font-body-lg text-body-lg text-text-muted max-w-2xl">Tüm aktif sınavlar için canlı geri sayım.</p>
+      </header>
+      <div class="flex flex-col gap-12">
+        {rows.map((r) => (
+          <CountdownTimer
+            client:load
+            targetDate={r.targetDate}
+            label={r.label}
+            isEstimated={r.isEstimated}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

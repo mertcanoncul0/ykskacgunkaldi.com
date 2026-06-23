@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/site';
+import { getExams } from '../lib/pocketbase';
+
+const exams = await getExams();
+
+// Not: PocketBase'deki Exam modelinde "başvuru tarihi" / "sonuç tarihi" gibi
+// alanlar bulunmuyor — sadece targetDate (sınav tarihi) ve countdownLabel var.
+// Bu yüzden tablo, mockup'taki uydurma başvuru/sonuç sütunları ve sahte
+// "Sınav Değişimi Bildirimi" uyarı banner'ı olmadan, sadece gerçek alanlarla
+// (sınav tarihi, tahmini/kesin durumu, geri sayım etiketi) oluşturuluyor.
+// Bir sınavın alt oturumları varsa (örn. YKS → TYT/AYT/YDT) her oturum kendi
+// satırında gösterilir.
+type Row = {
+  examSlug: string;
+  examName: string;
+  sessionName?: string;
+  targetDate: string;
+  countdownLabel: string;
+  isEstimated?: boolean;
+};
+
+const rows: Row[] = [];
+for (const e of exams) {
+  if (e.sessions && e.sessions.length > 0) {
+    for (const s of e.sessions) {
+      rows.push({
+        examSlug: e.slug,
+        examName: e.name,
+        sessionName: s.name,
+        targetDate: s.targetDate,
+        countdownLabel: s.countdownLabel,
+        isEstimated: s.isEstimated,
+      });
+    }
+  } else {
+    rows.push({
+      examSlug: e.slug,
+      examName: e.name,
+      targetDate: e.targetDate,
+      countdownLabel: e.countdownLabel,
+      isEstimated: e.isEstimated,
+    });
+  }
+}
+rows.sort((a, b) => new Date(a.targetDate).getTime() - new Date(b.targetDate).getTime());
+
+function formatDate(d: string) {
+  try {
+    return new Date(d).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+  } catch {
+    return d;
+  }
+}
+
+function isPastDate(d: string) {
+  const t = new Date(d).getTime();
+  return Number.isFinite(t) && t <= Date.now();
+}
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Sınav Takvimi', item: `${site.url}/sinavlar` },
+  ],
+};
+---
+
+<Layout
+  title="Sınav Takvimi | TYT, AYT, LGS, DGS, KPSS, ALES, MSÜ Tarihleri"
+  description="YKS kaç gün kaldı? TYT, AYT, LGS, KPSS, DGS ve ALES sınavlarının güncel tarihlerini ve geri sayımlarını tek sayfada gör."
+  structuredData={breadcrumbJsonLd}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-container-max mx-auto py-section-gap">
+      <header class="mb-12">
+        <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">Sınav Takvimi</h1>
+        <p class="font-body-lg text-body-lg text-text-muted max-w-2xl">
+          Hazırlandığın sınavı seç, tarihini ve geri sayımını gör.
+        </p>
+      </header>
+
+      {rows.length === 0 ? (
+        <div class="border border-border-subtle bg-white-pure p-12 text-center text-text-muted">
+          <span class="material-symbols-outlined text-4xl" aria-hidden="true">calendar_month</span>
+          <p class="font-body-md mt-4">Sınav bilgisi bulunamadı.</p>
+        </div>
+      ) : (
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse">
+            <thead>
+              <tr class="border-b-2 border-primary text-left">
+                <th class="py-4 px-2 font-label-md text-label-md uppercase tracking-wider text-text-muted text-left">Sınav</th>
+                <th class="py-4 px-2 font-label-md text-label-md uppercase tracking-wider text-text-muted text-left">Sınav Tarihi</th>
+                <th class="py-4 px-2 font-label-md text-label-md uppercase tracking-wider text-text-muted text-left">Durum</th>
+                <th class="py-4 px-2 text-left"></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border-subtle">
+              {rows.map((r) => {
+                const past = isPastDate(r.targetDate);
+                return (
+                  <tr class={`group hover:bg-surface-container-high transition-colors${past ? " opacity-60" : ""}`}>
+                    <td class="py-6 px-2">
+                      <div class="font-headline-md text-headline-md text-primary">{r.examName}</div>
+                      {r.sessionName && <div class="font-label-sm text-label-sm text-text-muted uppercase">{r.sessionName}</div>}
+                    </td>
+                    <td class="py-6 px-2 font-body-md text-body-md font-semibold">{formatDate(r.targetDate)}</td>
+                    <td class="py-6 px-2 font-body-md text-body-md text-text-muted">
+                      {past ? (
+                        <span class="inline-flex items-center gap-1 bg-surface-container-high px-3 py-1 font-label-sm text-label-sm uppercase">
+                          <span class="material-symbols-outlined text-[14px]" aria-hidden="true">task_alt</span>
+                          Tamamlandı
+                        </span>
+                      ) : r.isEstimated ? (
+                        <span class="border border-border-subtle px-3 py-1 font-label-sm text-label-sm uppercase">Tahmini</span>
+                      ) : (
+                        r.countdownLabel
+                      )}
+                    </td>
+                    <td class="py-6 px-2 text-right">
+                      {past ? (
+                        <span class="font-label-md text-label-md uppercase text-text-muted whitespace-nowrap">Geçti</span>
+                      ) : (
+                        <a class="font-label-md text-label-md uppercase text-primary hover:text-text-muted transition-colors whitespace-nowrap" href={`/?sinav=${r.examSlug}`}>
+                          Detayları Gör →
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/site';
+import { getPosts } from '../lib/pocketbase';
+
+const posts = await getPosts();
+
+// Not 1: PocketBase'de tıklanma/okunma sayısı gibi bir popülerlik metriği
+// bulunmuyor. "Popüler Yazılar" burada en güncel yayınlanan içerikleri
+// (publishedAt'e göre, getPosts() zaten -publishedAt sıralı) gündem
+// göstergesi olarak kullanır.
+// Not 2: Önceki sürüm, kategorisi boş olan yazılara slug'dan türetilmiş sahte
+// bir kategori atıyordu (pickCategory) — gerçek-ama-boş bir alana uydurma
+// değer yazmak olduğu için bu kaldırıldı. Kategori rozetleri ve "Popüler
+// Konular" listesi artık sadece gerçekten dolu olan post.category
+// değerlerinden türetiliyor.
+const spotlight = posts[0];
+const ranked = posts.slice(1, 5);
+const mustRead = posts.slice(5, 9);
+const topics = Array.from(
+  new Set(posts.map((p) => p.category).filter((c): c is string => Boolean(c)))
+);
+
+function readingTime(p: (typeof posts)[number]): number {
+  const text = (p?.contentHtml || p?.excerpt || '') as string;
+  const words = text.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(2, Math.round(words / 200));
+}
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Popüler Yazılar', item: `${site.url}/populer-yazilar` },
+  ],
+};
+---
+
+<Layout
+  title="Popüler Yazılar | YKS Kaç Gün Kaldı"
+  description="Sınav hazırlığında en çok okunan, gündemdeki rehber yazıları ve çalışma taktikleri."
+  structuredData={breadcrumbJsonLd}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-container-max mx-auto py-section-gap flex flex-col gap-section-gap">
+      <header class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-primary pb-8">
+        <div>
+          <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary">Popüler Yazılar</h1>
+          <p class="font-body-md text-body-md text-text-muted mt-4 max-w-2xl">
+            Sınav adaylarının şu anda en çok okuduğu rehberler ve gündem yazıları.
+          </p>
+        </div>
+      </header>
+
+      {!spotlight && (
+        <div class="border border-border-subtle bg-white-pure p-12 text-center text-text-muted">
+          <span class="material-symbols-outlined text-4xl" aria-hidden="true">auto_stories</span>
+          <p class="font-body-md mt-4">Henüz yayınlanmış bir yazı bulunmuyor.</p>
+        </div>
+      )}
+
+      {spotlight && (
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+          <div class="md:col-span-8 order-2 md:order-1">
+            <div class="flex items-center gap-2 mb-6">
+              <span class="w-2 h-2 bg-primary"></span>
+              <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary">Gündemdeki Yazı</span>
+            </div>
+            <h2 class="font-headline-lg text-headline-lg text-primary leading-tight mb-4 group">
+              <a class="hover:underline decoration-1 underline-offset-4" href={`/blog/${spotlight.slug}`}>{spotlight.title}</a>
+            </h2>
+            {spotlight.excerpt && (
+              <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 line-clamp-3">{spotlight.excerpt}</p>
+            )}
+            <div class="flex items-center gap-4">
+              <a
+                class="inline-flex items-center justify-center bg-primary text-on-primary px-6 py-3 font-label-md text-label-md uppercase hover:bg-surface-container-highest hover:text-primary transition-colors duration-300"
+                href={`/blog/${spotlight.slug}`}
+              >
+                Okumaya Başla
+              </a>
+              <span class="font-label-sm text-label-sm text-text-muted">{readingTime(spotlight)} Dk Okuma</span>
+            </div>
+          </div>
+          <div class="md:col-span-4 order-1 md:order-2">
+            <div class="w-full aspect-[4/5] bg-surface-container border border-border-subtle relative overflow-hidden">
+              {spotlight.coverImage ? (
+                <img class="w-full h-full object-cover grayscale" src={spotlight.coverImage} alt={spotlight.title} />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center text-text-muted">
+                  <span class="material-symbols-outlined text-[48px]" aria-hidden="true">trending_up</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {(ranked.length > 0 || mustRead.length > 0 || topics.length > 0) && (
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+          <section class="lg:col-span-8 flex flex-col">
+            {ranked.length > 0 && (
+              <>
+                <div class="border-b border-primary pb-4 mb-8">
+                  <h3 class="font-label-md text-label-md uppercase tracking-widest text-primary">En Çok Okunanlar</h3>
+                </div>
+                <div class="flex flex-col">
+                  {ranked.map((post, i) => (
+                    <article class="group flex items-start gap-6 py-8 border-b border-border-subtle">
+                      <div class="font-display-lg text-[64px] leading-none font-bold text-tertiary-fixed-dim group-hover:text-primary transition-colors duration-300 select-none">
+                        {String(i + 1).padStart(2, '0')}
+                      </div>
+                      <div class="flex-1 flex flex-col gap-3 mt-2">
+                        {post.category && (
+                          <div class="flex gap-2">
+                            <span class="font-label-sm text-label-sm border border-border-subtle px-2 py-0.5 text-text-muted">{post.category}</span>
+                          </div>
+                        )}
+                        <h4 class="font-headline-md text-headline-md text-primary group-hover:underline decoration-1 underline-offset-4">
+                          <a href={`/blog/${post.slug}`}>{post.title}</a>
+                        </h4>
+                        {post.excerpt && <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">{post.excerpt}</p>}
+                        <div class="font-label-sm text-label-sm text-text-muted mt-2">
+                          {post.authorName && <>Yazar: {post.authorName} • </>}{readingTime(post)} Dk Okuma
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </>
+            )}
+          </section>
+
+          <aside class="lg:col-span-4 flex flex-col gap-8">
+            {mustRead.length > 0 && (
+              <div class="bg-surface border border-border-subtle p-6">
+                <h3 class="font-headline-md text-headline-md text-primary mb-6 flex items-center gap-2">
+                  <span class="material-symbols-outlined" aria-hidden="true">bookmark</span>
+                  Mutlaka Okunmalı
+                </h3>
+                <ul class="flex flex-col gap-4">
+                  {mustRead.map((post) => (
+                    <li class="border-b border-border-subtle pb-4 last:border-0 last:pb-0">
+                      <a class="group block" href={`/blog/${post.slug}`}>
+                        {post.category && <p class="font-label-sm text-label-sm text-text-muted mb-1">{post.category}</p>}
+                        <h4 class="font-body-md text-body-md font-medium text-primary group-hover:underline decoration-1 underline-offset-2">{post.title}</h4>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {topics.length > 0 && (
+              <div class="border-t border-primary pt-6">
+                <h3 class="font-label-md text-label-md uppercase tracking-widest text-primary mb-4">Popüler Konular</h3>
+                <div class="flex flex-wrap gap-2">
+                  {topics.map((t) => (
+                    <a class="font-label-sm text-label-sm border border-border-subtle px-3 py-1 text-on-surface hover:border-primary transition-colors" href="/blog">{t}</a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </aside>
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>

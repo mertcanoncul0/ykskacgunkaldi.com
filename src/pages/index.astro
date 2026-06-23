@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { HomeClient } from '../components/HomeClient';
+import { getExams, getFaqs, getSettings, getPosts } from '../lib/pocketbase';
+
+const [exams, faqs, settings, posts] = await Promise.all([
+  getExams(),
+  getFaqs(),
+  getSettings(),
+  getPosts(),
+]);
+
+const stripHtml = (s: string) => s.replace(/<[^>]+>/g, '').trim();
+
+const faqJsonLd = faqs?.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: stripHtml(f.answer),
+        },
+      })),
+    }
+  : null;
+---
+
+<Layout
+  title={settings.homepage_seo_title}
+  description={settings.homepage_seo_description}
+  structuredData={faqJsonLd ? [faqJsonLd] : []}
+>
+  <HomeClient client:load exams={exams} faqs={faqs} posts={posts.slice(0, 3)} />
+</Layout>

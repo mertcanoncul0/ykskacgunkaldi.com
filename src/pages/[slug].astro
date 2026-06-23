@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../lib/site";
+import { getPageBySlug } from "../lib/pocketbase";
+
+const { slug } = Astro.params;
+const pageData = await getPageBySlug(slug as string);
+
+if (!pageData) {
+  return new Response("Not found", { status: 404 });
+}
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: site.url },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: pageData.title,
+      item: `${site.url}/${slug}`,
+    },
+  ],
+};
+---
+
+<Layout
+  title={pageData.title}
+  description={pageData.description || site.defaultDescription}
+  structuredData={breadcrumbJsonLd}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-3xl mx-auto py-section-gap">
+      <h1
+        class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6"
+      >
+        {pageData.title}
+      </h1>
+      {
+        pageData.description && (
+          <p class="font-body-lg text-body-lg text-text-muted mb-12 border-b border-border-subtle pb-12">
+            {pageData.description}
+          </p>
+        )
+      }
+      <div
+        class="prose-article font-body-lg text-on-surface space-y-6 leading-relaxed [&_h2]:font-headline-md [&_h2]:text-headline-md [&_h2]:text-black-pure [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:font-label-md [&_h3]:uppercase [&_h3]:mt-8 [&_h3]:mb-2 [&_a]:underline [&_a]:text-primary [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-black-pure [&_blockquote]:pl-8 [&_blockquote]:py-2 [&_blockquote]:italic [&_blockquote]:font-headline-md"
+        set:html={pageData.contentHtml}
+      />
+    </div>
+  </div>
+</Layout>

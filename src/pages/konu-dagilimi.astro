@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KonuDagilimiClient } from '../components/KonuDagilimiClient';
+import { site } from '../lib/site';
+import { getExams, getSubjects, getTopicDistributions } from '../lib/pocketbase';
+
+const [exams, subjects, distributions] = await Promise.all([
+  getExams(),
+  getSubjects(),
+  getTopicDistributions(),
+]);
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Konu Dağılımı', item: `${site.url}/konu-dagilimi` },
+  ],
+};
+---
+
+<Layout
+  title="Konu Dağılımı | YKS, LGS Yıllara Göre Soru Dağılımı"
+  description="Sınavlarda son yıllarda hangi konudan kaç soru çıktığını ders ve yıl bazında detaylı incele."
+  structuredData={breadcrumbJsonLd}
+>
+  <KonuDagilimiClient client:load exams={exams} subjects={subjects} distributions={distributions} />
+</Layout>

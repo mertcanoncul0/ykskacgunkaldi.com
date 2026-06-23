@@ -1,0 +1,291 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { site } from '../../lib/site';
+import { getDaysLeft } from '../../lib/countdown';
+import { getPosts, getExams } from '../../lib/pocketbase';
+
+const { slug } = Astro.params;
+const [posts, exams] = await Promise.all([getPosts(), getExams()]);
+
+const post = posts.find(p => p.slug === slug);
+if (!post) {
+  return new Response('Not found', { status: 404 });
+}
+
+const others = posts.filter((p) => p.slug !== slug);
+const top = others.slice(0, 3);
+const related = others.slice(3, 6).length > 0 ? others.slice(3, 6) : others.slice(0, 3);
+
+const targetExam = exams
+  .slice()
+  .sort((a, b) => b.slug.length - a.slug.length)
+  .find((e) => post.slug.includes(e.slug)) || exams.find((e) => e.slug === "yks") || exams[0];
+
+const daysLeft = getDaysLeft(targetExam?.targetDate);
+
+function readingTime(p: any): number {
+  const text = (p?.contentHtml || p?.excerpt || "") as string;
+  const words = text.replace(/<[^>]+>/g, " ").trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(2, Math.round(words / 200));
+}
+
+function formatDate(d?: string) {
+  if (!d) return "";
+  try {
+    return new Date(d).toLocaleDateString("tr-TR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  } catch {
+    return "";
+  }
+}
+
+function initials(name?: string) {
+  if (!name) return "ED";
+  return name.split(/\s+/).map((p) => p[0]).slice(0, 2).join("").toLocaleUpperCase("tr-TR");
+}
+
+const mins = readingTime(post);
+const tags = post.tags || [];
+
+const articleUrl = `${site.url}/blog/${post.slug}`;
+const articleImage = post.coverImage
+  ? (post.coverImage.startsWith('http') ? post.coverImage : `${site.url}${post.coverImage}`)
+  : `${site.url}${site.ogImage}`;
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${site.url}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: articleUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: articleImage,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    inLanguage: 'tr-TR',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
+    author: {
+      '@type': 'Person',
+      name: post.authorName || 'Eğitim Danışmanı',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: site.name,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${site.url}${site.logo}`,
+      },
+    },
+  },
+];
+---
+
+<Layout
+  title={post.title}
+  description={post.excerpt || site.defaultDescription}
+  ogType="article"
+  publishedTime={post.publishedAt}
+  author={post.authorName}
+  ogImage={post.coverImage}
+  structuredData={structuredData}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-container-max mx-auto py-section-gap">
+      <nav class="flex items-center gap-2 mb-8 font-label-sm text-text-muted" aria-label="Breadcrumb">
+        <a class="hover:text-primary transition-colors" href="/">Anasayfa</a>
+        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
+        <a class="hover:text-primary transition-colors" href="/blog">Blog</a>
+        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
+        <span class="text-on-surface line-clamp-1">{post.title}</span>
+      </nav>
+
+      <div class="lg:grid lg:grid-cols-12 gap-gutter">
+        <main class="lg:col-span-8">
+          <article>
+            <header class="mb-8">
+              <div class="flex items-center gap-2 mb-6">
+                {post.category && (
+                  <span class="px-3 py-1 border border-black-pure text-black-pure font-label-sm uppercase">{post.category}</span>
+                )}
+                <span class="text-text-muted font-label-sm">• {mins} Dakika Okuma</span>
+              </div>
+              <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-black-pure mb-8">{post.title}</h1>
+              <div class="flex items-center gap-4 py-6 border-y border-border-subtle">
+                <div class="w-12 h-12 bg-surface-container-high flex items-center justify-center font-label-md text-on-surface flex-shrink-0">
+                  {initials(post.authorName)}
+                </div>
+                <div>
+                  <p class="font-label-md text-black-pure">{post.authorName || "Eğitim Danışmanı"}</p>
+                  {post.publishedAt && <p class="text-text-muted font-label-sm">{formatDate(post.publishedAt)}</p>}
+                </div>
+                <div class="ml-auto flex gap-4">
+                  <button id="share-btn" class="material-symbols-outlined text-text-muted hover:text-black-pure transition-colors" aria-label="Paylaş" type="button" data-title={post.title} data-url={articleUrl}>share</button>
+                  <button id="save-btn" class="material-symbols-outlined text-text-muted hover:text-black-pure transition-colors" aria-label="Kaydet" type="button" data-slug={post.slug}>bookmark</button>
+                </div>
+              </div>
+            </header>
+
+            {post.coverImage ? (
+              <div class="w-full aspect-[16/9] mb-12 overflow-hidden bg-surface-container">
+                <img class="w-full h-full object-cover grayscale" src={post.coverImage} alt={post.title} />
+              </div>
+            ) : (
+              <div class="w-full aspect-[16/9] mb-12 overflow-hidden bg-surface-container border border-border-subtle flex items-center justify-center text-text-muted">
+                <span class="material-symbols-outlined text-[64px]" aria-hidden="true">menu_book</span>
+              </div>
+            )}
+
+            <div
+              class="prose-article font-body-lg text-on-surface space-y-6 leading-relaxed [&_h2]:font-headline-md [&_h2]:text-headline-md [&_h2]:text-black-pure [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:font-label-md [&_h3]:uppercase [&_h3]:mt-8 [&_h3]:mb-2 [&_a]:underline [&_a]:text-primary [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-black-pure [&_blockquote]:pl-8 [&_blockquote]:py-2 [&_blockquote]:italic [&_blockquote]:font-headline-md"
+              set:html={post.contentHtml}
+            />
+
+            {tags.length > 0 && (
+              <div class="mt-16 pt-8 border-t border-border-subtle flex flex-wrap gap-2">
+                {tags.map((t) => (
+                  <span class="font-label-sm border border-border-subtle px-3 py-1">#{t.toLocaleUpperCase("tr-TR")}</span>
+                ))}
+              </div>
+            )}
+          </article>
+        </main>
+
+        <aside class="lg:col-span-4 mt-16 lg:mt-0 space-y-8">
+          {top.length > 0 && (
+            <div class="bg-white-pure border border-border-subtle p-6">
+              <h3 class="flex items-center gap-2 font-label-md uppercase mb-6">
+                <span class="material-symbols-outlined" aria-hidden="true">trending_up</span>
+                En Çok Okunanlar
+              </h3>
+              <ol class="space-y-4">
+                {top.map((p, i) => (
+                  <li>
+                    <a class="flex gap-3 group" href={`/blog/${p.slug}`}>
+                      <span class="font-display-lg text-text-muted text-[24px] leading-none">{String(i + 1).padStart(2, "0")}</span>
+                      <span class="flex flex-col">
+                        <span class="font-label-md group-hover:text-primary transition-colors leading-snug">{p.title}</span>
+                        {p.publishedAt && <span class="font-label-sm text-text-muted mt-1">{formatDate(p.publishedAt)}</span>}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {targetExam && daysLeft !== null && (
+            <div class="bg-black-pure text-white-pure p-6 text-center">
+              <span class="material-symbols-outlined" aria-hidden="true">timer</span>
+              <h4 class="font-label-md uppercase mt-2 mb-4">{targetExam.name}</h4>
+              <div class="flex items-baseline justify-center gap-2 mb-6">
+                <strong class="font-display-lg text-[40px] leading-none">{daysLeft}</strong>
+                <span class="font-label-sm uppercase">Gün Kaldı</span>
+              </div>
+              <a class="inline-flex items-center gap-2 border border-white-pure px-4 py-2 font-label-sm uppercase hover:bg-white-pure hover:text-black-pure transition-colors" href={`/puan-hesaplama/${targetExam.slug}`}>
+                Hemen Planla
+                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+              </a>
+            </div>
+          )}
+        </aside>
+      </div>
+
+      {related.length > 0 && (
+        <section class="mt-section-gap pt-12 border-t border-border-subtle">
+          <h2 class="font-headline-lg text-headline-lg mb-8">İlginizi Çekebilir</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+            {related.map((p) => (
+              <a class="group block" href={`/blog/${p.slug}`}>
+                <div class="aspect-[4/3] mb-4 border border-border-subtle bg-surface-container overflow-hidden">
+                  {p.coverImage ? (
+                    <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.title} loading="lazy" />
+                  ) : (
+                    <div class="w-full h-full flex items-center justify-center text-text-muted">
+                      <span class="material-symbols-outlined text-[32px]" aria-hidden="true">article</span>
+                    </div>
+                  )}
+                </div>
+                {p.category && <span class="font-label-sm text-text-muted uppercase mb-2 block tracking-widest">{p.category}</span>}
+                <h3 class="font-headline-md text-headline-md group-hover:text-primary transition-colors">{p.title}</h3>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
+
+  <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-black-pure z-[60] transition-all duration-150" style="width: 0%"></div>
+  <script>
+    function updateProgressBar() {
+      const bar = document.getElementById('progress-bar');
+      if (!bar) return;
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      (bar as HTMLElement).style.width = scrolled + '%';
+    }
+    window.addEventListener('scroll', updateProgressBar);
+    updateProgressBar();
+
+    const shareBtn = document.getElementById('share-btn');
+    shareBtn?.addEventListener('click', async () => {
+      const title = shareBtn.dataset.title || document.title;
+      const url = shareBtn.dataset.url || location.href;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, url });
+        } catch {
+          /* user cancelled — no-op */
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(url);
+          const prevLabel = shareBtn.getAttribute('aria-label');
+          shareBtn.setAttribute('aria-label', 'Bağlantı kopyalandı');
+          setTimeout(() => shareBtn.setAttribute('aria-label', prevLabel || 'Paylaş'), 2000);
+        } catch {
+          /* clipboard unavailable — no-op */
+        }
+      }
+    });
+
+    const saveBtn = document.getElementById('save-btn');
+    if (saveBtn) {
+      const slug = saveBtn.dataset.slug || '';
+      const KEY = 'yks-saved-posts';
+      const readSaved = (): string[] => {
+        try {
+          return JSON.parse(localStorage.getItem(KEY) || '[]');
+        } catch {
+          return [];
+        }
+      };
+      const applyState = (saved: string[]) => {
+        const isSaved = saved.includes(slug);
+        saveBtn.classList.toggle('text-black-pure', isSaved);
+        saveBtn.classList.toggle('text-text-muted', !isSaved);
+        saveBtn.setAttribute('aria-pressed', String(isSaved));
+        saveBtn.textContent = isSaved ? 'bookmark_added' : 'bookmark';
+      };
+      applyState(readSaved());
+      saveBtn.addEventListener('click', () => {
+        const saved = readSaved();
+        const next = saved.includes(slug) ? saved.filter((s) => s !== slug) : [...saved, slug];
+        localStorage.setItem(KEY, JSON.stringify(next));
+        applyState(next);
+      });
+    }
+  </script>
+</Layout>

@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { hubLinks } from '../lib/site';
+
+Astro.response.status = 404;
+---
+
+<Layout
+  title="Sayfa Bulunamadı (404) | YKS Kaç Gün Kaldı"
+  description="Aradığınız sayfa bulunamadı. Sınav takvimi, geri sayım ve sınav hazırlık rehberlerine buradan ulaşabilirsiniz."
+  noindex={true}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-3xl mx-auto py-section-gap text-center">
+      <span class="material-symbols-outlined text-[64px] text-text-muted" aria-hidden="true">search_off</span>
+      <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mt-6 mb-4">404</h1>
+      <p class="font-headline-md text-headline-md text-black-pure mb-2">Sayfa Bulunamadı</p>
+      <p class="font-body-lg text-body-lg text-text-muted mb-12 max-w-xl mx-auto">
+        Aradığınız sayfa kaldırılmış, taşınmış ya da hiç var olmamış olabilir. Aşağıdaki bağlantılardan devam edebilirsin.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 bg-black-pure text-white-pure px-6 py-3 font-label-md uppercase hover:bg-primary transition-colors"
+        >
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">home</span>
+          Ana Sayfa
+        </a>
+        <a
+          href="/sinavlar"
+          class="inline-flex items-center gap-2 border border-border-subtle px-6 py-3 font-label-md uppercase hover:bg-surface-container-high transition-colors"
+        >
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">calendar_month</span>
+          Sınav Takvimi
+        </a>
+        <a
+          href="/sayac"
+          class="inline-flex items-center gap-2 border border-border-subtle px-6 py-3 font-label-md uppercase hover:bg-surface-container-high transition-colors"
+        >
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">timer</span>
+          Sınav Sayacı
+        </a>
+      </div>
+
+      <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2 font-label-sm text-text-muted" aria-label="Hızlı bağlantılar">
+        {hubLinks.map((l) => (
+          <a href={l.href} class="hover:text-primary transition-colors uppercase tracking-wide">{l.label}</a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</Layout>

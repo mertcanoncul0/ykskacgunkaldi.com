@@ -1,0 +1,23 @@
+{
+  "name": "YKS Kaç Gün Kaldı",
+  "short_name": "YKS Sayacı",
+  "description": "YKS, TYT, AYT, LGS, DGS, KPSS ve ALES için canlı geri sayım, sınav takvimi ve hazırlık rehberleri.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
