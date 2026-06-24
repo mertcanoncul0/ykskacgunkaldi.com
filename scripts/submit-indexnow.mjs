@@ -10,7 +10,7 @@ const DEFAULT_ENDPOINTS = [
 const DEFAULT_KEY = "df7cdb4351ae6da7";
 const SITEMAP_URL = process.env.INDEXNOW_SITEMAP_URL || `${SITE_URL}/sitemap.xml`;
 const key = process.env.INDEXNOW_KEY || DEFAULT_KEY;
-const keyLocation = process.env.INDEXNOW_KEY_LOCATION || `${SITE_URL}/.well-known/indexnow/${key}.txt`;
+const keyLocation = process.env.INDEXNOW_KEY_LOCATION || `${SITE_URL}/${key}.txt`;
 const endpoints = (process.env.INDEXNOW_ENDPOINT || process.env.INDEXNOW_ENDPOINTS || "")
   .split(",")
   .map((value) => value.trim())
