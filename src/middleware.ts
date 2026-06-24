@@ -35,9 +35,9 @@ const CONTENT_SECURITY_POLICY = [
   // Astro island hydration için sayfaya küçük inline bootstrap scriptleri
   // ekler. Bunlar engellenirse React markup görünür ama event handler'lar
   // bağlanmaz; header menüleri ve tab/accordion kontrolleri tepkisiz kalır.
-  // Cloudflare proxy arkasındaysa otomatik enjekte edilen Web Analytics
-  // beacon'ı için de origin istisnası korunur.
-  "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
+  // Google tag ve Cloudflare proxy arkasındaysa otomatik enjekte edilen Web
+  // Analytics beacon'ı için origin istisnaları korunur.
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.cloudflareinsights.com",
   // İkonlar SVG'ye taşındı ama bazı bileşenler (ScoreCalculatorForm,
   // KonuDagilimiClient, ilerleme çubuğu script'i, shadcn/ui sidebar/chart)
   // hâlâ inline style="" attribute'u kullanıyor — bunları kırmadan strict
@@ -48,7 +48,7 @@ const CONTENT_SECURITY_POLICY = [
   // artık hiç ihtiyaç yok — font-src 'self' yeterli.
   "font-src 'self'",
   "img-src 'self' data: https:",
-  "connect-src 'self' https://static.cloudflareinsights.com",
+  "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://static.cloudflareinsights.com",
   "form-action 'self'",
   "upgrade-insecure-requests",
 ].join("; ");
