@@ -30,7 +30,7 @@ const mainLinks = [
   { to: "/hakkimizda", label: "Hakkımızda" },
 ] as const;
 
-type OpenMenu = null | "exams" | "calc";
+type OpenMenu = null | "exams" | "calc" | "mobile";
 
 const linkClass = (active: boolean) =>
   active
@@ -73,12 +73,23 @@ export function Header({ exams = [] }: { exams?: any[] }) {
       <nav className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto h-16">
         <a
           href="/"
-          className="font-display-lg text-display-lg-mobile md:text-[24px] tracking-tighter text-primary uppercase font-extrabold"
+          className="font-display-lg text-[22px] sm:text-[24px] tracking-tighter text-primary uppercase font-extrabold"
           aria-label="Ana sayfa"
           onClick={close}
         >
           {site.name}
         </a>
+
+        <button
+          type="button"
+          className="md:hidden inline-flex h-10 w-10 items-center justify-center border border-primary text-primary"
+          aria-label={open === "mobile" ? "Menüyü kapat" : "Menüyü aç"}
+          aria-expanded={open === "mobile"}
+          aria-controls="header-mobile-menu"
+          onClick={() => setOpen((cur) => (cur === "mobile" ? null : "mobile"))}
+        >
+          <Icon name={open === "mobile" ? "close" : "menu"} size={22} />
+        </button>
 
         <div className="hidden md:flex items-center gap-8">
           <button
@@ -179,6 +190,74 @@ export function Header({ exams = [] }: { exams?: any[] }) {
                 <span>{item.label}</span>
               </a>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile menu */}
+      {open === "mobile" && (
+        <div
+          id="header-mobile-menu"
+          className="md:hidden absolute left-0 right-0 top-16 z-40 max-h-[calc(100vh-4rem)] overflow-y-auto border-b-2 border-primary bg-surface-container-lowest"
+        >
+          <div className="px-margin-mobile py-5">
+            <div className="border-b border-border-subtle pb-5">
+              <p className="font-label-sm text-label-sm uppercase tracking-widest text-text-muted mb-3">
+                Sınavlar
+              </p>
+              <div className="grid grid-cols-1 gap-1">
+                {exams.map((exam) => (
+                  <a
+                    key={exam.slug}
+                    href={`/?sinav=${exam.slug}`}
+                    className="flex items-center justify-between gap-3 px-3 py-3 font-label-md text-label-md text-primary hover:bg-surface-container-high"
+                    onClick={close}
+                  >
+                    <span>{examLabels[exam.slug] || exam.name}</span>
+                    <Icon name="chevron_right" size={18} className="text-text-muted" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-b border-border-subtle py-5">
+              <p className="font-label-sm text-label-sm uppercase tracking-widest text-text-muted mb-3">
+                Puan Hesaplama
+              </p>
+              <div className="grid grid-cols-1 gap-1">
+                {scoreCalculatorMenu?.map((item) => (
+                  <a
+                    key={item.slug}
+                    href={`/puan-hesaplama/${item.slug}`}
+                    className="flex items-center justify-between gap-3 px-3 py-3 font-label-md text-label-md text-primary hover:bg-surface-container-high"
+                    onClick={close}
+                  >
+                    <span>{item.label}</span>
+                    <Icon name={item.icon} size={18} className="text-text-muted" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-1 pt-5">
+              <a
+                href="/blog"
+                className="px-3 py-3 font-label-md text-label-md text-primary hover:bg-surface-container-high"
+                onClick={close}
+              >
+                Blog
+              </a>
+              {mainLinks.map((l) => (
+                <a
+                  key={l.to}
+                  href={l.to}
+                  className="px-3 py-3 font-label-md text-label-md text-primary hover:bg-surface-container-high"
+                  onClick={close}
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       )}

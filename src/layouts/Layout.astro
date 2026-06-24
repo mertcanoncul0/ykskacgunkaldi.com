@@ -74,6 +74,7 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="google-site-verification" content="Vgk0t-MjIkPo3QPmja7ly7jEKT_GqBhfD8s47ZkRKSA" />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="tr" href={canonicalUrl} />
@@ -89,6 +90,16 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-Q7MC7YC7WJ"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-Q7MC7YC7WJ');
+    </script>
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
