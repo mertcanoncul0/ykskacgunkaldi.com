@@ -66,18 +66,31 @@ const payload = {
   urlList: urls,
 };
 
-const results = await Promise.all(
-  endpointList.map(async (endpoint) => {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify(payload),
-    });
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-    const body = await response.text();
-    return { endpoint, ok: response.ok, status: response.status, body };
-  }),
-);
+async function submitToEndpoint(endpoint, attempt = 1) {
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify(payload),
+  });
+
+  const body = await response.text();
+
+  // 403 right after a deploy usually means the key file hasn't propagated
+  // yet (the search engine re-fetches keyLocation live to verify). Retry a
+  // couple of times with a short delay before giving up.
+  if (response.status === 403 && attempt < 3) {
+    await sleep(5000 * attempt);
+    return submitToEndpoint(endpoint, attempt + 1);
+  }
+
+  return { endpoint, ok: response.ok, status: response.status, body };
+}
+
+const results = await Promise.all(endpointList.map((endpoint) => submitToEndpoint(endpoint)));
 
 for (const result of results) {
   if (result.ok) {
