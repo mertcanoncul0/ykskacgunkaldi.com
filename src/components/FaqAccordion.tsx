@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addMissingLinkTitles } from "../lib/html";
 import { Icon } from "../lib/icons";
 
 interface FaqItem {
@@ -40,7 +41,7 @@ export function FaqAccordion({ faqs, title = "Sıkça Sorulan Sorular" }: Props)
               id={`faq-answer-${f.id ?? i}`}
               className="font-body-md text-body-md text-text-muted pb-6 leading-relaxed [&_a]:underline [&_a]:text-primary"
               hidden={open !== i}
-              dangerouslySetInnerHTML={{ __html: f.answer }}
+              dangerouslySetInnerHTML={{ __html: addMissingLinkTitles(f.answer) }}
             />
           </li>
         ))}

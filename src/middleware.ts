@@ -38,6 +38,7 @@ const CONTENT_SECURITY_POLICY = [
   // Google tag ve Cloudflare proxy arkasındaysa otomatik enjekte edilen Web
   // Analytics beacon'ı için origin istisnaları korunur.
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.cloudflareinsights.com",
+  "script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.cloudflareinsights.com",
   // İkonlar SVG'ye taşındı ama bazı bileşenler (ScoreCalculatorForm,
   // KonuDagilimiClient, ilerleme çubuğu script'i, shadcn/ui sidebar/chart)
   // hâlâ inline style="" attribute'u kullanıyor — bunları kırmadan strict

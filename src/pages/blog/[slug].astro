@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { site } from '../../lib/site';
 import { getDaysLeft } from '../../lib/countdown';
+import { addMissingLinkTitles } from '../../lib/html';
 import { getPosts, getExams } from '../../lib/pocketbase';
 import { Icon } from '../../lib/icons';
 
@@ -154,7 +155,7 @@ const structuredData = [
 
             <div
               class="prose-article font-body-lg text-on-surface space-y-6 leading-relaxed [&_h2]:font-headline-md [&_h2]:text-headline-md [&_h2]:text-black-pure [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:font-label-md [&_h3]:uppercase [&_h3]:mt-8 [&_h3]:mb-2 [&_a]:underline [&_a]:text-primary [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-black-pure [&_blockquote]:pl-8 [&_blockquote]:py-2 [&_blockquote]:italic [&_blockquote]:font-headline-md"
-              set:html={post.contentHtml}
+              set:html={addMissingLinkTitles(post.contentHtml)}
             />
 
             {tags.length > 0 && (
