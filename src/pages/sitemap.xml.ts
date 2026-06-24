@@ -3,6 +3,8 @@ import { site } from '../lib/site';
 import { getHomeSeoSitemapPaths } from '../lib/home-seo';
 import { getExams, getPosts, getAllPageSlugs } from '../lib/pocketbase';
 import { scoreCalculatorMenu } from '../data/score-calculators';
+import { examLandingPaths } from '../data/exam-landing-pages';
+import { toolPagePaths } from '../data/tool-pages';
 
 // Site artık tamamen PocketBase'den besleniyor; @astrojs/sitemap build-time'da
 // çalıştığı ve sadece prerender edilen rotaları gördüğü için SSR'da işe
@@ -14,6 +16,9 @@ const staticRoutes = [
   '/sayac',
   '/blog',
   '/konu-dagilimi',
+  '/konu-dagilimi/tyt',
+  '/konu-dagilimi/ayt',
+  '/konu-dagilimi/lgs',
   '/populer-yazilar',
   '/ilanlar',
   '/rehberler',
@@ -30,13 +35,15 @@ export const GET: APIRoute = async () => {
     getAllPageSlugs(),
   ]);
 
-  const urls = [
+  const urls = Array.from(new Set([
     ...staticRoutes,
+    ...examLandingPaths,
+    ...toolPagePaths,
     ...getHomeSeoSitemapPaths(exams),
     ...scoreCalculatorMenu.map((c) => `/puan-hesaplama/${c.slug}`),
     ...posts.map((p) => `/blog/${p.slug}`),
     ...pageSlugs.map((slug) => `/${slug}`),
-  ];
+  ]));
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
     .map(urlEntry)

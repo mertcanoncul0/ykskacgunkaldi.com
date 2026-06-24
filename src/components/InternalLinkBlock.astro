@@ -1,0 +1,28 @@
+---
+import type { LandingLink } from "../data/exam-landing-pages";
+import { Icon } from "../lib/icons";
+
+interface Props {
+  title?: string;
+  links: LandingLink[];
+}
+
+const { title = "İlgili Araçlar", links } = Astro.props;
+---
+
+{links.length > 0 && (
+  <section class="border border-border-subtle bg-white-pure p-6" aria-labelledby="internal-links-title">
+    <h2 id="internal-links-title" class="font-headline-md text-headline-md text-primary mb-6">{title}</h2>
+    <div class="grid grid-cols-1 gap-3">
+      {links.map((link) => (
+        <a href={link.href} class="group flex min-w-0 items-start gap-3 border border-border-subtle p-4 hover:border-black-pure transition-colors">
+          <Icon name={link.icon || "arrow_forward"} className="text-text-muted shrink-0 mt-0.5" />
+          <span class="min-w-0 flex-1">
+            <strong class="block break-words font-label-md text-label-md leading-snug text-on-surface group-hover:text-primary transition-colors">{link.label}</strong>
+            <span class="block break-words font-body-md text-body-md text-text-muted leading-relaxed">{link.description}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

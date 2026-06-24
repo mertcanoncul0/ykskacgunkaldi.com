@@ -1,0 +1,70 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { KonuDagilimiClient } from "../../components/KonuDagilimiClient";
+import { getExams, getSubjects, getTopicDistributions } from "../../lib/pocketbase";
+import { breadcrumbJsonLd, webPageJsonLd } from "../../lib/schema";
+
+const { slug } = Astro.params;
+
+const pageMap: Record<string, { title: string; metaTitle: string; description: string; examSlug: string }> = {
+  tyt: {
+    title: "TYT Konu Dağılımı",
+    metaTitle: "TYT Konu Dağılımı | Yıllara Göre Soru Dağılımı",
+    description:
+      "TYT Türkçe, matematik, sosyal ve fen konularını yıllara göre soru dağılımı ile inceleyin.",
+    examSlug: "yks",
+  },
+  ayt: {
+    title: "AYT Konu Dağılımı",
+    metaTitle: "AYT Konu Dağılımı | Yıllara Göre Soru Dağılımı",
+    description:
+      "AYT alan derslerinde son yılların konu ve soru dağılımını inceleyerek çalışma önceliği belirleyin.",
+    examSlug: "yks",
+  },
+  lgs: {
+    title: "LGS Konu Dağılımı",
+    metaTitle: "LGS Konu Dağılımı | Yıllara Göre Soru Dağılımı",
+    description:
+      "LGS dersleri için konu dağılımını inceleyin, deneme ve tekrar planınızı veriye göre oluşturun.",
+    examSlug: "lgs",
+  },
+};
+
+const page = slug ? pageMap[slug] : undefined;
+if (!page) {
+  return new Response("Not found", { status: 404 });
+}
+
+const [exams, subjects, distributions] = await Promise.all([
+  getExams(),
+  getSubjects(),
+  getTopicDistributions(),
+]);
+
+const path = `/konu-dagilimi/${slug}`;
+const structuredData = [
+  breadcrumbJsonLd([
+    { name: "Ana Sayfa", path: "/" },
+    { name: "Konu Dağılımı", path: "/konu-dagilimi" },
+    { name: page.title, path },
+  ]),
+  webPageJsonLd({ title: page.title, description: page.description, path }),
+];
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.description}
+  path={path}
+  structuredData={structuredData}
+>
+  <KonuDagilimiClient
+    client:load
+    exams={exams}
+    subjects={subjects}
+    distributions={distributions}
+    initialExamSlug={page.examSlug}
+    titleOverride={page.title}
+    descriptionOverride={page.description}
+  />
+</Layout>

@@ -51,6 +51,62 @@ function initials(name?: string) {
 
 const mins = readingTime(post);
 const tags = post.tags || [];
+const contextualLinks = (() => {
+  const s = post.slug;
+  if (s.includes("motivasyon") || s.includes("uyku") || s.includes("tekrar") || s.includes("calisma-programi")) {
+    return [
+      { href: "/yks-calisma-programi", label: "YKS çalışma programı", body: "Haftalık çalışma planı oluştur.", icon: "edit_note" },
+      { href: "/yks-kac-gun-kaldi", label: "YKS sayacı", body: "Kalan süreyi takip et.", icon: "timer" },
+    ];
+  }
+  if (s.includes("deneme")) {
+    return [
+      { href: "/deneme-net-takip-tablosu", label: "Deneme net takip tablosu", body: "Deneme sonuçlarını kaydet ve karşılaştır.", icon: "history" },
+      { href: "/puan-hesaplama/yks", label: "YKS puan hesaplama", body: "Netlerini tahmini puana çevir.", icon: "calculate" },
+    ];
+  }
+  if (s.includes("tyt")) {
+    return [
+      { href: "/tyt-kac-gun-kaldi", label: "TYT sayacı", body: "TYT oturumuna kalan süreyi gör.", icon: "timer" },
+      { href: "/konu-dagilimi/tyt", label: "TYT konu dağılımı", body: "Konu ağırlıklarını incele.", icon: "bar_chart" },
+      { href: "/puan-hesaplama/tyt", label: "TYT puan hesaplama", body: "TYT netlerini hesapla.", icon: "calculate" },
+    ];
+  }
+  if (s.includes("tercih")) {
+    return [
+      { href: "/puan-hesaplama/yks", label: "YKS puan hesaplama", body: "Tahmini puanını kontrol et.", icon: "calculate" },
+      { href: "/basari-siralamasi-tahmini", label: "Başarı sıralaması tahmini", body: "Puanını yaklaşık sıralama aralığıyla yorumla.", icon: "trending_up" },
+    ];
+  }
+  if (s.includes("lgs")) {
+    return [
+      { href: "/lgs-kac-gun-kaldi", label: "LGS sayacı", body: "LGS'ye kalan süreyi takip et.", icon: "timer" },
+      { href: "/puan-hesaplama/lgs", label: "LGS puan hesaplama", body: "Tahmini LGS puanını hesapla.", icon: "calculate" },
+    ];
+  }
+  if (s.includes("dgs")) {
+    return [
+      { href: "/dgs-kac-gun-kaldi", label: "DGS sayacı", body: "DGS tarihini ve geri sayımı takip et.", icon: "timer" },
+      { href: "/puan-hesaplama/dgs", label: "DGS puan hesaplama", body: "DGS netlerinden tahmini puan hesapla.", icon: "calculate" },
+    ];
+  }
+  if (s.includes("kpss")) {
+    return [
+      { href: "/kpss-kac-gun-kaldi", label: "KPSS sayacı", body: "KPSS oturumlarına kalan süreyi gör.", icon: "timer" },
+      { href: "/puan-hesaplama/kpss-lisans", label: "KPSS puan hesaplama", body: "KPSS netlerinden tahmini puan hesapla.", icon: "calculate" },
+    ];
+  }
+  if (s.includes("ales")) {
+    return [
+      { href: "/ales-kac-gun-kaldi", label: "ALES sayacı", body: "ALES oturumuna kalan süreyi takip et.", icon: "timer" },
+      { href: "/puan-hesaplama/ales", label: "ALES puan hesaplama", body: "ALES puan türlerini hesapla.", icon: "calculate" },
+    ];
+  }
+  return [
+    { href: "/yks-kac-gun-kaldi", label: "YKS sayacı", body: "Kalan süreyi takip et.", icon: "timer" },
+    { href: "/puan-hesaplama/yks", label: "YKS puan hesaplama", body: "Netlerini tahmini puana çevir.", icon: "calculate" },
+  ];
+})();
 
 const articleUrl = `${site.url}/blog/${post.slug}`;
 const articleImage = post.coverImage
@@ -157,6 +213,24 @@ const structuredData = [
               class="prose-article font-body-lg text-on-surface space-y-6 leading-relaxed [&_h2]:font-headline-md [&_h2]:text-headline-md [&_h2]:text-black-pure [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:font-label-md [&_h3]:uppercase [&_h3]:mt-8 [&_h3]:mb-2 [&_a]:underline [&_a]:text-primary [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-black-pure [&_blockquote]:pl-8 [&_blockquote]:py-2 [&_blockquote]:italic [&_blockquote]:font-headline-md"
               set:html={addMissingLinkTitles(post.contentHtml)}
             />
+
+            <section class="mt-12 border border-border-subtle bg-white-pure p-6" aria-labelledby="post-tools-title">
+              <h2 id="post-tools-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-5">
+                <Icon name="explore" />
+                İlgili Araçlar
+              </h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {contextualLinks.map((link) => (
+                  <a href={link.href} class="group flex min-w-0 items-start gap-3 border border-border-subtle p-4 hover:border-black-pure transition-colors">
+                    <Icon name={link.icon} className="text-text-muted shrink-0 mt-0.5" />
+                    <span class="min-w-0 flex-1">
+                      <strong class="block break-words font-label-md text-label-md leading-snug text-on-surface group-hover:text-primary transition-colors">{link.label}</strong>
+                      <span class="block break-words font-body-md text-body-md text-text-muted leading-relaxed">{link.body}</span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </section>
 
             {tags.length > 0 && (
               <div class="mt-16 pt-8 border-t border-border-subtle flex flex-wrap gap-2">

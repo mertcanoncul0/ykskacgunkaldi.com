@@ -54,22 +54,43 @@ const CONTENT_SECURITY_POLICY = [
   "upgrade-insecure-requests",
 ].join("; ");
 
+const EMBED_CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "frame-ancestors 'self' https: http:",
+  "object-src 'none'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self'",
+  "img-src 'self' data:",
+  "connect-src 'none'",
+  "form-action 'none'",
+].join("; ");
+
 export const onRequest = defineMiddleware(async (context, next) => {
   const response = await next();
   const { pathname } = context.url;
+  const isEmbed = pathname.startsWith("/embed/");
 
   response.headers.set(
     "Strict-Transport-Security",
     "max-age=63072000; includeSubDomains; preload"
   );
   response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("X-Frame-Options", "DENY");
+  if (!isEmbed) {
+    response.headers.set("X-Frame-Options", "DENY");
+  } else {
+    response.headers.delete("X-Frame-Options");
+  }
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set(
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
   );
-  response.headers.set("Content-Security-Policy", CONTENT_SECURITY_POLICY);
+  response.headers.set(
+    "Content-Security-Policy",
+    isEmbed ? EMBED_CONTENT_SECURITY_POLICY : CONTENT_SECURITY_POLICY
+  );
 
   if (HASHED_ASSET_RE.test(pathname)) {
     response.headers.set("Cache-Control", "public, max-age=31536000, immutable");

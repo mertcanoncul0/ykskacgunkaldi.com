@@ -1,4 +1,5 @@
 import type { Exam, ExamSession } from "./api";
+import { homeSelectionLandingPaths } from "../data/exam-landing-pages";
 
 export interface HomeSeoDefaults {
   homepage_seo_title: string;
@@ -123,10 +124,12 @@ export function getHomeSeo(
   }
 
   const exactSeo = HOME_SEO_BY_SLUG[selection.selectionSlug];
-  if (exactSeo) {
+    if (exactSeo) {
     return {
       ...exactSeo,
-      canonicalPath: `/?sinav=${encodeURIComponent(selection.selectionSlug)}`,
+      canonicalPath:
+        homeSelectionLandingPaths[selection.selectionSlug] ||
+        `/?sinav=${encodeURIComponent(selection.selectionSlug)}`,
       selectionSlug: selection.selectionSlug,
     };
   }
@@ -142,11 +145,15 @@ export function getHomeSeo(
   return {
     title,
     description,
-    canonicalPath: `/?sinav=${encodeURIComponent(selection.selectionSlug)}`,
+    canonicalPath:
+      homeSelectionLandingPaths[selection.selectionSlug] ||
+      `/?sinav=${encodeURIComponent(selection.selectionSlug)}`,
     selectionSlug: selection.selectionSlug,
   };
 }
 
 export function getHomeSeoSitemapPaths(exams: Exam[]) {
-  return getAllSelectionSlugs(exams).map((slug) => `/?sinav=${encodeURIComponent(slug)}`);
+  return getAllSelectionSlugs(exams)
+    .filter((slug) => !homeSelectionLandingPaths[slug])
+    .map((slug) => `/?sinav=${encodeURIComponent(slug)}`);
 }

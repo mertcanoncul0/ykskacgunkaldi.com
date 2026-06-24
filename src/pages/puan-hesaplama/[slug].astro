@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getScoreCalculatorConfig, getCalculatorFaqs, scoreCalculatorMenu } from '../../data/score-calculators';
+import { homeSelectionLandingPaths } from '../../data/exam-landing-pages';
 import { ScoreCalculatorForm } from '../../components/ScoreCalculatorForm';
 import { CalcExamCountdown } from '../../components/CalcExamCountdown';
 import { site } from '../../lib/site';
@@ -23,6 +24,51 @@ const activeSession = activeExam?.sessions?.find((s: any) => s.slug === slug);
 
 const targetDate = activeSession?.targetDate || activeExam?.targetDate || new Date().toISOString();
 const targetLabel = activeSession?.countdownLabel || activeExam?.countdownLabel || "Sınava Kalan Süre";
+const countdownHref = homeSelectionLandingPaths[slug as string] || homeSelectionLandingPaths[config.kind] || "/sayac";
+
+const relatedLinks = [
+  {
+    href: countdownHref,
+    icon: "timer",
+    label: `${config.title.replace("Puan Hesaplama", "Sayacı")}`,
+    body: "İlgili sınava kalan süreyi ve hazırlık bağlantılarını takip et.",
+  },
+  ...(slug === "tyt"
+    ? [
+        {
+          href: "/konu-dagilimi/tyt",
+          icon: "bar_chart",
+          label: "TYT Konu Dağılımı",
+          body: "TYT derslerinde hangi konulara öncelik vereceğini gör.",
+        },
+      ]
+    : []),
+  ...(slug === "ayt" || slug === "yks"
+    ? [
+        {
+          href: "/konu-dagilimi/ayt",
+          icon: "bar_chart",
+          label: "AYT Konu Dağılımı",
+          body: "Alan derslerinin konu ağırlıklarını incele.",
+        },
+      ]
+    : []),
+  {
+    href: "/deneme-net-takip-tablosu",
+    icon: "history",
+    label: "Deneme Net Takip",
+    body: "Hesapladığın netleri zaman içinde karşılaştır.",
+  },
+  {
+    href: slug === "yks" || slug === "tyt" || slug === "ayt" ? "/yks-calisma-programi" : "/blog",
+    icon: slug === "yks" || slug === "tyt" || slug === "ayt" ? "edit_note" : "article",
+    label: slug === "yks" || slug === "tyt" || slug === "ayt" ? "YKS Çalışma Programı" : "Rehberler & Blog",
+    body:
+      slug === "yks" || slug === "tyt" || slug === "ayt"
+        ? "Netlerine göre haftalık çalışma planı oluştur."
+        : "Sınavlara dair detaylı rehberleri incele.",
+  },
+].slice(0, 4);
 
 const pageUrl = `${site.url}/puan-hesaplama/${slug}`;
 
@@ -120,13 +166,15 @@ const structuredData = [
               İlgili Sayfalar
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <a href="/blog" class="group flex items-start gap-4 border border-border-subtle p-4 hover:border-black-pure transition-colors">
-                <Icon name="article" className="text-text-muted" />
-                <div>
-                  <strong class="block font-label-md text-on-surface group-hover:text-primary transition-colors">Rehberler &amp; Blog</strong>
-                  <span class="font-body-md text-body-md text-text-muted">Sınavlara dair detaylı bilgilere ulaş.</span>
-                </div>
-              </a>
+              {relatedLinks.map((link) => (
+                <a href={link.href} class="group flex min-w-0 items-start gap-3 border border-border-subtle p-4 hover:border-black-pure transition-colors">
+                  <Icon name={link.icon} className="text-text-muted shrink-0 mt-0.5" />
+                  <div class="min-w-0 flex-1">
+                    <strong class="block break-words font-label-md text-label-md leading-snug text-on-surface group-hover:text-primary transition-colors">{link.label}</strong>
+                    <span class="block break-words font-body-md text-body-md text-text-muted leading-relaxed">{link.body}</span>
+                  </div>
+                </a>
+              ))}
             </div>
           </section>
         </div>
@@ -136,7 +184,7 @@ const structuredData = [
             client:load
             targetDate={targetDate}
             label={targetLabel}
-            href="/sayac"
+            href={countdownHref}
             isEstimated={true}
           />
           <div class="border border-border-subtle bg-white-pure p-6">

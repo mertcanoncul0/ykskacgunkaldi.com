@@ -13,10 +13,13 @@
 
 import type { Exam, ExamSession } from "./api";
 
-const PB_URL = (process.env.POCKETBASE_URL || "http://127.0.0.1:8091").replace(
-  /\/$/,
-  "",
-);
+const runtimeEnv = (globalThis as typeof globalThis & {
+  process?: { env?: Record<string, string | undefined> };
+}).process?.env;
+
+const PB_URL = (
+  runtimeEnv?.POCKETBASE_URL || "https://api.ykskacgunkaldi.com"
+).replace(/\/$/, "");
 
 // Aynı süreç içinde tekrarlanan istekleri PocketBase'e tekrar göndermemek için
 // kısa ömürlü bir bellek-içi cache. Node adapter "standalone" modda sürekli

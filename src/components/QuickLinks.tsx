@@ -8,10 +8,10 @@ import { Icon } from "../lib/icons";
 
 const links = [
   {
-    label: "Sınav Takvimi",
-    href: "/sinavlar",
-    body: "Tüm sınavların güncel tarihlerini ve oturumlarını tek sayfada karşılaştırın.",
-    description: "Sınavlar sayfasını incele",
+    label: "YKS Sayacı",
+    href: "/yks-kac-gun-kaldi",
+    body: "YKS, TYT ve AYT oturumlarına kalan süreyi path tabanlı kaynak sayfasından takip edin.",
+    description: "YKS sayacı sayfasını incele",
   },
   {
     label: "Puan Hesaplama",
@@ -21,9 +21,9 @@ const links = [
   },
   {
     label: "Konu Dağılımı",
-    href: "/konu-dagilimi",
-    body: "Geçmiş yıllarda hangi dersten kaç soru çıktığını derslere göre inceleyin.",
-    description: "Konu dağılımı sayfasını incele",
+    href: "/konu-dagilimi/tyt",
+    body: "TYT ve AYT konu dağılımlarını inceleyerek çalışma önceliklerinizi belirleyin.",
+    description: "TYT konu dağılımı sayfasını incele",
   },
 ] as const;
 

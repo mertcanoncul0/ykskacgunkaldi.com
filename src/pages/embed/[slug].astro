@@ -1,0 +1,28 @@
+---
+import EmbedLayout from "../../layouts/EmbedLayout.astro";
+import EmbedCountdown from "../../components/EmbedCountdown.astro";
+import { getEmbedCountdown } from "../../data/embed-countdowns";
+import { getExams } from "../../lib/pocketbase";
+import { resolveCountdownRef } from "../../lib/exams";
+
+const { slug } = Astro.params;
+const config = getEmbedCountdown(slug);
+
+if (!config) {
+  return new Response("Not found", { status: 404 });
+}
+
+const exams = await getExams();
+const countdown = resolveCountdownRef(exams, config.countdown);
+
+if (!countdown) {
+  return new Response("Not found", { status: 404 });
+}
+
+const theme = Astro.url.searchParams.get("theme") || "light";
+const compact = Astro.url.searchParams.get("compact") === "1";
+---
+
+<EmbedLayout title={`${config.title} Embed Sayaç`}>
+  <EmbedCountdown config={config} countdown={countdown} theme={theme} compact={compact} />
+</EmbedLayout>

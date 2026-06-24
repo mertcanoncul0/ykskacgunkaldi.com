@@ -33,11 +33,23 @@ export const footerLinkGroups = [
   {
     title: "Sınavlar",
     links: [
+      { label: "YKS Sayacı", href: "/yks-kac-gun-kaldi" },
+      { label: "TYT Sayacı", href: "/tyt-kac-gun-kaldi" },
+      { label: "AYT Sayacı", href: "/ayt-kac-gun-kaldi" },
       { label: "Sınav Takvimi", href: "/sinavlar" },
       { label: "Puan Hesaplama", href: "/puan-hesaplama/yks" },
       { label: "Konu Dağılımı", href: "/konu-dagilimi" },
       { label: "Blog", href: "/blog" },
       { label: "Rehberlik", href: "/rehberler" },
+    ],
+  },
+  {
+    title: "Kaynaklar",
+    links: [
+      { label: "YKS Çalışma Programı", href: "/yks-calisma-programi" },
+      { label: "Deneme Net Takip", href: "/deneme-net-takip-tablosu" },
+      { label: "Embed Sayaç", href: "/embed-sayac" },
+      { label: "2027 YKS Takvimi", href: "/2027-yks-takvimi" },
     ],
   },
   {

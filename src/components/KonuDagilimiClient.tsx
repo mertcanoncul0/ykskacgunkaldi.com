@@ -2,9 +2,25 @@ import { useMemo, useState, useEffect } from "react";
 import { Select } from "./Select";
 import { Icon } from "../lib/icons";
 
-export function KonuDagilimiClient({ exams, subjects, distributions }: { exams: any[], subjects: any[], distributions: any[] }) {
-  const [examSlug, setExamSlug] = useState("yks");
-  const [activeSubjectSlug, setActiveSubjectSlug] = useState<string | undefined>(undefined);
+export function KonuDagilimiClient({
+  exams,
+  subjects,
+  distributions,
+  initialExamSlug = "yks",
+  initialSubjectSlug,
+  titleOverride,
+  descriptionOverride,
+}: {
+  exams: any[];
+  subjects: any[];
+  distributions: any[];
+  initialExamSlug?: string;
+  initialSubjectSlug?: string;
+  titleOverride?: string;
+  descriptionOverride?: string;
+}) {
+  const [examSlug, setExamSlug] = useState(initialExamSlug);
+  const [activeSubjectSlug, setActiveSubjectSlug] = useState<string | undefined>(initialSubjectSlug);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -98,10 +114,10 @@ export function KonuDagilimiClient({ exams, subjects, distributions }: { exams: 
       <div className="max-w-container-max mx-auto py-section-gap">
         <header className="mb-12">
           <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">
-            {exam?.name || "Sınav"} Konu Dağılımı
+            {titleOverride || `${exam?.name || "Sınav"} Konu Dağılımı`}
           </h1>
           <p className="font-body-lg text-body-lg text-text-muted max-w-2xl">
-            Son yılların çıkmış sorularına dayalı analitik konu dağılımı. Stratejik çalışma planınızı oluşturmak için verileri inceleyin.
+            {descriptionOverride || "Son yılların çıkmış sorularına dayalı analitik konu dağılımı. Stratejik çalışma planınızı oluşturmak için verileri inceleyin."}
           </p>
         </header>
 
@@ -146,12 +162,12 @@ export function KonuDagilimiClient({ exams, subjects, distributions }: { exams: 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
             <div className="lg:col-span-8 flex flex-col gap-8">
               <article className="border border-border-subtle bg-white-pure p-8">
-                <div className="flex items-start justify-between gap-4 mb-8">
-                  <div>
-                    <h2 className="font-headline-md text-headline-md text-primary">{subjectName} Soru Dağılımı</h2>
+                <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
+                  <div className="min-w-0 flex-1">
+                    <h2 className="break-words font-headline-md text-headline-md leading-snug text-primary">{subjectName} Soru Dağılımı</h2>
                     <p className="font-body-md text-body-md text-text-muted mt-1">Yıllara göre ortalama soru sayısı ağırlıkları</p>
                   </div>
-                  <span className="inline-flex items-center gap-2 border border-border-subtle px-3 py-1 font-label-sm text-label-sm uppercase text-text-muted whitespace-nowrap">
+                  <span className="inline-flex shrink-0 items-center gap-2 border border-border-subtle px-3 py-1 font-label-sm text-label-sm uppercase text-text-muted whitespace-nowrap">
                     <Icon name="trending_up" size={16} />
                     Güncel Veri
                   </span>

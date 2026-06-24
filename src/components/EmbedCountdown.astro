@@ -1,0 +1,139 @@
+---
+import type { EmbedCountdownConfig } from "../data/embed-countdowns";
+import { getCountdown } from "../lib/countdown";
+import type { ResolvedCountdown } from "../lib/exams";
+import { site } from "../lib/site";
+
+interface Props {
+  config: EmbedCountdownConfig;
+  countdown: ResolvedCountdown;
+  theme?: string | null;
+  compact?: boolean;
+}
+
+const { config, countdown, theme = "light", compact = false } = Astro.props;
+const initial = getCountdown(countdown.targetDate);
+const dark = theme === "dark";
+const landingUrl = `${site.url}${config.canonicalLanding}`;
+---
+
+<div
+  class:list={["embed-countdown", { dark, compact }]}
+  data-target={countdown.targetDate}
+  data-label={countdown.countdownLabel}
+>
+  <div class="topline">
+    <strong>{countdown.countdownLabel}</strong>
+    {countdown.isEstimated ? <span>Tahmini</span> : <span>Kesin</span>}
+  </div>
+  <div class="grid" role="timer" aria-live="off">
+    <div><b data-unit="days">{String(initial.days).padStart(2, "0")}</b><small>Gün</small></div>
+    <div><b data-unit="hours">{String(initial.hours).padStart(2, "0")}</b><small>Saat</small></div>
+    <div><b data-unit="minutes">{String(initial.minutes).padStart(2, "0")}</b><small>Dk</small></div>
+    {!compact && <div><b data-unit="seconds">{String(initial.seconds).padStart(2, "0")}</b><small>Sn</small></div>}
+  </div>
+  <a class="brand" href={landingUrl} target="_blank" rel="noopener">
+    {config.attributionLabel}: ykskacgunkaldi.com
+  </a>
+</div>
+
+<style>
+  .embed-countdown {
+    width: 100%;
+    max-width: 360px;
+    min-width: 280px;
+    min-height: 180px;
+    height: 100vh;
+    max-height: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+    padding: 16px;
+    border: 1px solid #111;
+    background: #fff;
+    color: #111;
+  }
+  .embed-countdown.dark {
+    background: #111;
+    color: #fff;
+    border-color: #fff;
+  }
+  .topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 13px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .topline span {
+    border: 1px solid currentColor;
+    padding: 3px 6px;
+    font-size: 11px;
+    opacity: 0.72;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .compact .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .grid div {
+    border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+    padding: 10px 4px;
+    text-align: center;
+  }
+  b {
+    display: block;
+    font-size: 28px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  small {
+    display: block;
+    margin-top: 5px;
+    font-size: 10px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .brand {
+    font-size: 11px;
+    line-height: 1.25;
+    opacity: 0.72;
+    text-align: center;
+    text-decoration: none;
+  }
+  .brand:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+</style>
+
+<script is:inline>
+  const root = document.querySelector(".embed-countdown");
+  const pad = (value) => String(value).padStart(2, "0");
+  const update = () => {
+    if (!root) return;
+    const target = new Date(root.dataset.target || "").getTime();
+    const ms = Math.max(Number.isFinite(target) ? target - Date.now() : 0, 0);
+    const days = Math.floor(ms / 86400000);
+    const hours = Math.floor((ms % 86400000) / 3600000);
+    const minutes = Math.floor((ms % 3600000) / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    root.querySelector('[data-unit="days"]').textContent = pad(days);
+    root.querySelector('[data-unit="hours"]').textContent = pad(hours);
+    root.querySelector('[data-unit="minutes"]').textContent = pad(minutes);
+    const secondsEl = root.querySelector('[data-unit="seconds"]');
+    if (secondsEl) secondsEl.textContent = pad(seconds);
+    root.querySelector(".grid")?.setAttribute(
+      "aria-label",
+      `${root.dataset.label}: ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye kaldı.`,
+    );
+  };
+  update();
+  window.setInterval(update, 1000);
+</script>

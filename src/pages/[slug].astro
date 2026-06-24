@@ -2,53 +2,109 @@
 import Layout from "../layouts/Layout.astro";
 import { site } from "../lib/site";
 import { addMissingLinkTitles } from "../lib/html";
-import { getPageBySlug } from "../lib/pocketbase";
+import { getExams, getPageBySlug } from "../lib/pocketbase";
+import { getExamLandingPage } from "../data/exam-landing-pages";
+import { getToolPage } from "../data/tool-pages";
+import ExamLandingPage from "../components/ExamLandingPage.astro";
+import ToolResourcePage from "../components/ToolResourcePage.astro";
+import { breadcrumbJsonLd, faqJsonLd, webPageJsonLd } from "../lib/schema";
 
 const { slug } = Astro.params;
-const pageData = await getPageBySlug(slug as string);
+const landingPage = getExamLandingPage(slug);
+const toolPage = getToolPage(slug);
+const pageData = !landingPage && !toolPage ? await getPageBySlug(slug as string) : undefined;
 
-if (!pageData) {
+if (!landingPage && !toolPage && !pageData) {
   return new Response("Not found", { status: 404 });
 }
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: site.url },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: pageData.title,
-      item: `${site.url}/${slug}`,
-    },
-  ],
-};
+const exams = landingPage || toolPage ? await getExams() : [];
+const path = `/${slug}`;
+
+const landingFaqJsonLd = landingPage ? faqJsonLd(landingPage.faqs) : null;
+const toolFaqJsonLd = toolPage ? faqJsonLd(toolPage.faqs) : null;
+const landingStructuredData = landingPage
+  ? [
+      breadcrumbJsonLd([
+        { name: "Ana Sayfa", path: "/" },
+        { name: "Sınavlar", path: "/sinavlar" },
+        { name: landingPage.h1, path },
+      ]),
+      webPageJsonLd({
+        title: landingPage.h1,
+        description: landingPage.metaDescription,
+        path,
+      }),
+      ...(landingFaqJsonLd ? [landingFaqJsonLd] : []),
+    ]
+  : [];
+const toolStructuredData = toolPage
+  ? [
+      breadcrumbJsonLd([
+        { name: "Ana Sayfa", path: "/" },
+        { name: "Rehberler", path: "/rehberler" },
+        { name: toolPage.h1, path },
+      ]),
+      webPageJsonLd({
+        title: toolPage.h1,
+        description: toolPage.metaDescription,
+        path,
+      }),
+      ...(toolFaqJsonLd ? [toolFaqJsonLd] : []),
+    ]
+  : [];
+
+const cmsBreadcrumbJsonLd = pageData
+  ? breadcrumbJsonLd([
+      { name: "Ana Sayfa", path: "/" },
+      { name: pageData.title, path },
+    ])
+  : null;
 ---
 
-<Layout
-  title={pageData.title}
-  description={pageData.description || site.defaultDescription}
-  structuredData={breadcrumbJsonLd}
->
-  <div class="px-margin-mobile md:px-margin-desktop">
-    <div class="max-w-3xl mx-auto py-section-gap">
-      <h1
-        class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6"
-      >
-        {pageData.title}
-      </h1>
-      {
-        pageData.description && (
-          <p class="font-body-lg text-body-lg text-text-muted mb-12 border-b border-border-subtle pb-12">
-            {pageData.description}
-          </p>
-        )
-      }
-      <div
-        class="prose-article font-body-lg text-on-surface space-y-6 leading-relaxed [&_h2]:font-headline-md [&_h2]:text-headline-md [&_h2]:text-black-pure [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:font-label-md [&_h3]:uppercase [&_h3]:mt-8 [&_h3]:mb-2 [&_a]:underline [&_a]:text-primary [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-black-pure [&_blockquote]:pl-8 [&_blockquote]:py-2 [&_blockquote]:italic [&_blockquote]:font-headline-md"
-        set:html={addMissingLinkTitles(pageData.contentHtml)}
-      />
+{landingPage ? (
+  <Layout
+    title={landingPage.metaTitle}
+    description={landingPage.metaDescription}
+    path={path}
+    structuredData={landingStructuredData}
+  >
+    <ExamLandingPage config={landingPage} exams={exams} />
+  </Layout>
+) : toolPage ? (
+  <Layout
+    title={toolPage.metaTitle}
+    description={toolPage.metaDescription}
+    path={path}
+    structuredData={toolStructuredData}
+  >
+    <ToolResourcePage config={toolPage} exams={exams} />
+  </Layout>
+) : pageData ? (
+  <Layout
+    title={pageData.title}
+    description={pageData.description || site.defaultDescription}
+    structuredData={cmsBreadcrumbJsonLd ? [cmsBreadcrumbJsonLd] : []}
+  >
+    <div class="px-margin-mobile md:px-margin-desktop">
+      <div class="max-w-3xl mx-auto py-section-gap">
+        <h1
+          class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6"
+        >
+          {pageData.title}
+        </h1>
+        {
+          pageData.description && (
+            <p class="font-body-lg text-body-lg text-text-muted mb-12 border-b border-border-subtle pb-12">
+              {pageData.description}
+            </p>
+          )
+        }
+        <div
+          class="prose-article font-body-lg text-on-surface space-y-6 leading-relaxed [&_h2]:font-headline-md [&_h2]:text-headline-md [&_h2]:text-black-pure [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:font-label-md [&_h3]:uppercase [&_h3]:mt-8 [&_h3]:mb-2 [&_a]:underline [&_a]:text-primary [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-black-pure [&_blockquote]:pl-8 [&_blockquote]:py-2 [&_blockquote]:italic [&_blockquote]:font-headline-md"
+          set:html={addMissingLinkTitles(pageData.contentHtml)}
+        />
+      </div>
     </div>
-  </div>
-</Layout>
+  </Layout>
+) : null}

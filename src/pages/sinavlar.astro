@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { site } from '../lib/site';
+import { homeSelectionLandingPaths } from '../data/exam-landing-pages';
 import { getExams } from '../lib/pocketbase';
 import { Icon } from '../lib/icons';
 
@@ -128,7 +129,7 @@ const breadcrumbJsonLd = {
                       ) : (
                         <a
                           class="font-label-md text-label-md uppercase text-primary hover:text-text-muted transition-colors whitespace-nowrap"
-                          href={`/?sinav=${r.examSlug}`}
+                          href={homeSelectionLandingPaths[r.sessionName?.toLocaleLowerCase("tr-TR") || r.examSlug] || homeSelectionLandingPaths[r.examSlug] || `/?sinav=${r.examSlug}`}
                           aria-label={`${r.examName}${r.sessionName ? ` ${r.sessionName}` : ""} – Detayları Gör`}
                         >
                           Detayları Gör →

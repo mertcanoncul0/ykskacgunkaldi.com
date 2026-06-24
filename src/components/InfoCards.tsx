@@ -1,4 +1,5 @@
 import type { Exam } from "../lib/api";
+import { homeSelectionLandingPaths } from "../data/exam-landing-pages";
 import { Icon } from "../lib/icons";
 
 // Not: Eski sürümdeki "Günün Sözü" (Robert Collier'e atfedilen alıntı) ve
@@ -34,7 +35,7 @@ export function InfoCards({ exam }: { exam: Exam }) {
           </p>
         </div>
         <a
-          href={`/?sinav=${exam.slug}`}
+          href={homeSelectionLandingPaths[exam.slug] || `/?sinav=${exam.slug}`}
           className="inline-flex items-center gap-2 font-label-md text-label-md uppercase text-primary hover:text-text-muted transition-colors shrink-0"
           aria-label={`${exam.name} detaylarını görüntüle`}
           title={`${exam.name} detaylarını görüntüle`}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { scoreCalculatorMenu } from "../data/score-calculators";
+import { homeSelectionLandingPaths } from "../data/exam-landing-pages";
 import { site } from "../lib/site";
 import { Icon } from "../lib/icons";
 
@@ -73,7 +74,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
       <nav className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto h-16">
         <a
           href="/"
-          className="font-display-lg text-[22px] sm:text-[24px] tracking-tighter text-primary uppercase font-extrabold"
+          className="whitespace-nowrap font-display-lg text-[22px] sm:text-[24px] leading-none tracking-tighter text-primary uppercase font-extrabold"
           aria-label="Ana sayfa"
           onClick={close}
         >
@@ -82,7 +83,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
 
         <button
           type="button"
-          className="md:hidden inline-flex h-10 w-10 items-center justify-center border border-primary text-primary"
+          className="lg:hidden inline-flex h-10 w-10 items-center justify-center border border-primary text-primary"
           aria-label={open === "mobile" ? "Menüyü kapat" : "Menüyü aç"}
           aria-expanded={open === "mobile"}
           aria-controls="header-mobile-menu"
@@ -91,10 +92,10 @@ export function Header({ exams = [] }: { exams?: any[] }) {
           <Icon name={open === "mobile" ? "close" : "menu"} size={22} />
         </button>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-8">
           <button
             type="button"
-            className={triggerClass(open === "exams" || path.startsWith("/sinavlar"))}
+            className={triggerClass(open === "exams" || path.startsWith("/sinavlar") || path.endsWith("-kac-gun-kaldi"))}
             aria-expanded={open === "exams"}
             aria-haspopup="true"
             aria-controls="header-exams-menu"
@@ -145,14 +146,14 @@ export function Header({ exams = [] }: { exams?: any[] }) {
       {open === "exams" && (
         <div
           id="header-exams-menu"
-          className="absolute left-0 right-0 top-16 bg-surface-container-lowest border-b-2 border-primary z-40"
+          className="hidden lg:block absolute left-0 right-0 top-16 bg-surface-container-lowest border-b-2 border-primary z-40"
           onMouseEnter={() => show("exams")}
         >
           <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-6 grid grid-cols-1 md:grid-cols-2 gap-2">
             {exams.map((exam) => (
               <a
                 key={exam.slug}
-                href={`/?sinav=${exam.slug}`}
+                href={homeSelectionLandingPaths[exam.slug] || `/?sinav=${exam.slug}`}
                 className="flex items-start gap-4 p-4 hover:bg-surface-container-high transition-colors"
                 onClick={close}
               >
@@ -175,7 +176,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
       {open === "calc" && (
         <div
           id="header-calc-menu"
-          className="absolute right-0 md:right-auto top-16 md:left-1/2 bg-surface-container-lowest border-2 border-primary z-40 w-full md:w-64"
+          className="hidden lg:block absolute right-0 lg:right-auto top-16 lg:left-1/2 bg-surface-container-lowest border-2 border-primary z-40 w-full lg:w-64"
           onMouseEnter={() => show("calc")}
         >
           <div className="flex flex-col py-2">
@@ -198,7 +199,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
       {open === "mobile" && (
         <div
           id="header-mobile-menu"
-          className="md:hidden absolute left-0 right-0 top-16 z-40 max-h-[calc(100vh-4rem)] overflow-y-auto border-b-2 border-primary bg-surface-container-lowest"
+          className="lg:hidden absolute left-0 right-0 top-16 z-40 max-h-[calc(100vh-4rem)] overflow-y-auto border-b-2 border-primary bg-surface-container-lowest"
         >
           <div className="px-margin-mobile py-5">
             <div className="border-b border-border-subtle pb-5">
@@ -209,7 +210,7 @@ export function Header({ exams = [] }: { exams?: any[] }) {
                 {exams.map((exam) => (
                   <a
                     key={exam.slug}
-                    href={`/?sinav=${exam.slug}`}
+                    href={homeSelectionLandingPaths[exam.slug] || `/?sinav=${exam.slug}`}
                     className="flex items-center justify-between gap-3 px-3 py-3 font-label-md text-label-md text-primary hover:bg-surface-container-high"
                     onClick={close}
                   >

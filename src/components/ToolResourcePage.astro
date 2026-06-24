@@ -1,0 +1,155 @@
+---
+import type { Exam } from "../lib/api";
+import type { ToolPageConfig } from "../data/tool-pages";
+import InternalLinkBlock from "./InternalLinkBlock.astro";
+import { StudyPlannerClient } from "./StudyPlannerClient";
+import { TrialTrackerClient } from "./TrialTrackerClient";
+import { RankEstimatorClient } from "./RankEstimatorClient";
+import { resolveCountdownRef, formatExamDate } from "../lib/exams";
+import { Icon } from "../lib/icons";
+
+interface Props {
+  config: ToolPageConfig;
+  exams: Exam[];
+}
+
+const { config, exams } = Astro.props;
+const yks = exams.find((exam) => exam.slug === "yks");
+const yksRows = [
+  resolveCountdownRef(exams, { examSlug: "yks", sessionSlug: "tyt", label: "TYT 2027" }),
+  resolveCountdownRef(exams, { examSlug: "yks", sessionSlug: "ayt", label: "AYT 2027" }),
+  resolveCountdownRef(exams, { examSlug: "yks", sessionSlug: "ydt", label: "YDT 2027" }),
+].filter(Boolean);
+
+const embedCodes = [
+  { label: "YKS", src: "https://ykskacgunkaldi.com/embed/yks-2027" },
+  { label: "TYT", src: "https://ykskacgunkaldi.com/embed/tyt-2027" },
+  { label: "AYT", src: "https://ykskacgunkaldi.com/embed/ayt-2027" },
+];
+---
+
+<div class="px-margin-mobile md:px-margin-desktop">
+  <div class="max-w-container-max mx-auto py-section-gap">
+    <nav class="flex items-center gap-2 mb-8 font-label-sm text-text-muted" aria-label="Breadcrumb">
+      <a class="hover:text-primary transition-colors" href="/">Ana Sayfa</a>
+      <Icon name="chevron_right" size={16} />
+      <a class="hover:text-primary transition-colors" href="/rehberler">Rehberler</a>
+      <Icon name="chevron_right" size={16} />
+      <span class="text-on-surface line-clamp-1" aria-current="page">{config.h1}</span>
+    </nav>
+
+    <header class="mb-12">
+      <div class="flex flex-wrap items-center gap-2 mb-6">
+        <span class="inline-flex items-center gap-2 bg-black-pure text-white-pure px-3 py-1 font-label-sm text-label-sm uppercase">
+          <Icon name="verified" size={16} />
+          Ücretsiz Kaynak
+        </span>
+        <span class="inline-flex items-center gap-2 border border-border-subtle px-3 py-1 font-label-sm text-label-sm uppercase text-text-muted">
+          <Icon name="public" size={16} />
+          Doğal Paylaşım
+        </span>
+      </div>
+      <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">{config.h1}</h1>
+      <p class="font-body-lg text-body-lg text-text-muted max-w-3xl leading-relaxed">{config.intro}</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+      <main class="lg:col-span-8 flex flex-col gap-8">
+        {config.kind === "yks-schedule" && (
+          <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="schedule-title">
+            <h2 id="schedule-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">
+              <Icon name="calendar_month" />
+              2027 YKS Oturumları
+            </h2>
+            {yksRows.length > 0 ? (
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-left">
+                  <thead>
+                    <tr class="border-b-2 border-primary">
+                      <th class="py-3 px-2 font-label-md text-label-md uppercase text-text-muted">Oturum</th>
+                      <th class="py-3 px-2 font-label-md text-label-md uppercase text-text-muted">Tarih</th>
+                      <th class="py-3 px-2 font-label-md text-label-md uppercase text-text-muted">Durum</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-border-subtle">
+                    {yksRows.map((row) => row && (
+                      <tr>
+                        <td class="py-4 px-2 font-body-md text-body-md font-semibold text-primary">{row.title}</td>
+                        <td class="py-4 px-2 font-body-md text-body-md text-text-muted">{formatExamDate(row.targetDate)}</td>
+                        <td class="py-4 px-2">
+                          {row.isEstimated ? (
+                            <span class="border border-border-subtle px-3 py-1 font-label-sm text-label-sm uppercase text-text-muted">Tahmini</span>
+                          ) : (
+                            <span class="bg-black-pure text-white-pure px-3 py-1 font-label-sm text-label-sm uppercase">Kesin</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p class="font-body-md text-body-md text-text-muted">YKS oturum verisi bulunamadı.</p>
+            )}
+            <p class="font-label-sm text-label-sm text-text-muted mt-6">
+              Ana sınav kaydı: {yks?.countdownLabel || "YKS"}.
+              Resmi tarih açıklandığında ÖSYM duyurusu kaynak alınmalıdır.
+            </p>
+          </section>
+        )}
+
+        {config.kind === "study-planner" && <StudyPlannerClient client:load />}
+        {config.kind === "trial-tracker" && <TrialTrackerClient client:load />}
+        {config.kind === "rank-estimator" && <RankEstimatorClient client:load />}
+
+        {config.kind === "embed-docs" && (
+          <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="embed-code-title">
+            <h2 id="embed-code-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">
+              <Icon name="timer" />
+              Iframe Kodları
+            </h2>
+            <div class="grid gap-4">
+              {embedCodes.map((item) => (
+                <article class="border border-border-subtle p-5">
+                  <h3 class="font-headline-md text-headline-md text-primary mb-3">{item.label} sayacı</h3>
+                  <pre class="overflow-x-auto bg-surface-container-high p-4 font-label-sm text-label-sm"><code>{`<iframe src="${item.src}" title="${item.label} sayacı" width="320" height="220" loading="lazy"></iframe>`}</code></pre>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {config.sections.map((section, index) => (
+          <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby={`tool-section-${index}`}>
+            <h2 id={`tool-section-${index}`} class="font-headline-md text-headline-md text-primary mb-4">{section.title}</h2>
+            <p class="font-body-md text-body-md text-text-muted leading-relaxed">{section.body}</p>
+          </section>
+        ))}
+
+        {config.faqs.length > 0 && (
+          <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="tool-faq-title">
+            <h2 id="tool-faq-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">
+              <Icon name="help" />
+              Sıkça Sorulan Sorular
+            </h2>
+            <div class="flex flex-col">
+              {config.faqs.map((faq) => (
+                <details class="group border-b border-border-subtle py-4 last:border-0">
+                  <summary class="flex items-center justify-between gap-4 cursor-pointer font-label-md text-label-md text-on-surface list-none [&::-webkit-details-marker]:hidden">
+                    {faq.question}
+                    <Icon name="expand_more" className="text-text-muted shrink-0 transition-transform group-open:rotate-180" />
+                  </summary>
+                  <p class="font-body-md text-body-md text-text-muted mt-4 leading-relaxed">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+      </main>
+
+      <aside class="lg:col-span-4 flex flex-col gap-6">
+        <InternalLinkBlock title="İlgili Kaynaklar" links={config.links} />
+      </aside>
+    </div>
+  </div>
+</div>

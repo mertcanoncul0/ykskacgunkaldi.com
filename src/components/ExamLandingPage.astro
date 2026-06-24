@@ -1,0 +1,146 @@
+---
+import { CountdownTimer } from "./CountdownTimer";
+import InternalLinkBlock from "./InternalLinkBlock.astro";
+import type { Exam } from "../lib/api";
+import { examLandingPages, type ExamLandingPageConfig } from "../data/exam-landing-pages";
+import { resolveCountdownRef, formatExamDate } from "../lib/exams";
+import { Icon } from "../lib/icons";
+
+interface Props {
+  config: ExamLandingPageConfig;
+  exams: Exam[];
+}
+
+const { config, exams } = Astro.props;
+const primary = resolveCountdownRef(exams, config.primaryCountdown);
+const secondary = (config.secondaryCountdowns || [])
+  .map((ref) => resolveCountdownRef(exams, ref))
+  .filter(Boolean);
+const switchItems = examLandingPages.map((page) => ({
+  href: `/${page.slug}`,
+  label: page.switchLabel || page.h1.replace(/'?(ye|e) Kaç Gün Kaldı\??/i, ""),
+  active: page.slug === config.slug,
+}));
+---
+
+<div class="px-margin-mobile md:px-margin-desktop">
+  <div class="max-w-container-max mx-auto py-section-gap">
+    <nav class="flex items-center gap-2 mb-8 font-label-sm text-text-muted" aria-label="Breadcrumb">
+      <a class="hover:text-primary transition-colors" href="/">Ana Sayfa</a>
+      <Icon name="chevron_right" size={16} />
+      <a class="hover:text-primary transition-colors" href="/sinavlar">Sınavlar</a>
+      <Icon name="chevron_right" size={16} />
+      <span class="text-on-surface line-clamp-1" aria-current="page">{config.h1}</span>
+    </nav>
+
+    <header class="mb-12">
+      <div class="flex flex-wrap items-center gap-2 mb-6">
+        <span class="inline-flex items-center gap-2 bg-black-pure text-white-pure px-3 py-1 font-label-sm text-label-sm uppercase">
+          <Icon name="timer" size={16} />
+          Canlı Sayaç
+        </span>
+        <span class="inline-flex items-center gap-2 border border-border-subtle px-3 py-1 font-label-sm text-label-sm uppercase text-text-muted">
+          <Icon name="verified" size={16} />
+          Kaynaklı Takip
+        </span>
+      </div>
+      <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">{config.h1}</h1>
+      <p class="font-body-lg text-body-lg text-text-muted max-w-3xl leading-relaxed">{config.intro}</p>
+      <nav class="mt-8 flex max-w-4xl flex-wrap gap-2" aria-label="Sınav sayaçları">
+        {switchItems.map((item) => (
+          <a
+            href={item.href}
+            aria-current={item.active ? "page" : undefined}
+            class:list={[
+              "inline-flex min-h-10 items-center justify-center border px-4 py-2 font-label-sm text-label-sm uppercase transition-colors",
+              item.active
+                ? "border-black-pure bg-black-pure text-white-pure"
+                : "border-border-subtle bg-white-pure text-text-muted hover:border-black-pure hover:text-primary",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </header>
+
+    {primary ? (
+      <section class="mb-12">
+        <CountdownTimer
+          client:load
+          targetDate={primary.targetDate}
+          label={primary.countdownLabel}
+          isEstimated={primary.isEstimated}
+        />
+      </section>
+    ) : (
+      <section class="mb-12 border border-border-subtle bg-white-pure p-8 text-text-muted">
+        Bu sınav için sayaç verisi bulunamadı.
+      </section>
+    )}
+
+    {secondary.length > 0 && (
+      <section class="mb-12" aria-labelledby="sessions-title">
+        <h2 id="sessions-title" class="font-headline-md text-headline-md text-primary mb-6">Oturumlar</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+          {secondary.map((item) => item && (
+            <article class="border border-border-subtle bg-white-pure p-6">
+              <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+                <h3 class="min-w-0 break-words font-headline-md text-headline-md leading-snug text-primary">{item.title}</h3>
+                {item.isEstimated ? (
+                  <span class="shrink-0 font-label-sm text-label-sm border border-border-subtle px-2 py-1 text-text-muted uppercase">Tahmini</span>
+                ) : (
+                  <span class="shrink-0 font-label-sm text-label-sm bg-black-pure text-white-pure px-2 py-1 uppercase">Kesin</span>
+                )}
+              </div>
+              <p class="font-body-md text-body-md text-text-muted">{formatExamDate(item.targetDate)}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+      <main class="lg:col-span-8 flex flex-col gap-8">
+        <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="source-title">
+          <h2 id="source-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-4">
+            <Icon name="info" />
+            Tarih Bilgisi
+          </h2>
+          <p class="font-body-md text-body-md text-text-muted leading-relaxed">{config.sourceNote}</p>
+        </section>
+
+        {config.sections.map((section, index) => (
+          <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby={`landing-section-${index}`}>
+            <h2 id={`landing-section-${index}`} class="font-headline-md text-headline-md text-primary mb-4">{section.title}</h2>
+            <p class="font-body-md text-body-md text-text-muted leading-relaxed">{section.body}</p>
+          </section>
+        ))}
+
+        {config.faqs.length > 0 && (
+          <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="landing-faq-title">
+            <h2 id="landing-faq-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">
+              <Icon name="help" />
+              Sıkça Sorulan Sorular
+            </h2>
+            <div class="flex flex-col">
+              {config.faqs.map((faq) => (
+                <details class="group border-b border-border-subtle py-4 last:border-0">
+                  <summary class="flex items-center justify-between gap-4 cursor-pointer font-label-md text-label-md text-on-surface list-none [&::-webkit-details-marker]:hidden">
+                    {faq.question}
+                    <Icon name="expand_more" className="text-text-muted shrink-0 transition-transform group-open:rotate-180" />
+                  </summary>
+                  <p class="font-body-md text-body-md text-text-muted mt-4 leading-relaxed">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+      </main>
+
+      <aside class="lg:col-span-4 flex flex-col gap-6">
+        <InternalLinkBlock title="Bu Sayfadan Sonra" links={config.links} />
+      </aside>
+    </div>
+  </div>
+</div>
