@@ -62,12 +62,13 @@ export function Header({ exams = [] }: { exams?: any[] }) {
   }, [open]);
 
   const close = () => setOpen(null);
-  const toggle = (k: OpenMenu) => setOpen((cur) => (cur === k ? null : k));
+  const show = (k: OpenMenu) => setOpen(k);
 
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-border-subtle"
       ref={rootRef}
+      onMouseLeave={close}
     >
       <nav className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto h-16">
         <a
@@ -85,7 +86,9 @@ export function Header({ exams = [] }: { exams?: any[] }) {
             className={triggerClass(open === "exams" || path.startsWith("/sinavlar"))}
             aria-expanded={open === "exams"}
             aria-haspopup="true"
-            onClick={() => toggle("exams")}
+            aria-controls="header-exams-menu"
+            onMouseEnter={() => show("exams")}
+            onClick={() => show("exams")}
           >
             Sınavlar
             <Icon name="expand_more" size={18} />
@@ -96,7 +99,9 @@ export function Header({ exams = [] }: { exams?: any[] }) {
             className={triggerClass(open === "calc" || path.startsWith("/puan-hesaplama"))}
             aria-expanded={open === "calc"}
             aria-haspopup="true"
-            onClick={() => toggle("calc")}
+            aria-controls="header-calc-menu"
+            onMouseEnter={() => show("calc")}
+            onClick={() => show("calc")}
           >
             Puan Hesaplama
             <Icon name="expand_more" size={18} />
@@ -127,7 +132,11 @@ export function Header({ exams = [] }: { exams?: any[] }) {
 
       {/* Exams mega menu */}
       {open === "exams" && (
-        <div className="absolute left-0 right-0 top-16 bg-surface-container-lowest border-b-2 border-primary z-40">
+        <div
+          id="header-exams-menu"
+          className="absolute left-0 right-0 top-16 bg-surface-container-lowest border-b-2 border-primary z-40"
+          onMouseEnter={() => show("exams")}
+        >
           <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-6 grid grid-cols-1 md:grid-cols-2 gap-2">
             {exams.map((exam) => (
               <a
@@ -153,7 +162,11 @@ export function Header({ exams = [] }: { exams?: any[] }) {
 
       {/* Calculator menu */}
       {open === "calc" && (
-        <div className="absolute right-0 md:right-auto top-16 md:left-1/2 bg-surface-container-lowest border-2 border-primary z-40 w-full md:w-64">
+        <div
+          id="header-calc-menu"
+          className="absolute right-0 md:right-auto top-16 md:left-1/2 bg-surface-container-lowest border-2 border-primary z-40 w-full md:w-64"
+          onMouseEnter={() => show("calc")}
+        >
           <div className="flex flex-col py-2">
             {scoreCalculatorMenu?.map((item) => (
               <a

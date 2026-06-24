@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function CountdownTimer({ targetDate, label, isEstimated }: Props) {
-  const [remaining, setRemaining] = useState(() => getCountdown(targetDate));
+  const [remaining, setRemaining] = useState<ReturnType<typeof getCountdown> | null>(null);
   const headingId = useId();
 
   useEffect(() => {
@@ -18,18 +18,21 @@ export function CountdownTimer({ targetDate, label, isEstimated }: Props) {
     return () => window.clearInterval(id);
   }, [targetDate]);
 
+  const isPast = remaining?.isPast ?? false;
   const units = [
-    { key: "days", value: remaining.days, label: "GÜN" },
-    { key: "hours", value: remaining.hours, label: "SAAT" },
-    { key: "minutes", value: remaining.minutes, label: "DAKİKA" },
-    { key: "seconds", value: remaining.seconds, label: "SANİYE" },
+    { key: "days", value: remaining?.days, label: "GÜN" },
+    { key: "hours", value: remaining?.hours, label: "SAAT" },
+    { key: "minutes", value: remaining?.minutes, label: "DAKİKA" },
+    { key: "seconds", value: remaining?.seconds, label: "SANİYE" },
   ];
 
   // Saniyede bir değişen rakamları ekran okuyucuya tek tek/sürekli
   // okutmamak için sayaç ızgarası `aria-hidden` ile gizlenir; onun yerine
   // tek, kontrollü bir özet `aria-label` olarak sunulur ve `aria-live="off"`
   // ile otomatik yeniden okuma engellenir.
-  const liveSummary = remaining.isPast
+  const liveSummary = !remaining
+    ? `${label}: geri sayım yükleniyor.`
+    : remaining.isPast
     ? `${label}: geri sayım tamamlandı.`
     : `${label}: ${remaining.days} gün ${remaining.hours} saat ${remaining.minutes} dakika ${remaining.seconds} saniye kaldı.`;
 
@@ -41,7 +44,7 @@ export function CountdownTimer({ targetDate, label, isEstimated }: Props) {
       >
         {label}
       </h2>
-      {remaining.isPast ? (
+      {isPast ? (
         <div className="w-full max-w-3xl mx-auto bg-surface-container-high border border-black-pure p-8 md:p-12 flex flex-col items-center gap-3 text-center">
           <Icon name="task_alt" size={40} className="text-primary" />
           <span className="font-headline-md text-headline-md text-primary uppercase">Tamamlandı</span>
@@ -63,7 +66,7 @@ export function CountdownTimer({ targetDate, label, isEstimated }: Props) {
               }`}
             >
               <span className="font-display-lg text-[64px] leading-none mb-2 tabular-nums">
-                {String(u.value).padStart(2, "0")}
+                {u.value === undefined ? "--" : String(u.value).padStart(2, "0")}
               </span>
               <span className="font-label-sm text-label-sm uppercase tracking-widest text-text-muted">
                 {u.label}
@@ -72,7 +75,7 @@ export function CountdownTimer({ targetDate, label, isEstimated }: Props) {
           ))}
         </div>
       )}
-      {isEstimated && !remaining.isPast && (
+      {isEstimated && !isPast && (
         <div className="flex items-center justify-center gap-2 mt-4 font-label-sm text-label-sm text-text-muted border border-border-subtle py-2 px-4 max-w-3xl mx-auto">
           <Icon name="info" size={16} />
           Tarih henüz resmi olarak açıklanmamış olup, tahmini bir tarihtir.

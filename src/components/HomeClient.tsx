@@ -17,8 +17,18 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
   // Statik üretim sırasında URL erişilemez, bu yüzden mount sonrası okunur.
   useEffect(() => {
     const slug = new URLSearchParams(window.location.search).get("sinav");
-    if (slug && exams.some((e) => e.slug === slug)) {
-      setActiveSlug(slug);
+    if (!slug) return;
+
+    const examMatch = exams.find((e) => e.slug === slug);
+    if (examMatch) {
+      setActiveSlug(examMatch.slug);
+      return;
+    }
+
+    const sessionOwner = exams.find((e) => e.sessions?.some((s: any) => s.slug === slug));
+    if (sessionOwner) {
+      setActiveSlug(sessionOwner.slug);
+      setActiveSessionSlug(slug);
     }
   }, [exams]);
 
@@ -39,8 +49,13 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
   // kullanılır — useMemo saf değer hesaplamak için tasarlanmıştır, içinde
   // setState çağırmak React tarafından önerilmez.
   useEffect(() => {
+    const querySlug = new URLSearchParams(window.location.search).get("sinav");
+    if (querySlug && exam?.sessions?.some((s: any) => s.slug === querySlug)) {
+      setActiveSessionSlug(querySlug);
+      return;
+    }
     setActiveSessionSlug(defaultSessionSlug);
-  }, [exam?.slug, defaultSessionSlug]);
+  }, [exam?.slug, defaultSessionSlug, exam?.sessions]);
 
   if (!exam) {
     return (

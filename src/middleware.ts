@@ -32,11 +32,12 @@ const CONTENT_SECURITY_POLICY = [
   "base-uri 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
-  // Astro, client:* yönergesi olmayan/olan <script> taglarını derleme
-  // zamanında hash'li dış JS dosyalarına dönüştürür (inline script yok),
-  // bu yüzden 'unsafe-inline' gerekmiyor. Cloudflare proxy arkasındaysa
-  // otomatik enjekte edilen Web Analytics beacon'ı için istisna eklendi.
-  "script-src 'self' https://static.cloudflareinsights.com",
+  // Astro island hydration için sayfaya küçük inline bootstrap scriptleri
+  // ekler. Bunlar engellenirse React markup görünür ama event handler'lar
+  // bağlanmaz; header menüleri ve tab/accordion kontrolleri tepkisiz kalır.
+  // Cloudflare proxy arkasındaysa otomatik enjekte edilen Web Analytics
+  // beacon'ı için de origin istisnası korunur.
+  "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
   // İkonlar SVG'ye taşındı ama bazı bileşenler (ScoreCalculatorForm,
   // KonuDagilimiClient, ilerleme çubuğu script'i, shadcn/ui sidebar/chart)
   // hâlâ inline style="" attribute'u kullanıyor — bunları kırmadan strict
