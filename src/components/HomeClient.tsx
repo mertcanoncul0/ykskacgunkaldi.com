@@ -6,6 +6,7 @@ import { SeoGuideSection } from "./SeoGuideSection";
 import { FaqAccordion } from "./FaqAccordion";
 import { FeaturedPosts } from "./FeaturedPosts";
 import { QuickLinks } from "./QuickLinks";
+import { TrustNotice } from "./TrustNotice";
 import type { Post } from "../lib/pocketbase";
 import { getHomeSeo, resolveHomeSelection, type HomeSeoDefaults } from "../lib/home-seo";
 import { Icon } from "../lib/icons";
@@ -225,6 +226,7 @@ export function HomeClient({
 
         <InfoCards exam={exam} />
         <FeatureGrid exam={exam} />
+        <TrustNotice />
         <SeoGuideSection exam={exam} />
         <FaqAccordion faqs={faqs} />
 

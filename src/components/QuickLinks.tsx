@@ -10,7 +10,7 @@ const links = [
   {
     label: "YKS Sayacı",
     href: "/yks-kac-gun-kaldi",
-    body: "YKS, TYT ve AYT oturumlarına kalan süreyi path tabanlı kaynak sayfasından takip edin.",
+    body: "YKS, TYT ve AYT oturumlarına kalan süreyi canlı sayaçla takip edin.",
     description: "YKS sayacı sayfasını incele",
   },
   {
@@ -25,12 +25,18 @@ const links = [
     body: "TYT ve AYT konu dağılımlarını inceleyerek çalışma önceliklerinizi belirleyin.",
     description: "TYT konu dağılımı sayfasını incele",
   },
+  {
+    label: "Sınav Rehberi",
+    href: "/rehberler",
+    body: "Sayaç, puan hesaplama, çalışma programı ve blog kaynaklarına tek merkezden ulaşın.",
+    description: "Sınav rehberi ve ücretsiz kaynakları incele",
+  },
 ] as const;
 
 export function QuickLinks() {
   return (
     <section className="mb-section-gap">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-12">
         {links.map((l) => (
           <div key={l.href} className="border-t border-black-pure pt-8">
             <h3 className="font-label-md text-label-md uppercase tracking-widest mb-6">{l.label}</h3>

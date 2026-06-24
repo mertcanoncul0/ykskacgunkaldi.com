@@ -2,12 +2,99 @@ import { useMemo, useState, useEffect } from "react";
 import { Select } from "./Select";
 import { Icon } from "../lib/icons";
 
+type FocusMode = "yks" | "tyt" | "ayt" | "lgs";
+
+const FOCUS_COPY: Record<
+  FocusMode,
+  {
+    label: string;
+    intro: string;
+    subjects?: string[];
+    relatedLinks: { href: string; label: string }[];
+  }
+> = {
+  yks: {
+    label: "YKS",
+    intro:
+      "YKS, TYT ve AYT için konu başlığı bazlı dağılımları tek merkezde inceleyin.",
+    relatedLinks: [
+      { href: "/konu-dagilimi/tyt", label: "TYT çıkan konular" },
+      { href: "/konu-dagilimi/ayt", label: "AYT çıkan konular" },
+      { href: "/puan-hesaplama/yks", label: "YKS puan hesaplama" },
+    ],
+  },
+  tyt: {
+    label: "TYT",
+    intro:
+      "TYT ağırlıklı dersleri ve yıllara göre konu sayılarını takip ederek temel oturum çalışma sıranızı belirleyin.",
+    subjects: [
+      "turkce",
+      "turkce-dil-bilgisi",
+      "matematik",
+      "temel-matematik",
+      "sosyal-bilimler",
+      "tarih",
+      "cografya",
+      "felsefe",
+      "din-kulturu",
+      "fen-bilimleri",
+      "fizik",
+      "kimya",
+      "biyoloji",
+    ],
+    relatedLinks: [
+      { href: "/konu-dagilimi", label: "YKS konu dağılımı" },
+      { href: "/konu-dagilimi/ayt", label: "AYT konu dağılımı" },
+      { href: "/puan-hesaplama/tyt", label: "TYT puan hesaplama" },
+    ],
+  },
+  ayt: {
+    label: "AYT",
+    intro:
+      "AYT alan derslerinde öne çıkan konu başlıklarını görerek sayısal, eşit ağırlık ve sözel planınızı netleştirin.",
+    subjects: [
+      "matematik",
+      "ayt-matematik",
+      "geometri",
+      "edebiyat",
+      "turk-dili-ve-edebiyati",
+      "tarih",
+      "tarih-1",
+      "tarih-2",
+      "cografya",
+      "cografya-1",
+      "cografya-2",
+      "felsefe",
+      "din-kulturu",
+      "fizik",
+      "kimya",
+      "biyoloji",
+    ],
+    relatedLinks: [
+      { href: "/konu-dagilimi", label: "YKS konu dağılımı" },
+      { href: "/konu-dagilimi/tyt", label: "TYT konu dağılımı" },
+      { href: "/puan-hesaplama/ayt", label: "AYT puan hesaplama" },
+    ],
+  },
+  lgs: {
+    label: "LGS",
+    intro:
+      "LGS derslerinde yıllara göre konu ağırlıklarını inceleyerek tekrar ve deneme planınızı güncelleyin.",
+    relatedLinks: [
+      { href: "/konu-dagilimi", label: "Tüm konu dağılımları" },
+      { href: "/puan-hesaplama/lgs", label: "LGS puan hesaplama" },
+      { href: "/lgs-kac-gun-kaldi", label: "LGS sayacı" },
+    ],
+  },
+};
+
 export function KonuDagilimiClient({
   exams,
   subjects,
   distributions,
   initialExamSlug = "yks",
   initialSubjectSlug,
+  focusMode = "yks",
   titleOverride,
   descriptionOverride,
 }: {
@@ -16,19 +103,23 @@ export function KonuDagilimiClient({
   distributions: any[];
   initialExamSlug?: string;
   initialSubjectSlug?: string;
+  focusMode?: FocusMode;
   titleOverride?: string;
   descriptionOverride?: string;
 }) {
   const [examSlug, setExamSlug] = useState(initialExamSlug);
   const [activeSubjectSlug, setActiveSubjectSlug] = useState<string | undefined>(initialSubjectSlug);
+  const focus = FOCUS_COPY[focusMode];
 
   useEffect(() => {
+    if (focusMode !== "yks") return;
     const params = new URLSearchParams(window.location.search);
     if (params.get("sinav")) setExamSlug(params.get("sinav")!);
     if (params.get("ders")) setActiveSubjectSlug(params.get("ders")!);
-  }, []);
+  }, [focusMode]);
 
   const updateUrl = (exam: string, subject?: string) => {
+    if (focusMode !== "yks") return;
     const url = new URL(window.location.href);
     url.searchParams.set("sinav", exam);
     if (subject) {
@@ -52,10 +143,13 @@ export function KonuDagilimiClient({
 
   const exam = exams.find((e: any) => e.slug === examSlug);
 
-  const examSubjects = useMemo(
-    () => subjects.filter((s: any) => s.examSlug === examSlug),
-    [subjects, examSlug]
-  );
+  const examSubjects = useMemo(() => {
+    const base = subjects.filter((s: any) => s.examSlug === examSlug);
+    if (!focus.subjects) return base;
+    const allowed = new Set(focus.subjects);
+    const filtered = base.filter((s: any) => allowed.has(s.slug));
+    return filtered.length > 0 ? filtered : base;
+  }, [subjects, examSlug, focus.subjects]);
 
   const activeSubject = examSubjects.find(
     (s: any) => s.slug === (activeSubjectSlug || examSubjects[0]?.slug)
@@ -117,22 +211,74 @@ export function KonuDagilimiClient({
             {titleOverride || `${exam?.name || "Sınav"} Konu Dağılımı`}
           </h1>
           <p className="font-body-lg text-body-lg text-text-muted max-w-2xl">
-            {descriptionOverride || "Son yılların çıkmış sorularına dayalı analitik konu dağılımı. Stratejik çalışma planınızı oluşturmak için verileri inceleyin."}
+            {descriptionOverride || "Yıllara göre konu başlığı ve soru sayısı dağılımını inceleyin. Stratejik çalışma planınızı oluşturmak için verileri kullanın."}
           </p>
+          <div className="mt-6 flex flex-wrap gap-2" aria-label="İlgili konu dağılımı sayfaları">
+            {focus.relatedLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="inline-flex items-center gap-2 border border-border-subtle px-3 py-2 font-label-sm text-label-sm uppercase text-primary transition-colors hover:border-black-pure"
+              >
+                {link.label}
+                <Icon name="north_east" size={14} />
+              </a>
+            ))}
+          </div>
         </header>
 
-        <div className="mb-8 max-w-xs">
-          <Select
-            ariaLabel="Sınav"
-            icon="quiz"
-            value={examSlug}
-            onChange={handleExamChange}
-            options={exams.map((ex: any) => ({
-              value: ex.slug,
-              label: ex.name,
-            }))}
-          />
-        </div>
+        {focusMode === "yks" ? (
+          <div className="mb-8 max-w-xs">
+            <Select
+              ariaLabel="Sınav"
+              icon="quiz"
+              value={examSlug}
+              onChange={handleExamChange}
+              options={exams.map((ex: any) => ({
+                value: ex.slug,
+                label: ex.name,
+              }))}
+            />
+          </div>
+        ) : (
+          <div className="mb-8 inline-flex items-center gap-2 border border-border-subtle px-4 py-2 font-label-sm text-label-sm uppercase text-text-muted">
+            <Icon name="quiz" size={16} />
+            {focus.label} odaklı konu analizi
+          </div>
+        )}
+
+        <section className="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-gutter" aria-label="Konu dağılımı bilgilendirmesi">
+          <article className="lg:col-span-2 border border-border-subtle bg-surface-container-low p-6">
+            <div className="flex items-start gap-3">
+              <Icon name="bar_chart" size={22} className="mt-1 text-primary" />
+              <div>
+                <h2 className="font-headline-sm text-headline-sm text-primary mb-2">Çıkan Konular Nasıl Okunmalı?</h2>
+                <p className="font-body-md text-body-md text-text-muted leading-relaxed">
+                  {focus.intro} Tablolar, soru metinlerini değil konuların yıllara göre kaç soruyla temsil edildiğini gösterir.
+                </p>
+              </div>
+            </div>
+          </article>
+          <article className="border border-border-subtle bg-white-pure p-6">
+            <div className="flex items-start gap-3">
+              <Icon name="info" size={22} className="mt-1 text-primary" />
+              <div>
+                <h2 className="font-headline-sm text-headline-sm text-primary mb-2">Telif ve Kaynak Notu</h2>
+                <p className="font-body-sm text-body-sm text-text-muted leading-relaxed">
+                  Bu sayfada çıkmış soru metni, seçenek veya kitapçık kopyası yayımlanmaz. Resmi soru kitapçıkları için{" "}
+                  <a className="underline hover:text-primary" href="https://www.osym.gov.tr/tr%2C15164/yks-cikmis-sorular.html" target="_blank" rel="noopener noreferrer nofollow">
+                    ÖSYM
+                  </a>{" "}
+                  ve{" "}
+                  <a className="underline hover:text-primary" href="https://www.meb.gov.tr" target="_blank" rel="noopener noreferrer nofollow">
+                    MEB
+                  </a>{" "}
+                  kaynaklarını esas alın.
+                </p>
+              </div>
+            </div>
+          </article>
+        </section>
 
         <div className="flex flex-wrap gap-2 mb-12" role="tablist" aria-label="Dersler">
           {examSubjects.map((s: any) => {

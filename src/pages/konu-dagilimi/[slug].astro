@@ -6,20 +6,25 @@ import { breadcrumbJsonLd, webPageJsonLd } from "../../lib/schema";
 
 const { slug } = Astro.params;
 
-const pageMap: Record<string, { title: string; metaTitle: string; description: string; examSlug: string }> = {
+const pageMap: Record<
+  string,
+  { title: string; metaTitle: string; description: string; examSlug: string; focusMode: "tyt" | "ayt" | "lgs" }
+> = {
   tyt: {
-    title: "TYT Konu Dağılımı",
-    metaTitle: "TYT Konu Dağılımı | Yıllara Göre Soru Dağılımı",
+    title: "TYT Çıkan Konular ve Konu Dağılımı",
+    metaTitle: "TYT Çıkan Konular ve Konu Dağılımı | YKS Kaç Gün Kaldı",
     description:
-      "TYT Türkçe, matematik, sosyal ve fen konularını yıllara göre soru dağılımı ile inceleyin.",
+      "TYT Türkçe, matematik, sosyal ve fen konularını yıllara göre soru dağılımı ile inceleyin; soru metni olmadan çalışma önceliği belirleyin.",
     examSlug: "yks",
+    focusMode: "tyt",
   },
   ayt: {
-    title: "AYT Konu Dağılımı",
-    metaTitle: "AYT Konu Dağılımı | Yıllara Göre Soru Dağılımı",
+    title: "AYT Çıkan Konular ve Konu Dağılımı",
+    metaTitle: "AYT Çıkan Konular ve Konu Dağılımı | YKS Kaç Gün Kaldı",
     description:
-      "AYT alan derslerinde son yılların konu ve soru dağılımını inceleyerek çalışma önceliği belirleyin.",
+      "AYT matematik, edebiyat, tarih, coğrafya, fizik, kimya ve biyoloji konu dağılımını yıllara göre inceleyerek alan çalışma planınızı güçlendirin.",
     examSlug: "yks",
+    focusMode: "ayt",
   },
   lgs: {
     title: "LGS Konu Dağılımı",
@@ -27,6 +32,7 @@ const pageMap: Record<string, { title: string; metaTitle: string; description: s
     description:
       "LGS dersleri için konu dağılımını inceleyin, deneme ve tekrar planınızı veriye göre oluşturun.",
     examSlug: "lgs",
+    focusMode: "lgs",
   },
 };
 
@@ -64,6 +70,7 @@ const structuredData = [
     subjects={subjects}
     distributions={distributions}
     initialExamSlug={page.examSlug}
+    focusMode={page.focusMode}
     titleOverride={page.title}
     descriptionOverride={page.description}
   />

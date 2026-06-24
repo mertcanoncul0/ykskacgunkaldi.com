@@ -27,7 +27,7 @@ const examLabels: Record<string, string> = {
 };
 
 const mainLinks = [
-  { to: "/rehberler", label: "Rehberlik" },
+  { to: "/rehberler", label: "Sınav Rehberi" },
   { to: "/hakkimizda", label: "Hakkımızda" },
 ] as const;
 

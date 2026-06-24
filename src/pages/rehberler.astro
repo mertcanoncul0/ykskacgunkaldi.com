@@ -15,12 +15,54 @@ const examIcons: Record<string, string> = {
   msu: 'military_tech',
 };
 
+const resourceBlocks = [
+  {
+    title: 'Canlı Sayaçlar',
+    icon: 'timer',
+    body: 'YKS, TYT, AYT, LGS, KPSS, DGS ve ALES için güncel geri sayım sayfalarına ulaşın.',
+    href: '/yks-kac-gun-kaldi',
+    cta: 'YKS Sayacını Aç',
+  },
+  {
+    title: 'Puan Hesaplama',
+    icon: 'calculate',
+    body: 'Netlerinizi girerek YKS, TYT, AYT ve diğer sınavlar için tahmini puanınızı hesaplayın.',
+    href: '/puan-hesaplama/yks',
+    cta: 'Puan Hesapla',
+  },
+  {
+    title: 'Konu Dağılımı',
+    icon: 'bar_chart',
+    body: 'TYT, AYT ve LGS konularını soru dağılımına göre inceleyip çalışma önceliğinizi belirleyin.',
+    href: '/konu-dagilimi',
+    cta: 'Konuları İncele',
+  },
+  {
+    title: 'Çalışma ve Takip Araçları',
+    icon: 'edit_note',
+    body: 'Haftalık çalışma programı oluşturun, deneme netlerinizi kaydedin ve gelişiminizi takip edin.',
+    href: '/yks-calisma-programi',
+    cta: 'Program Oluştur',
+  },
+  {
+    title: 'Blog Rehberleri',
+    icon: 'article',
+    body: 'Çalışma planı, deneme analizi, tercih dönemi ve sınav hazırlığı yazılarını okuyun.',
+    href: '/blog',
+    cta: 'Blogu Aç',
+  },
+] as const;
+
+const secondaryLinks = [
+  { label: 'Deneme Net Takip', href: '/deneme-net-takip-tablosu', icon: 'history' },
+  { label: 'Başarı Sıralaması Tahmini', href: '/basari-siralamasi-tahmini', icon: 'trending_up' },
+  { label: '2027 YKS Takvimi', href: '/2027-yks-takvimi', icon: 'calendar_month' },
+] as const;
+
 // Her sınavın gerçek "guideTitle"/"guideParagraphs" alanları (PocketBase'de
-// zaten ana sayfanın SEO rehber bölümünde kullanılıyor) burada strateji
-// kartlarına dönüştürülür. Mockup'taki danışmanlık formu sahte bir başarı
-// durumu simüle ediyordu (setTimeout) ve sahte bir e-posta/telefon
-// listeliyordu; bunların yerine gerçek /iletisim sayfasına yönlendirilen tek
-// bir CTA kullanılıyor.
+// zaten ana sayfanın SEO rehber bölümünde kullanılıyor) burada kaynak kartına
+// dönüştürülür. Sayfa herhangi bir danışmanlık hizmeti vaadi vermez; gerçek
+// araçlara ve mevcut rehber içeriklerine yönlendirir.
 const guides = exams
   .filter((e) => e.guideTitle && e.guideParagraphs && e.guideParagraphs.length > 0)
   .map((e) => ({
@@ -36,14 +78,14 @@ const breadcrumbJsonLd = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
-    { '@type': 'ListItem', position: 2, name: 'Rehberlik', item: `${site.url}/rehberler` },
+    { '@type': 'ListItem', position: 2, name: 'Sınav Rehberi', item: `${site.url}/rehberler` },
   ],
 };
 ---
 
 <Layout
-  title="Rehberlik | Sınav Stratejileri ve Danışmanlık | YKS Kaç Gün Kaldı"
-  description="Sınavlara hazırlanırken izlenecek stratejiler, sınav rehberleri ve uzman danışmanlığı."
+  title="Sınav Rehberi ve Ücretsiz Hazırlık Araçları | YKS Kaç Gün Kaldı"
+  description="YKS canlı sayaç, puan hesaplama, konu dağılımı, çalışma programı ve deneme net takip araçlarına tek sayfadan ulaşın."
   structuredData={breadcrumbJsonLd}
 >
   <div class="px-margin-mobile md:px-margin-desktop">
@@ -51,14 +93,54 @@ const breadcrumbJsonLd = {
       <section class="mb-section-gap">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-end">
           <div class="md:col-span-8">
-            <span class="font-label-sm text-label-sm text-text-muted uppercase tracking-[0.2em] mb-4 block">Akademik Yol Haritası</span>
-            <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">Rehberlik &amp; Danışmanlık</h1>
+            <span class="font-label-sm text-label-sm text-text-muted uppercase tracking-[0.2em] mb-4 block">Ücretsiz Hazırlık Kaynakları</span>
+            <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">Sınav Rehberi</h1>
             <p class="font-body-lg text-body-lg text-text-muted max-w-2xl">
-              Sınavına göre hazırlanmış stratejik rehberler ve uzman desteğiyle hazırlık sürecini doğru yönet.
+              YKS’ye kalan süreyi takip edin, puanınızı hesaplayın, konu dağılımına göre çalışma planınızı güncelleyin.
             </p>
+          </div>
+          <div class="md:col-span-4">
+            <div class="border border-border-subtle bg-surface-container-low p-6">
+              <p class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3">Bağımsız araç sitesi</p>
+              <p class="font-body-md text-body-md text-text-muted">
+                Resmi kurum sitesi değildir; tarihler ve tahmini puanlar bilgilendirme amacıyla sunulur.
+              </p>
+            </div>
           </div>
         </div>
         <div class="h-px bg-border-subtle mt-12"></div>
+      </section>
+
+      <section class="mb-section-gap" aria-labelledby="resource-title">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+          <div>
+            <h2 id="resource-title" class="font-headline-lg text-headline-lg uppercase tracking-tight mb-3">Araçlar ve Kaynaklar</h2>
+            <p class="font-body-md text-body-md text-text-muted max-w-2xl">
+              Hazırlık sürecinde en sık gereken sayaç, hesaplama, konu takibi ve planlama araçlarını tek merkezden açın.
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {resourceBlocks.map((item) => (
+            <a href={item.href} class="group border border-border-subtle bg-white-pure p-8 transition-all hover:border-black-pure block">
+              <div class="flex items-start justify-between gap-4 mb-8">
+                <Icon name={item.icon} size={36} className="text-primary" />
+                <Icon name="north_east" size={16} className="text-text-muted group-hover:text-primary transition-colors" />
+              </div>
+              <h3 class="font-headline-md text-headline-md text-primary mb-3">{item.title}</h3>
+              <p class="font-body-md text-body-md text-text-muted mb-6">{item.body}</p>
+              <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary">{item.cta}</span>
+            </a>
+          ))}
+        </div>
+        <div class="flex flex-wrap gap-3 mt-8">
+          {secondaryLinks.map((link) => (
+            <a href={link.href} class="inline-flex items-center gap-2 border border-border-subtle px-4 py-2 font-label-sm text-label-sm uppercase text-text-muted hover:border-primary hover:text-primary transition-colors">
+              <Icon name={link.icon} size={16} />
+              {link.label}
+            </a>
+          ))}
+        </div>
       </section>
 
       {guides.length === 0 ? (
@@ -68,7 +150,7 @@ const breadcrumbJsonLd = {
         </div>
       ) : (
         <section class="mb-section-gap">
-          <h2 class="font-label-sm text-label-sm text-text-muted uppercase tracking-[0.2em] mb-10">Stratejik Rehberler</h2>
+          <h2 class="font-label-sm text-label-sm text-text-muted uppercase tracking-[0.2em] mb-10">Sınav Bazlı Rehberler</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {guides.map((g) => (
               <a href={`/?sinav=${g.slug}`} class="group border border-border-subtle bg-white-pure p-8 transition-all hover:border-black-pure block">
@@ -86,24 +168,6 @@ const breadcrumbJsonLd = {
           </div>
         </section>
       )}
-
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter border-t border-black-pure pt-section-gap">
-        <div class="lg:col-span-5">
-          <h2 class="font-headline-lg text-headline-lg mb-6">Uzman Danışmanlığı</h2>
-          <p class="font-body-md text-body-md text-text-muted leading-relaxed">
-            Sınav stratejin, çalışma planın veya bölüm seçimin hakkında sorularını ekibimize iletebilirsin.
-          </p>
-        </div>
-        <div class="lg:col-span-6 lg:col-start-7 flex items-start">
-          <a
-            class="inline-flex items-center gap-3 bg-black-pure text-white-pure px-12 py-4 font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors"
-            href="/iletisim"
-          >
-            İletişime Geç
-            <Icon name="arrow_forward" size={14} />
-          </a>
-        </div>
-      </section>
     </div>
   </div>
 </Layout>

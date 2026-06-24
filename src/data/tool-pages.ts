@@ -63,6 +63,7 @@ export const toolPages: ToolPageConfig[] = [
       { label: "TYT sayacı", href: "/tyt-kac-gun-kaldi", description: "TYT oturumuna kalan süreyi gör", icon: "timer" },
       { label: "AYT sayacı", href: "/ayt-kac-gun-kaldi", description: "AYT oturumuna kalan süreyi gör", icon: "timer" },
       { label: "YKS çalışma programı", href: "/yks-calisma-programi", description: "Takvime göre haftalık plan oluştur", icon: "edit_note" },
+      { label: "Sınav Rehberi", href: "/rehberler", description: "Tüm hazırlık kaynaklarını tek merkezde incele", icon: "school" },
     ],
   },
   {
@@ -73,7 +74,7 @@ export const toolPages: ToolPageConfig[] = [
     metaDescription:
       "Hedef sınav tarihine, günlük çalışma süresine ve önceliklerine göre ücretsiz YKS çalışma programı oluşturun.",
     intro:
-      "Bu araç, kalan süreyi haftalara böler ve günlük çalışma saatine göre sade bir plan önerir. Üretilen plan resmi bir rehberlik programı değil; öğrencinin kendi temposunu görünür kılmasına yardımcı olan pratik bir başlangıçtır.",
+      "Bu araç, kalan süreyi haftalara böler ve günlük çalışma saatine göre sade bir plan önerir. Üretilen plan resmi bir çalışma programı değil; öğrencinin kendi temposunu görünür kılmasına yardımcı olan pratik bir başlangıçtır.",
     sections: [
       {
         title: "MVP çalışma mantığı",
@@ -107,6 +108,7 @@ export const toolPages: ToolPageConfig[] = [
       { label: "YKS sayacı", href: "/yks-kac-gun-kaldi", description: "Hedef tarihe kalan süreyi gör", icon: "timer" },
       { label: "TYT konu dağılımı", href: "/konu-dagilimi/tyt", description: "TYT konu önceliklerini incele", icon: "bar_chart" },
       { label: "Deneme net takip", href: "/deneme-net-takip-tablosu", description: "Plan sonrası denemelerini takip et", icon: "history" },
+      { label: "Sınav Rehberi", href: "/rehberler", description: "Sayaç, puan ve kaynak sayfalarını birlikte gör", icon: "school" },
     ],
   },
   {
@@ -151,6 +153,7 @@ export const toolPages: ToolPageConfig[] = [
       { label: "TYT puan hesaplama", href: "/puan-hesaplama/tyt", description: "Netlerini tahmini puana çevir", icon: "calculate" },
       { label: "YKS çalışma programı", href: "/yks-calisma-programi", description: "Deneme sonuçlarına göre plan oluştur", icon: "edit_note" },
       { label: "Başarı sıralaması tahmini", href: "/basari-siralamasi-tahmini", description: "Tahmini puan aralığını sıraya çevir", icon: "trending_up" },
+      { label: "Sınav Rehberi", href: "/rehberler", description: "Ücretsiz sınav araçlarını tek merkezde incele", icon: "school" },
     ],
   },
   {
@@ -195,6 +198,7 @@ export const toolPages: ToolPageConfig[] = [
       { label: "YKS puan hesaplama", href: "/puan-hesaplama/yks", description: "Önce netlerinden tahmini puan hesapla", icon: "calculate" },
       { label: "Deneme net takip", href: "/deneme-net-takip-tablosu", description: "Sıralama tahminini deneme trendiyle birlikte izle", icon: "history" },
       { label: "YKS tercih rehberi", href: "/blog/yks-tercih-donemi-rehberi", description: "Tercih listesi hazırlarken dikkat edilecekler", icon: "article" },
+      { label: "Sınav Rehberi", href: "/rehberler", description: "Hazırlık araçlarını ve kaynakları birlikte gör", icon: "school" },
     ],
   },
   {
@@ -239,6 +243,7 @@ export const toolPages: ToolPageConfig[] = [
       { label: "YKS widget", href: "/embed/yks-2027", description: "YKS embed sayacını önizle", icon: "timer" },
       { label: "TYT widget", href: "/embed/tyt-2027", description: "TYT embed sayacını önizle", icon: "timer" },
       { label: "AYT widget", href: "/embed/ayt-2027", description: "AYT embed sayacını önizle", icon: "timer" },
+      { label: "Sınav Rehberi", href: "/rehberler", description: "Ücretsiz kaynak merkezini aç", icon: "school" },
     ],
   },
 ];

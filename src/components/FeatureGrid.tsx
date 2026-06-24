@@ -5,18 +5,17 @@ const features = [
   {
     icon: "timer",
     title: "Canlı Sayaç",
-    body: "Saniye saniye güncellenen geri sayım.",
+    body: "YKS, TYT, AYT ve diğer sınavlara kalan süreyi canlı takip edin.",
   },
   {
-    icon: "article",
-    title: "Rehberlik & Blog",
-    body: "Sınavlara hazırlık tüyoları ve makaleler.",
+    icon: "bar_chart",
+    title: "Konu Dağılımı",
+    body: "TYT, AYT ve LGS konularını soru dağılımına göre önceliklendirin.",
   },
-
   {
     icon: "calculate",
     title: "Puan Hesaplama",
-    body: "TYT, AYT, DGS, LGS, ALES, OBP hepsi tek yerde.",
+    body: "TYT, AYT, DGS, LGS, ALES, KPSS ve OBP için tahmini puan hesaplayın.",
   },
 ];
 

@@ -72,6 +72,13 @@ const contextualLinks = (() => {
       { href: "/puan-hesaplama/tyt", label: "TYT puan hesaplama", body: "TYT netlerini hesapla.", icon: "calculate" },
     ];
   }
+  if (s.includes("ayt")) {
+    return [
+      { href: "/ayt-kac-gun-kaldi", label: "AYT sayacı", body: "AYT oturumuna kalan süreyi gör.", icon: "timer" },
+      { href: "/konu-dagilimi/ayt", label: "AYT konu dağılımı", body: "Alan derslerinin konu ağırlıklarını incele.", icon: "bar_chart" },
+      { href: "/puan-hesaplama/ayt", label: "AYT puan hesaplama", body: "AYT netlerini hesapla.", icon: "calculate" },
+    ];
+  }
   if (s.includes("tercih")) {
     return [
       { href: "/puan-hesaplama/yks", label: "YKS puan hesaplama", body: "Tahmini puanını kontrol et.", icon: "calculate" },

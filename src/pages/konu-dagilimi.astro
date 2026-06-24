@@ -21,9 +21,16 @@ const breadcrumbJsonLd = {
 ---
 
 <Layout
-  title="Konu Dağılımı | YKS, LGS Yıllara Göre Soru Dağılımı"
-  description="Sınavlarda son yıllarda hangi konudan kaç soru çıktığını ders ve yıl bazında detaylı incele."
+  title="YKS, TYT ve AYT Konu Dağılımı | Yıllara Göre Çıkan Konular"
+  description="YKS, TYT ve AYT konu dağılımını yıllara göre inceleyin; soru metni yayımlamadan konu başlığı ve soru sayısı analizleriyle çalışma önceliği belirleyin."
   structuredData={breadcrumbJsonLd}
 >
-  <KonuDagilimiClient client:load exams={exams} subjects={subjects} distributions={distributions} />
+  <KonuDagilimiClient
+    client:load
+    exams={exams}
+    subjects={subjects}
+    distributions={distributions}
+    titleOverride="YKS, TYT ve AYT Konu Dağılımı"
+    descriptionOverride="Yıllara göre çıkan konuları ve soru sayılarını inceleyin; TYT ve AYT çalışma planınızı konu ağırlıklarına göre güncelleyin."
+  />
 </Layout>

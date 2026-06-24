@@ -1,6 +1,6 @@
 ---
 // Persistent left sidebar — drawn identically (4 items: Geri Sayım /
-// Popüler Yazılar / Rehberlik / İlanlar) on every single new_ui mockup
+// Popüler Yazılar / Sınav Rehberi / İlanlar) on every single new_ui mockup
 // (ana_sayfa, blog listesi, blog detayı, sınav takvimi, ilanlar, popüler
 // yazılar, rehberlik). This is the site's global secondary navigation,
 // rendered once from Layout.astro on every page — not just a "hub" subset.
@@ -23,7 +23,7 @@ const items = [
   { key: 'yks-kac-gun-kaldi', href: '/yks-kac-gun-kaldi', label: 'YKS Sayacı', icon: 'timer' },
   { key: '2027-yks-takvimi', href: '/2027-yks-takvimi', label: 'YKS Takvimi', icon: 'calendar_month' },
   { key: 'puan-hesaplama', href: '/puan-hesaplama/yks', label: 'Puan Hesaplama', icon: 'calculate' },
-  { key: 'rehberler', href: '/rehberler', label: 'Rehberlik', icon: 'school' },
+  { key: 'rehberler', href: '/rehberler', label: 'Sınav Rehberi', icon: 'school' },
 ] as const;
 
 function isActive(href: string) {

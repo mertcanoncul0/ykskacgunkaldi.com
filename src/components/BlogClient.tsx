@@ -56,10 +56,10 @@ export function BlogClient({ posts }: { posts: Post[] }) {
     <div className="px-margin-mobile md:px-margin-desktop">
       <div className="max-w-container-max mx-auto py-section-gap">
         <header className="mb-12">
-          <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg mb-4">Rehberlik ve Blog</h1>
+          <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg mb-4">Sınav Rehberi ve Blog</h1>
           <div className="h-px w-24 bg-primary mb-6" />
           <p className="font-body-lg text-text-muted max-w-2xl">
-            Sınav yolculuğunuzda size rehberlik edecek güncel haberler, çalışma teknikleri ve başarı hikayeleri.
+            Sınav hazırlığında kullanabileceğiniz çalışma teknikleri, güncel rehber yazıları ve kaynak notları.
           </p>
         </header>
 

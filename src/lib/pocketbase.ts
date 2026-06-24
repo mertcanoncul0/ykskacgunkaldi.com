@@ -137,6 +137,17 @@ export interface Post {
   publishedAt?: string;
 }
 
+function normalizeAuthorName(authorName?: string) {
+  if (!authorName) return undefined;
+  const replacements: Record<string, string> = {
+    "Rehberlik Servisi": "Kaynak Editörü",
+    "Eğitim Danışmanı": "Eğitim Editörü",
+    "Kariyer Danışmanı": "Kariyer Editörü",
+    "Psikolojik Danışman": "Psikoloji Editörü",
+  };
+  return replacements[authorName] || authorName;
+}
+
 export async function getPosts(): Promise<Post[]> {
   // Koleksiyonun listRule'u zaten status = "" || status = "published" olduğu
   // için taslaklar (draft) PocketBase tarafından otomatik filtrelenir.
@@ -148,7 +159,7 @@ export async function getPosts(): Promise<Post[]> {
       category: p.category || undefined,
       excerpt: p.excerpt || undefined,
       contentHtml: p.contentHtml || "",
-      authorName: p.authorName || undefined,
+      authorName: normalizeAuthorName(p.authorName),
       tags: p.tags || [],
       coverImage: p.coverImage || undefined,
       publishedAt: p.publishedAt || undefined,
@@ -208,12 +219,16 @@ export interface Settings {
   homepage_seo_description: string;
 }
 
+function normalizeSettingsDescription(description?: string) {
+  return (description || "").replace("rehberleri inceleyin", "kaynakları inceleyin");
+}
+
 export async function getSettings(): Promise<Settings> {
   const records = await fetchAllRecords<any>("settings");
   const s = records[0];
   return {
     homepage_seo_title: s?.homepage_seo_title || "",
-    homepage_seo_description: s?.homepage_seo_description || "",
+    homepage_seo_description: normalizeSettingsDescription(s?.homepage_seo_description),
   };
 }
 
