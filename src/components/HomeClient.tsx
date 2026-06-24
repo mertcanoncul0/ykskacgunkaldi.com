@@ -145,7 +145,7 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
               className="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 mt-8 font-label-md text-label-md uppercase tracking-widest border border-primary hover:bg-surface-container-highest hover:text-primary transition-colors duration-300"
               href="https://www.osym.gov.tr/tr%2C15164/yks-cikmis-sorular.html"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
             >
               Çıkmış Soruları Çöz
               <Icon name="north_east" size={18} />

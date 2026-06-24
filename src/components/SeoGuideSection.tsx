@@ -1,4 +1,5 @@
 import type { Exam } from "../lib/api";
+import { addMissingLinkTitles } from "../lib/html";
 import { Icon } from "../lib/icons";
 
 export function SeoGuideSection({ exam }: { exam: Exam }) {
@@ -20,7 +21,7 @@ export function SeoGuideSection({ exam }: { exam: Exam }) {
             </summary>
             <p
               className="font-body-md text-body-md text-text-muted mt-4 leading-relaxed [&_a]:underline [&_a]:text-primary"
-              dangerouslySetInnerHTML={{ __html: g.body }}
+              dangerouslySetInnerHTML={{ __html: addMissingLinkTitles(g.body) }}
             />
           </details>
         ))}
