@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { site } from '../lib/site';
 import { getExams } from '../lib/pocketbase';
 import { Icon } from '../lib/icons';
+import { homeSelectionLandingPaths } from '../data/exam-landing-pages';
 
 const exams = await getExams();
 
@@ -71,6 +72,7 @@ const guides = exams
     title: e.guideTitle!,
     summary: e.guideParagraphs![0]?.body || e.heroDescription,
     icon: examIcons[e.slug] || 'auto_stories',
+    href: homeSelectionLandingPaths[e.slug] || '/sinavlar',
   }));
 
 const breadcrumbJsonLd = {
@@ -153,7 +155,7 @@ const breadcrumbJsonLd = {
           <h2 class="font-label-sm text-label-sm text-text-muted uppercase tracking-[0.2em] mb-10">Sınav Bazlı Rehberler</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {guides.map((g) => (
-              <a href={`/?sinav=${g.slug}`} class="group border border-border-subtle bg-white-pure p-8 transition-all hover:border-black-pure block">
+              <a href={g.href} class="group border border-border-subtle bg-white-pure p-8 transition-all hover:border-black-pure block">
                 <div class="aspect-video mb-6 overflow-hidden bg-surface-container flex items-center justify-center">
                   <Icon name={g.icon} size={48} className="text-text-muted" />
                 </div>
