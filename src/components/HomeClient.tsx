@@ -7,29 +7,76 @@ import { FaqAccordion } from "./FaqAccordion";
 import { FeaturedPosts } from "./FeaturedPosts";
 import { QuickLinks } from "./QuickLinks";
 import type { Post } from "../lib/pocketbase";
+import { getHomeSeo, resolveHomeSelection, type HomeSeoDefaults } from "../lib/home-seo";
 import { Icon } from "../lib/icons";
 
-export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; posts: Post[] }) {
-  const [activeSlug, setActiveSlug] = useState(exams[0]?.slug || "");
+const SESSION_H1_BY_SLUG: Record<string, string> = {
+  tyt: "2027 TYT'ye Kaç Gün Kaldı?",
+  ayt: "2027 AYT'ye Kaç Gün Kaldı?",
+  ydt: "2027 YDT'ye Kaç Gün Kaldı?",
+  "genel-yetenek": "2026 KPSS Genel Yetenek - Genel Kültür'e Kaç Gün Kaldı?",
+  "egitim-bilimleri": "2026 KPSS Eğitim Bilimleri'ne Kaç Gün Kaldı?",
+  oabt: "2026 KPSS ÖABT'ye Kaç Gün Kaldı?",
+};
+
+function getDefaultSessionSlug(exam: any) {
+  return (
+    exam?.sessions?.find((s: any) => new Date(s.targetDate).getTime() > Date.now())?.slug ||
+    exam?.sessions?.[0]?.slug ||
+    null
+  );
+}
+
+function updateHeadMeta(name: string, content: string) {
+  const selector = name.startsWith("og:")
+    ? `meta[property="${name}"]`
+    : `meta[name="${name}"]`;
+  const meta = document.querySelector<HTMLMetaElement>(selector);
+  meta?.setAttribute("content", content);
+}
+
+function replaceSelectionUrl(selectionSlug: string) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("sinav", selectionSlug);
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+export function HomeClient({
+  exams,
+  faqs,
+  posts,
+  defaultSeo,
+  initialSelectionSlug,
+}: {
+  exams: any[];
+  faqs: any[];
+  posts: Post[];
+  defaultSeo: HomeSeoDefaults;
+  initialSelectionSlug?: string;
+}) {
+  const initialSelection = resolveHomeSelection(exams, initialSelectionSlug);
+  const initialExamSlug = initialSelection?.examSlug || exams[0]?.slug || "";
+  const initialExam = exams.find((e) => e.slug === initialExamSlug) || exams[0];
+
+  const [activeSlug, setActiveSlug] = useState(initialExamSlug);
+  const [currentSelectionSlug, setCurrentSelectionSlug] = useState<string | null>(
+    initialSelection?.selectionSlug || null,
+  );
+  const [activeSessionSlug, setActiveSessionSlug] = useState<string | null>(
+    initialSelection?.sessionSlug || getDefaultSessionSlug(initialExam),
+  );
 
   // Header'daki sınav menüsü, /sinavlar listesi ve bilgi kartları
   // "/?sinav=<slug>" linkiyle belirli bir sınavı açmayı bekliyor.
   // Statik üretim sırasında URL erişilemez, bu yüzden mount sonrası okunur.
   useEffect(() => {
     const slug = new URLSearchParams(window.location.search).get("sinav");
-    if (!slug) return;
+    const selection = resolveHomeSelection(exams, slug);
+    if (!selection) return;
 
-    const examMatch = exams.find((e) => e.slug === slug);
-    if (examMatch) {
-      setActiveSlug(examMatch.slug);
-      return;
-    }
-
-    const sessionOwner = exams.find((e) => e.sessions?.some((s: any) => s.slug === slug));
-    if (sessionOwner) {
-      setActiveSlug(sessionOwner.slug);
-      setActiveSessionSlug(slug);
-    }
+    setCurrentSelectionSlug(selection.selectionSlug);
+    setActiveSlug(selection.examSlug);
+    if (selection.sessionSlug) setActiveSessionSlug(selection.sessionSlug);
   }, [exams]);
 
   const exam = useMemo(
@@ -37,25 +84,44 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
     [exams, activeSlug]
   );
 
-  const defaultSessionSlug =
-    exam?.sessions?.find((s: any) => new Date(s.targetDate).getTime() > Date.now())?.slug ||
-    exam?.sessions?.[0]?.slug ||
-    null;
-
-  const [activeSessionSlug, setActiveSessionSlug] = useState<string | null>(defaultSessionSlug);
+  const defaultSessionSlug = getDefaultSessionSlug(exam);
 
   // Sınav (ve dolayısıyla oturum listesi) değiştiğinde aktif oturumu
   // sıfırla. Not: bu bir yan etkidir, bu yüzden useMemo değil useEffect
   // kullanılır — useMemo saf değer hesaplamak için tasarlanmıştır, içinde
   // setState çağırmak React tarafından önerilmez.
   useEffect(() => {
-    const querySlug = new URLSearchParams(window.location.search).get("sinav");
-    if (querySlug && exam?.sessions?.some((s: any) => s.slug === querySlug)) {
-      setActiveSessionSlug(querySlug);
+    if (currentSelectionSlug && exam?.sessions?.some((s: any) => s.slug === currentSelectionSlug)) {
+      setActiveSessionSlug(currentSelectionSlug);
       return;
     }
     setActiveSessionSlug(defaultSessionSlug);
-  }, [exam?.slug, defaultSessionSlug, exam?.sessions]);
+  }, [exam?.slug, defaultSessionSlug, exam?.sessions, currentSelectionSlug]);
+
+  useEffect(() => {
+    const seo = getHomeSeo(defaultSeo, exams, currentSelectionSlug);
+    const canonicalUrl = `${window.location.origin}${seo.canonicalPath}`;
+    document.title = seo.title;
+    updateHeadMeta("description", seo.description);
+    updateHeadMeta("og:title", seo.title);
+    updateHeadMeta("og:description", seo.description);
+    updateHeadMeta("og:url", canonicalUrl);
+    updateHeadMeta("twitter:title", seo.title);
+    updateHeadMeta("twitter:description", seo.description);
+    document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute("href", canonicalUrl);
+  }, [currentSelectionSlug, defaultSeo, exams]);
+
+  const selectExam = (slug: string) => {
+    setActiveSlug(slug);
+    setCurrentSelectionSlug(slug);
+    replaceSelectionUrl(slug);
+  };
+
+  const selectSession = (slug: string) => {
+    setActiveSessionSlug(slug);
+    setCurrentSelectionSlug(slug);
+    replaceSelectionUrl(slug);
+  };
 
   if (!exam) {
     return (
@@ -68,6 +134,10 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
 
   const activeSession =
     exam.sessions?.find((s: any) => s.slug === activeSessionSlug) || exam.sessions?.[0];
+  const displayH1 =
+    currentSelectionSlug && currentSelectionSlug === activeSession?.slug
+      ? SESSION_H1_BY_SLUG[activeSession.slug] || `${exam.name} ${activeSession.name} Kaç Gün Kaldı?`
+      : exam.h1;
   const targetDate = activeSession?.targetDate || exam.targetDate;
   const countdownLabel = activeSession?.countdownLabel || exam.countdownLabel;
 
@@ -89,7 +159,7 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
                     type="button"
                     role="tab"
                     aria-selected={e.slug === exam.slug ? "true" : "false"}
-                    onClick={() => setActiveSlug(e.slug)}
+                    onClick={() => selectExam(e.slug)}
                     className={`px-8 py-2 font-label-md text-label-md transition-all ${
                       e.slug === exam.slug
                         ? "bg-primary text-on-primary"
@@ -103,7 +173,7 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
             )}
 
             <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg mb-6 uppercase tracking-tighter">
-              {exam.h1}
+              {displayH1}
             </h1>
 
             {exam.sessions && exam.sessions.length > 1 && (
@@ -118,7 +188,7 @@ export function HomeClient({ exams, faqs, posts }: { exams: any[]; faqs: any[]; 
                     type="button"
                     role="tab"
                     aria-selected={s.slug === activeSession?.slug ? "true" : "false"}
-                    onClick={() => setActiveSessionSlug(s.slug)}
+                    onClick={() => selectSession(s.slug)}
                     className={`px-5 py-1.5 font-label-sm text-label-sm uppercase tracking-widest border transition-colors ${
                       s.slug === activeSession?.slug
                         ? "border-primary bg-primary text-on-primary"

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { HomeClient } from '../components/HomeClient';
+import { getHomeSeo } from '../lib/home-seo';
 import { getExams, getFaqs, getSettings, getPosts } from '../lib/pocketbase';
 
 const [exams, faqs, settings, posts] = await Promise.all([
@@ -11,6 +12,8 @@ const [exams, faqs, settings, posts] = await Promise.all([
 ]);
 
 const stripHtml = (s: string) => s.replace(/<[^>]+>/g, '').trim();
+const selectedExamSlug = Astro.url.searchParams.get('sinav');
+const homeSeo = getHomeSeo(settings, exams, selectedExamSlug);
 
 const faqJsonLd = faqs?.length
   ? {
@@ -29,9 +32,17 @@ const faqJsonLd = faqs?.length
 ---
 
 <Layout
-  title={settings.homepage_seo_title}
-  description={settings.homepage_seo_description}
+  title={homeSeo.title}
+  description={homeSeo.description}
+  path={homeSeo.canonicalPath}
   structuredData={faqJsonLd ? [faqJsonLd] : []}
 >
-  <HomeClient client:load exams={exams} faqs={faqs} posts={posts.slice(0, 3)} />
+  <HomeClient
+    client:load
+    exams={exams}
+    faqs={faqs}
+    posts={posts.slice(0, 3)}
+    defaultSeo={settings}
+    initialSelectionSlug={homeSeo.selectionSlug}
+  />
 </Layout>

@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { site } from '../lib/site';
+import { getHomeSeoSitemapPaths } from '../lib/home-seo';
 import { getExams, getPosts, getAllPageSlugs } from '../lib/pocketbase';
 import { scoreCalculatorMenu } from '../data/score-calculators';
 
@@ -31,6 +32,7 @@ export const GET: APIRoute = async () => {
 
   const urls = [
     ...staticRoutes,
+    ...getHomeSeoSitemapPaths(exams),
     ...scoreCalculatorMenu.map((c) => `/puan-hesaplama/${c.slug}`),
     ...posts.map((p) => `/blog/${p.slug}`),
     ...pageSlugs.map((slug) => `/${slug}`),
@@ -39,10 +41,6 @@ export const GET: APIRoute = async () => {
   const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
     .map(urlEntry)
     .join('\n')}\n</urlset>\n`;
-
-  // exams şu an /?sinav=<slug> deep-link olarak ana sayfa içinde gösteriliyor,
-  // bağımsız bir URL'leri olmadığı için sitemap'e ayrıca eklenmiyor.
-  void exams;
 
   return new Response(body, {
     headers: { 'Content-Type': 'application/xml; charset=utf-8' },
