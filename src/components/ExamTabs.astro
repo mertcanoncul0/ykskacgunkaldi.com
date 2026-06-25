@@ -1,0 +1,39 @@
+---
+// Spec'teki "Exam Tabs": beyaz, yuvarlatılmış konteyner içinde, aktif sekme
+// siyah dolgulu pill. Sınav landing sayfaları arası gerçek <a> linkleri
+// ile gezinir (her biri kendi route'una), bu yüzden tamamen statik —
+// HomeClient.tsx'teki aynı görünümlü sekmeler ise sayfa içi state değiştirdiği
+// için orada React ile ayrıca render edilir.
+interface TabItem {
+  href: string;
+  label: string;
+  active: boolean;
+}
+
+interface Props {
+  items: TabItem[];
+  ariaLabel: string;
+}
+
+const { items, ariaLabel } = Astro.props;
+---
+
+<nav
+  class="flex w-fit flex-nowrap md:flex-wrap items-center gap-1 max-w-full overflow-x-auto md:overflow-visible border border-border-subtle rounded-pill bg-white-pure shadow-card p-1.5"
+  aria-label={ariaLabel}
+>
+  {items.map((item) => (
+    <a
+      href={item.href}
+      aria-current={item.active ? 'page' : undefined}
+      class:list={[
+        'shrink-0 inline-flex min-h-10 items-center justify-center rounded-pill px-5 py-2 font-label-sm text-label-sm uppercase transition-colors',
+        item.active
+          ? 'bg-accent text-on-primary'
+          : 'text-text-muted hover:bg-surface-container-high hover:text-primary',
+      ]}
+    >
+      {item.label}
+    </a>
+  ))}
+</nav>

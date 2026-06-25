@@ -1,0 +1,48 @@
+---
+// Spec'teki "Quick Action Cards": Sınav Takvimi / Puan Hesaplama / Sınav
+// Rehberi / Çıkmış Sorular. Kart listesi `lib/exams.ts`'teki
+// `getQuickActionCards` ile üretilir (aynı mantık HomeClient.tsx'te de
+// kullanılıyor) — burada sadece statik, JS'siz markup'a dönüştürülür.
+import { Icon } from '../lib/icons';
+import { getQuickActionCards } from '../lib/exams';
+import type { Exam } from '../lib/api';
+
+interface Props {
+  exam: Exam;
+}
+
+const { exam } = Astro.props;
+const cards = getQuickActionCards(exam);
+
+const gridClass =
+  cards.length >= 4
+    ? 'sm:grid-cols-2 lg:grid-cols-4'
+    : cards.length === 3
+      ? 'sm:grid-cols-3'
+      : 'sm:grid-cols-2';
+---
+
+{cards.length > 0 && (
+  <section class="mb-12" aria-label="Hızlı erişim araçları">
+    <div class:list={['grid grid-cols-1 gap-6', gridClass]}>
+      {cards.map((card) => (
+        <a
+          href={card.href}
+          target={card.external ? '_blank' : undefined}
+          rel={card.external ? 'noopener noreferrer nofollow' : undefined}
+          class="group bg-white-pure border border-border-subtle rounded-card shadow-card hover:shadow-card-hover hover:border-accent transition-all p-6 flex flex-col gap-3"
+        >
+          <Icon name={card.icon} size={28} className="text-accent" />
+          <div>
+            <h3 class="font-headline-md text-headline-md text-primary mb-1">{card.title}</h3>
+            <p class="font-body-md text-body-md text-text-muted text-sm">{card.body}</p>
+          </div>
+          <span class="mt-auto inline-flex items-center gap-1 font-label-sm text-label-sm uppercase text-accent">
+            Aç
+            <Icon name="arrow_forward" size={14} />
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

@@ -150,7 +150,7 @@ export function HomeClient({
           <div className="flex flex-col items-center text-center">
             {exams.length > 1 && (
               <div
-                className="flex flex-wrap justify-center border border-border-subtle mb-12 bg-white-pure p-1"
+                className="inline-flex flex-wrap justify-center gap-1 border border-border-subtle mb-12 bg-white-pure p-1.5"
                 role="tablist"
                 aria-label="Sınav seçimi"
               >
@@ -161,7 +161,7 @@ export function HomeClient({
                     role="tab"
                     aria-selected={e.slug === exam.slug ? "true" : "false"}
                     onClick={() => selectExam(e.slug)}
-                    className={`px-8 py-2 font-label-md text-label-md transition-all ${
+                    className={`px-5 py-2 font-label-md text-label-md transition-colors ${
                       e.slug === exam.slug
                         ? "bg-primary text-on-primary"
                         : "hover:bg-surface-container-low text-text-muted"
