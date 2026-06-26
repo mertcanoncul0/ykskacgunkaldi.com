@@ -1,0 +1,9 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { ForgotPasswordForm } from "../components/ForgotPasswordForm";
+import { site } from "../lib/site";
+---
+
+<Layout title={`Şifremi Unuttum | ${site.name}`} description="Şifreni sıfırlamak için e-posta bağlantısı al." noindex={true}>
+  <ForgotPasswordForm client:load />
+</Layout>

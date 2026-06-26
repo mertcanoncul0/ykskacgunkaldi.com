@@ -67,9 +67,30 @@ const EMBED_CONTENT_SECURITY_POLICY = [
   "form-action 'none'",
 ].join("; ");
 
+// Giriş gerektiren yollar — token yoksa /giris'e yönlendirilir.
+const PROTECTED_ROUTES = ["/hesap"];
+// Sadece giriş yapılmamışken anlamlı yollar — giriş varsa /hesap'a gönder.
+const GUEST_ONLY_ROUTES = ["/giris", "/kayit"];
+
 export const onRequest = defineMiddleware(async (context, next) => {
-  const response = await next();
   const { pathname } = context.url;
+  const hasToken = !!context.cookies.get("pb_token")?.value;
+
+  // Korumalı sayfalara giriş kontrolü (header'lar eklenmeden önce).
+  const isProtected = PROTECTED_ROUTES.some(
+    (p) => pathname === p || pathname.startsWith(p + "/")
+  );
+  if (isProtected && !hasToken) {
+    const redirect = encodeURIComponent(pathname + context.url.search);
+    return context.redirect(`/giris?redirect=${redirect}`, 302);
+  }
+
+  // Giriş yapmış kullanıcı giriş/kayıt sayfasına gitmesin.
+  if (hasToken && GUEST_ONLY_ROUTES.includes(pathname)) {
+    return context.redirect("/hesap", 302);
+  }
+
+  const response = await next();
   const isEmbed = pathname.startsWith("/embed/");
 
   response.headers.set(

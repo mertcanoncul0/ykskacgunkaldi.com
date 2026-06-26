@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { AuthForm } from "../components/AuthForm";
+import { site } from "../lib/site";
+---
+
+<Layout
+  title={`Kayıt Ol | ${site.name}`}
+  description="Ücretsiz hesap oluştur; çalışma planını, deneme net takibini ve kaydettiğin rehberleri tek yerde topla."
+  noindex={true}
+>
+  <AuthForm client:load mode="register" />
+</Layout>

@@ -149,6 +149,13 @@
   --spacing-margin-mobile: 16px;
   --spacing-margin-desktop: 48px;
   --spacing-section-gap: 80px;
+
+  /* Header'a özel kırılma noktaları:
+   * - hdr (1220px): altında tüm gezinme sağdaki hamburger menüsüne toplanır.
+   * - hdrwide (1420px): altında sosyal medya header'dan çıkıp sol menüye taşınır.
+   */
+  --breakpoint-hdr: 1220px;
+  --breakpoint-hdrwide: 1420px;
 }
 
 @theme inline {
@@ -173,4 +180,80 @@
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+/*
+ * Arama input'ları kendi alt çizgilerine (border-b) sahip; bu yüzden global
+ * :focus-visible çerçevesini ve tarayıcının varsayılan input border'ını burada
+ * tamamen bastırıyoruz (aksi halde input'un etrafında çirkin bir kutu çıkıyor).
+ */
+.search-input,
+.search-input:focus,
+.search-input:focus-visible {
+  outline: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.search-input::-webkit-search-decoration,
+.search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/*
+ * Başlık alt çizgisi — soldan sağa büyüyen animasyonlu underline. Tüm yazı/
+ * içerik kartlarında AYNI davranış olsun diye tek kaynaktan yönetilir. Başlık
+ * metnini saran span'a `title-underline` sınıfını ver; çizgi yalnızca başlığın
+ * üzerine gelince çalışır (tüm kartın değil).
+ */
+.title-underline {
+  background-image: linear-gradient(var(--color-primary), var(--color-primary));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0% 2px;
+  padding-bottom: 0.25rem;
+  transition: background-size 0.3s ease-out;
+}
+.title-underline:hover {
+  background-size: 100% 2px;
+}
+
+/*
+ * Hareket azaltma tercihi olan kullanıcılar için animasyon/geçişleri kapat
+ * (erişilebilirlik — vestibüler rahatsızlıkları olanlar için önemli).
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Açılıp kapanır sol kenar çubuğu (yalnızca ≥1024px). Header'daki hamburger
+ * `body.sidebar-open` sınıfını toggle eder; aside kayarak girer/çıkar ve
+ * ana içerik 16rem (w-64) kayarak yer açar. Mobilde (<1024px) aside zaten
+ * `hidden` olduğu için her şey sağdaki hamburger menüsünden yönetilir.
+ */
+.app-sidebar {
+  transition: transform 0.4s ease;
+}
+.app-main {
+  transition: margin-left 0.4s ease;
+}
+@media (min-width: 1220px) {
+  .app-sidebar {
+    transform: translateX(-100%);
+  }
+  body.sidebar-open .app-sidebar {
+    transform: translateX(0);
+  }
+  body.sidebar-open .app-main {
+    margin-left: 16rem;
+  }
 }

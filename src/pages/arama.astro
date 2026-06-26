@@ -1,0 +1,243 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../lib/site";
+import { getPosts } from "../lib/pocketbase";
+import { Icon } from "../lib/icons";
+
+export const prerender = false;
+
+// --- Sorgu ---
+const rawQuery = (Astro.url.searchParams.get("q") || "").trim();
+
+// Türkçe-duyarlı normalizasyon + aksan temizleme (örn. "calisma" → "çalışma"
+// eşleşsin diye). toLocaleLowerCase('tr') İ→i, I→ı dönüşümünü doğru yapar;
+// ardından aksanlı harfleri sadeleştiriyoruz.
+function norm(s: string): string {
+  return (s || "")
+    .toLocaleLowerCase("tr")
+    .replaceAll("ç", "c")
+    .replaceAll("ğ", "g")
+    .replaceAll("ı", "i")
+    .replaceAll("i̇", "i")
+    .replaceAll("î", "i")
+    .replaceAll("ö", "o")
+    .replaceAll("ş", "s")
+    .replaceAll("ü", "u")
+    .replaceAll("â", "a")
+    .replaceAll("û", "u")
+    .trim();
+}
+
+function stripHtml(html: string): string {
+  return (html || "").replace(/<[^>]+>/g, " ");
+}
+
+function escapeHtml(s: string): string {
+  return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+const terms = norm(rawQuery).split(/\s+/).filter(Boolean);
+
+// Vurgulama, orijinal metin üzerinde (büyük/küçük harf duyarsız) yapılır.
+const rawTerms = rawQuery.split(/\s+/).filter(Boolean);
+const highlightRe = rawTerms.length
+  ? new RegExp(`(${rawTerms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "gi")
+  : null;
+
+function highlight(text?: string): string {
+  const safe = escapeHtml(text || "");
+  if (!highlightRe) return safe;
+  return safe.replace(highlightRe, '<mark class="bg-surface-container-highest text-primary">$1</mark>');
+}
+
+// --- Araçlar / sayfalar (içerik dışı hızlı hedefler) ---
+const tools = [
+  { label: "YKS Sayacı", href: "/yks-kac-gun-kaldi", desc: "YKS'ye kalan günleri canlı takip et.", icon: "timer", keywords: "yks sayac kac gun kaldi geri sayim countdown" },
+  { label: "Puan Hesaplama", href: "/puan-hesaplama/yks", desc: "TYT, AYT ve YDT puanını hesapla.", icon: "calculate", keywords: "puan hesaplama tyt ayt ydt net" },
+  { label: "Konu Dağılımı", href: "/konu-dagilimi", desc: "Yıllara göre çıkan soru konularını incele.", icon: "bar_chart", keywords: "konu dagilimi soru analiz mufredat" },
+  { label: "Sınav Takvimi", href: "/sinavlar", desc: "Tüm sınav tarihleri ve oturumlar.", icon: "calendar_month", keywords: "sinav takvimi tarih oturum yks tyt ayt lgs" },
+  { label: "Çalışma Programı", href: "/yks-calisma-programi", desc: "Haftalık çalışma planı oluştur.", icon: "school", keywords: "calisma programi plan haftalik ders" },
+  { label: "Deneme Net Takip", href: "/deneme-net-takip-tablosu", desc: "Deneme netlerini tabloyla takip et.", icon: "trending_up", keywords: "deneme net takip tablo gelisim" },
+  { label: "Blog & Rehber", href: "/blog", desc: "Çalışma teknikleri ve rehber yazıları.", icon: "article", keywords: "blog rehber yazi makale teknik" },
+];
+
+const toolResults = terms.length
+  ? tools.filter((t) => {
+      const hay = norm(t.label + " " + t.keywords);
+      return terms.some((term) => hay.includes(term));
+    })
+  : [];
+
+// --- Yazılar ---
+const posts = terms.length ? await getPosts() : [];
+
+function scorePost(p: (typeof posts)[number]): number {
+  const title = norm(p.title);
+  const cat = norm(p.category || "");
+  const tags = norm((p.tags || []).join(" "));
+  const ex = norm(p.excerpt || "");
+  const body = norm(stripHtml(p.contentHtml || ""));
+  let score = 0;
+  for (const t of terms) {
+    if (title.includes(t)) score += 10;
+    if (cat.includes(t)) score += 5;
+    if (tags.includes(t)) score += 4;
+    if (ex.includes(t)) score += 3;
+    if (body.includes(t)) score += 1;
+  }
+  return score;
+}
+
+const postResults = posts
+  .map((p) => ({ p, score: scorePost(p) }))
+  .filter((r) => r.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .map((r) => r.p);
+
+const totalResults = toolResults.length + postResults.length;
+
+const popular = [
+  "YKS kaç gün kaldı",
+  "TYT puan hesaplama",
+  "AYT konu dağılımı",
+  "YKS çalışma programı",
+  "Deneme net takip",
+];
+
+function formatDate(d?: string) {
+  if (!d) return "";
+  try {
+    return new Date(d).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+  } catch {
+    return "";
+  }
+}
+
+const pageTitle = rawQuery ? `"${rawQuery}" için arama sonuçları` : "Arama";
+---
+
+<Layout title={`${pageTitle} | ${site.name}`} description="Site içi arama sonuçları." noindex={true}>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-container-max mx-auto py-section-gap">
+      <!-- Başlık + arama kutusu -->
+      <header class="mb-12">
+        <span class="font-label-sm uppercase tracking-[0.3em] text-text-muted">Arama</span>
+        <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg mt-3 mb-6">
+          {rawQuery ? `“${rawQuery}”` : "Ne arıyorsun?"}
+        </h1>
+        <form action="/arama" method="get" class="flex items-center gap-3 border-b border-border-subtle focus-within:border-primary transition-colors pb-3 max-w-2xl">
+          <Icon name="search" size={24} className="text-primary shrink-0" />
+          <input
+            type="search"
+            name="q"
+            value={rawQuery}
+            placeholder="Sınav, puan, konu, yazı…"
+            autofocus
+            class="search-input flex-1 min-w-0 bg-transparent font-body-lg text-lg md:text-xl placeholder:text-text-muted/50"
+          />
+          <button type="submit" class="font-label-md text-label-md uppercase tracking-wide text-primary hover:opacity-70 transition-opacity">Ara</button>
+        </form>
+        {rawQuery && (
+          <p class="mt-5 font-body-md text-text-muted">
+            {totalResults > 0 ? `${totalResults} sonuç bulundu` : "Sonuç bulunamadı"}
+          </p>
+        )}
+      </header>
+
+      {/* Sorgu yokken: popüler aramalar */}
+      {!rawQuery && (
+        <section>
+          <p class="font-label-sm uppercase tracking-widest text-text-muted mb-4">Popüler aramalar</p>
+          <div class="flex flex-wrap gap-3">
+            {popular.map((q) => (
+              <a
+                href={`/arama?q=${encodeURIComponent(q)}`}
+                class="px-4 py-2 border border-border-subtle text-text-muted hover:border-primary hover:text-primary transition-colors font-label-md text-label-md"
+              >
+                {q}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Araç/sayfa sonuçları */}
+      {toolResults.length > 0 && (
+        <section class="mb-14">
+          <p class="font-label-sm uppercase tracking-widest text-text-muted mb-4">Araçlar & sayfalar</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border-subtle border border-border-subtle">
+            {toolResults.map((t) => (
+              <a href={t.href} class="group flex items-center gap-4 bg-surface-container-lowest p-5 hover:bg-surface-container-high transition-colors">
+                <span class="inline-flex h-11 w-11 items-center justify-center bg-primary text-on-primary shrink-0">
+                  <Icon name={t.icon} size={22} />
+                </span>
+                <span class="flex flex-col">
+                  <span class="font-label-md text-label-md text-primary">{t.label}</span>
+                  <span class="font-body-md text-text-muted text-sm">{t.desc}</span>
+                </span>
+                <Icon name="arrow_forward" size={20} className="ml-auto text-text-muted group-hover:text-primary transition-colors" />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Yazı sonuçları */}
+      {postResults.length > 0 && (
+        <section>
+          <p class="font-label-sm uppercase tracking-widest text-text-muted mb-6">Yazılar</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-12">
+            {postResults.map((p) => (
+              <article class="group">
+                <a href={`/blog/${p.slug}`} class="block">
+                  <div class="aspect-[16/10] mb-5 border border-border-subtle bg-surface-container overflow-hidden">
+                    {p.coverImage ? (
+                      <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.title} loading="lazy" decoding="async" />
+                    ) : (
+                      <div class="w-full h-full flex items-center justify-center text-text-muted">
+                        <Icon name="article" size={32} />
+                      </div>
+                    )}
+                  </div>
+                  {p.category && (
+                    <span class="border border-primary text-primary px-2 py-0.5 font-label-sm uppercase inline-block mb-3">{p.category}</span>
+                  )}
+                  {p.publishedAt && (
+                    <time class="block font-label-sm text-text-muted mb-2">{formatDate(p.publishedAt)}</time>
+                  )}
+                  <h3 class="font-headline-md text-headline-md mb-2">
+                    <span class="title-underline" set:html={highlight(p.title)} />
+                  </h3>
+                  {p.excerpt && <p class="font-body-md text-text-muted text-sm line-clamp-3" set:html={highlight(p.excerpt)} />}
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Sonuç yok */}
+      {rawQuery && totalResults === 0 && (
+        <section class="border border-border-subtle p-10 text-center">
+          <div class="inline-flex h-14 w-14 items-center justify-center border border-border-subtle text-text-muted mb-5">
+            <Icon name="search_off" size={28} />
+          </div>
+          <h2 class="font-headline-md text-headline-md mb-3">“{rawQuery}” için sonuç yok</h2>
+          <p class="font-body-md text-text-muted max-w-md mx-auto mb-6">
+            Farklı bir kelime deneyebilir ya da aşağıdaki popüler aramalara göz atabilirsin.
+          </p>
+          <div class="flex flex-wrap gap-3 justify-center">
+            {popular.map((q) => (
+              <a
+                href={`/arama?q=${encodeURIComponent(q)}`}
+                class="px-4 py-2 border border-border-subtle text-text-muted hover:border-primary hover:text-primary transition-colors font-label-md text-label-md"
+              >
+                {q}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
+</Layout>

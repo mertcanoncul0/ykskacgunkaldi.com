@@ -98,6 +98,8 @@ export function BlogClient({ posts }: { posts: Post[] }) {
                       className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700"
                       src={featured.coverImage}
                       alt={featured.title}
+                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-text-muted">
@@ -119,8 +121,10 @@ export function BlogClient({ posts }: { posts: Post[] }) {
                   <span className="h-px w-8 bg-border-subtle" />
                   <span className="font-label-sm text-primary">{readingTime(featured)} DK OKUMA</span>
                 </div>
-                <h2 className="font-headline-lg text-headline-lg mb-4 group-hover:underline underline-offset-4 decoration-1">
-                  {featured.title}
+                <h2 className="font-headline-lg text-headline-lg mb-4">
+                  <span className="title-underline">
+                    {featured.title}
+                  </span>
                 </h2>
                 {featured.excerpt && (
                   <p className="font-body-md text-text-muted line-clamp-2">{featured.excerpt}</p>
@@ -138,6 +142,8 @@ export function BlogClient({ posts }: { posts: Post[] }) {
                       className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
                       src={p.coverImage}
                       alt={p.title}
+                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-text-muted">
@@ -153,8 +159,10 @@ export function BlogClient({ posts }: { posts: Post[] }) {
                 {p.publishedAt && (
                   <time className="block font-label-sm text-text-muted mb-2">{formatDate(p.publishedAt)}</time>
                 )}
-                <h3 className="font-headline-md text-headline-md mb-3 group-hover:text-primary transition-colors">
-                  {p.title}
+                <h3 className="font-headline-md text-headline-md mb-3">
+                  <span className="title-underline">
+                    {p.title}
+                  </span>
                 </h3>
                 {p.excerpt && (
                   <p className="font-body-md text-text-muted text-sm line-clamp-3">{p.excerpt}</p>

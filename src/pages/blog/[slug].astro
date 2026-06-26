@@ -262,7 +262,7 @@ const structuredData = [
                     <a class="flex gap-3 group" href={`/blog/${p.slug}`}>
                       <span class="font-display-lg text-text-muted text-[24px] leading-none">{String(i + 1).padStart(2, "0")}</span>
                       <span class="flex flex-col">
-                        <span class="font-label-md group-hover:text-primary transition-colors leading-snug">{p.title}</span>
+                        <span class="font-label-md leading-snug"><span class="title-underline">{p.title}</span></span>
                         {p.publishedAt && <span class="font-label-sm text-text-muted mt-1">{formatDate(p.publishedAt)}</span>}
                       </span>
                     </a>
@@ -305,7 +305,7 @@ const structuredData = [
                   )}
                 </div>
                 {p.category && <span class="font-label-sm text-text-muted uppercase mb-2 block tracking-widest">{p.category}</span>}
-                <h3 class="font-headline-md text-headline-md group-hover:text-primary transition-colors">{p.title}</h3>
+                <h3 class="font-headline-md text-headline-md"><span class="title-underline">{p.title}</span></h3>
               </a>
             ))}
           </div>

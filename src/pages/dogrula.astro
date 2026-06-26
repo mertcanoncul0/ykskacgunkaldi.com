@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { VerifyClient } from "../components/VerifyClient";
+import { site } from "../lib/site";
+
+export const prerender = false;
+---
+
+<Layout title={`E-posta Doğrulama | ${site.name}`} description="E-posta adresini doğrula." noindex={true}>
+  <VerifyClient client:load />
+</Layout>

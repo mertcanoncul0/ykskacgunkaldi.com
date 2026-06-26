@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { AuthForm } from "../components/AuthForm";
+import { site } from "../lib/site";
+---
+
+<Layout
+  title={`Giriş Yap | ${site.name}`}
+  description="Hesabına giriş yaparak çalışma planını, deneme takibini ve kaydettiğin içerikleri yönet."
+  noindex={true}
+>
+  <AuthForm client:load mode="login" />
+</Layout>

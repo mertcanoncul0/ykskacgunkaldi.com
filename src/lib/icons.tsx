@@ -48,6 +48,13 @@ import {
   MousePointerClick,
   Megaphone,
   SearchX,
+  Search,
+  UserRound,
+  Eye,
+  EyeOff,
+  LogIn,
+  LogOut,
+  UserPlus,
   Home,
   type LucideIcon,
 } from "lucide-react";
@@ -130,6 +137,14 @@ export const iconMap: Record<string, LucideIcon> = {
   ads_click: MousePointerClick,
   campaign: Megaphone,
   search_off: SearchX,
+  search: Search,
+  account: UserRound,
+  person: UserRound,
+  visibility: Eye,
+  visibility_off: EyeOff,
+  login: LogIn,
+  logout: LogOut,
+  person_add: UserPlus,
   home: Home,
 };
 

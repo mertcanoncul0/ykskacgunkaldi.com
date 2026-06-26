@@ -190,6 +190,21 @@ export function ScoreCalculatorForm({
         </span>
       </div>
 
+      <div className="border border-border-subtle bg-surface-container-low p-4 mb-6 flex items-start gap-3">
+        <Icon name="info" size={18} className="text-text-muted mt-0.5 shrink-0" />
+        <p className="font-body-md text-sm text-text-muted">
+          <strong className="text-on-surface">Net = Doğru − Yanlış / {config.kind === "lgs" ? "3" : "4"}</strong>
+          {config.kind === "lgs"
+            ? " (LGS'de 3 yanlış 1 doğruyu götürür)."
+            : config.kind === "yds"
+              ? " — YDS'de yanlışlar doğru sayısını etkilemez."
+              : " (4 yanlış 1 doğruyu götürür)."}{" "}
+          Ham puanlar ÖSYM'nin o yılki ortalama ve standart sapmasına bağlı olduğu için burada gösterilenler <strong className="text-on-surface">tahminîdir</strong>; resmî sonuç için{" "}
+          <a href="https://www.osym.gov.tr" target="_blank" rel="noopener noreferrer nofollow" className="underline hover:text-primary">ÖSYM</a>{" "}
+          sonuç belgesini esas al.
+        </p>
+      </div>
+
       {config.groups.map((g) => (
         <div key={g.title} className="relative border border-border-subtle bg-white-pure p-8 pl-10 overflow-hidden">
           <span className="absolute inset-y-0 left-0 w-1.5 bg-black-pure" aria-hidden="true" />

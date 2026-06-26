@@ -42,6 +42,8 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
                   className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700"
                   src={major.coverImage}
                   alt={major.title}
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-text-muted">
@@ -56,8 +58,8 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
                 </div>
               )}
             </div>
-            <h3 className="font-headline-lg text-[40px] leading-tight mb-4 group-hover:underline decoration-1 underline-offset-4">
-              {major.title}
+            <h3 className="font-headline-lg text-[40px] leading-tight mb-4">
+              <span className="title-underline">{major.title}</span>
             </h3>
           </a>
           {major.excerpt && <p className="font-body-md text-text-muted max-w-xl mb-6">{major.excerpt}</p>}
@@ -78,6 +80,8 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
                       className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
                       src={post.coverImage}
                       alt={post.title}
+                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-text-muted">
@@ -90,8 +94,8 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
                     {post.category}
                   </span>
                 )}
-                <h4 className="font-headline-md text-headline-md leading-snug group-hover:text-primary transition-colors">
-                  {post.title}
+                <h4 className="font-headline-md text-headline-md leading-snug">
+                  <span className="title-underline">{post.title}</span>
                 </h4>
               </a>
             </article>

@@ -69,7 +69,7 @@ const breadcrumbJsonLd = {
               <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary">Gündemdeki Yazı</span>
             </div>
             <h2 class="font-headline-lg text-headline-lg text-primary leading-tight mb-4 group">
-              <a class="hover:underline decoration-1 underline-offset-4" href={`/blog/${spotlight.slug}`}>{spotlight.title}</a>
+              <a href={`/blog/${spotlight.slug}`}><span class="title-underline">{spotlight.title}</span></a>
             </h2>
             {spotlight.excerpt && (
               <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 line-clamp-3">{spotlight.excerpt}</p>
@@ -118,8 +118,8 @@ const breadcrumbJsonLd = {
                             <span class="font-label-sm text-label-sm border border-border-subtle px-2 py-0.5 text-text-muted">{post.category}</span>
                           </div>
                         )}
-                        <h4 class="font-headline-md text-headline-md text-primary group-hover:underline decoration-1 underline-offset-4">
-                          <a href={`/blog/${post.slug}`}>{post.title}</a>
+                        <h4 class="font-headline-md text-headline-md text-primary">
+                          <a href={`/blog/${post.slug}`}><span class="title-underline">{post.title}</span></a>
                         </h4>
                         {post.excerpt && <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">{post.excerpt}</p>}
                         <div class="font-label-sm text-label-sm text-text-muted mt-2">
@@ -145,7 +145,7 @@ const breadcrumbJsonLd = {
                     <li class="border-b border-border-subtle pb-4 last:border-0 last:pb-0">
                       <a class="group block" href={`/blog/${post.slug}`}>
                         {post.category && <p class="font-label-sm text-label-sm text-text-muted mb-1">{post.category}</p>}
-                        <h4 class="font-body-md text-body-md font-medium text-primary group-hover:underline decoration-1 underline-offset-2">{post.title}</h4>
+                        <h4 class="font-body-md text-body-md font-medium text-primary"><span class="title-underline">{post.title}</span></h4>
                       </a>
                     </li>
                   ))}

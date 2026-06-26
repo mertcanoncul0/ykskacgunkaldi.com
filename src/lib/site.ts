@@ -12,6 +12,15 @@ export const site = {
   twitterHandle: "@ykskacgunkaldi",
 } as const;
 
+// Header/footer'da gösterilen sosyal medya bağlantıları. URL'ler gerçek
+// hesaplar bağlanınca güncellenecek.
+export const socialLinks = [
+  { label: "Facebook", href: "https://facebook.com/ykskacgunkaldi", icon: "facebook" },
+  { label: "Twitter", href: "https://twitter.com/ykskacgunkaldi", icon: "twitter" },
+  { label: "Instagram", href: "https://instagram.com/ykskacgunkaldi", icon: "instagram" },
+  { label: "YouTube", href: "https://youtube.com/@ykskacgunkaldi", icon: "youtube" },
+] as const;
+
 // Not: Daha önce burada ayrı bir `headerLinks` listesi de vardı ama hiçbir
 // dosyada import edilmiyordu (Header.tsx kendi `mainLinks` dizisini ve
 // aşağıdaki `hubLinks`'i kullanıyor) — ölü kod olduğu için kaldırıldı.

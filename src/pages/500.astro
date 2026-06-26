@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { hubLinks } from "../lib/site";
+import { Icon } from "../lib/icons";
+
+Astro.response.status = 500;
+---
+
+<Layout
+  title="Bir hata oluştu (500) | YKS Kaç Gün Kaldı"
+  description="Beklenmeyen bir sunucu hatası oluştu. Lütfen birazdan tekrar dene."
+  noindex={true}
+>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-3xl mx-auto py-section-gap text-center">
+      <Icon name="warning" size={64} className="text-text-muted" />
+      <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mt-6 mb-4">500</h1>
+      <p class="font-headline-md text-headline-md text-black-pure mb-2">Bir şeyler ters gitti</p>
+      <p class="font-body-lg text-body-lg text-text-muted mb-12 max-w-xl mx-auto">
+        Beklenmeyen bir sunucu hatası oluştu. Sayfayı yenilemeyi ya da birazdan tekrar denemeyi dene.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 bg-black-pure text-white-pure px-6 py-3 font-label-md uppercase hover:bg-primary transition-colors"
+        >
+          <Icon name="home" size={18} />
+          Ana Sayfa
+        </a>
+        <button
+          type="button"
+          onclick="location.reload()"
+          class="inline-flex items-center gap-2 border border-border-subtle px-6 py-3 font-label-md uppercase hover:bg-surface-container-high transition-colors"
+        >
+          <Icon name="refresh" size={18} />
+          Yeniden Dene
+        </button>
+      </div>
+
+      <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2 font-label-sm text-text-muted" aria-label="Hızlı bağlantılar">
+        {hubLinks.map((l) => (
+          <a href={l.href} class="hover:text-primary transition-colors uppercase tracking-wide">{l.label}</a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</Layout>

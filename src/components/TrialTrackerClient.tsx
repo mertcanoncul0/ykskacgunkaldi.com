@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Icon } from "../lib/icons";
+import { isLoggedIn, fetchTrials, createTrial, deleteTrial, clearTrials } from "../lib/user-data";
+
+function genId() {
+  return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}`;
+}
 
 type TrialRow = {
   id: string;
@@ -33,18 +38,27 @@ function total(row: TrialRow | Omit<TrialRow, "id">) {
 export function TrialTrackerClient() {
   const [rows, setRows] = useState<TrialRow[]>([]);
   const [form, setForm] = useState(emptyRow);
+  const [remote, setRemote] = useState(false);
 
+  // Giriş yapılmışsa PocketBase'den (cihazlar arası), değilse localStorage'dan.
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      setRows(raw ? JSON.parse(raw) : []);
-    } catch {
-      setRows([]);
+    const loggedIn = isLoggedIn();
+    setRemote(loggedIn);
+    if (loggedIn) {
+      fetchTrials<TrialRow>()
+        .then((list) => setRows(list))
+        .catch(() => setRows([]));
+    } else {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        setRows(raw ? JSON.parse(raw) : []);
+      } catch {
+        setRows([]);
+      }
     }
   }, []);
 
-  const persist = (next: TrialRow[]) => {
-    setRows(next);
+  const persistLocal = (next: TrialRow[]) => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     } catch {
@@ -53,22 +67,36 @@ export function TrialTrackerClient() {
   };
 
   const add = () => {
-    const next = [
-      {
-        ...form,
-        id:
-          typeof crypto !== "undefined" && "randomUUID" in crypto
-            ? crypto.randomUUID()
-            : `${Date.now()}`,
-      },
-      ...rows,
-    ].slice(0, 20);
-    persist(next);
+    const payload = { ...form };
+    if (remote) {
+      createTrial<typeof payload>(payload)
+        .then((item) => setRows((prev) => [item as TrialRow, ...prev].slice(0, 20)))
+        .catch(() => {});
+    } else {
+      const row: TrialRow = { ...payload, id: genId() };
+      setRows((prev) => {
+        const next = [row, ...prev].slice(0, 20);
+        persistLocal(next);
+        return next;
+      });
+    }
     setForm({ ...emptyRow, date: form.date, exam: form.exam });
   };
 
+  const removeRow = (id: string) => {
+    setRows((prev) => {
+      const next = prev.filter((r) => r.id !== id);
+      if (!remote) persistLocal(next);
+      return next;
+    });
+    if (remote) deleteTrial(id).catch(() => {});
+  };
+
   const clear = () => {
-    if (confirm("Tüm deneme kayıtları silinsin mi?")) persist([]);
+    if (!confirm("Tüm deneme kayıtları silinsin mi?")) return;
+    setRows([]);
+    if (remote) clearTrials().catch(() => {});
+    else persistLocal([]);
   };
 
   const stats = useMemo(() => {
@@ -196,7 +224,7 @@ export function TrialTrackerClient() {
                   <td className="py-3 px-2 text-right">
                     <button
                       type="button"
-                      onClick={() => persist(rows.filter((item) => item.id !== row.id))}
+                      onClick={() => removeRow(row.id)}
                       className="p-2 border border-border-subtle text-text-muted hover:border-error hover:text-error transition-colors"
                       aria-label="Kaydı sil"
                     >

@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { ResetPasswordForm } from "../components/ResetPasswordForm";
+import { site } from "../lib/site";
+
+export const prerender = false;
+---
+
+<Layout title={`Yeni Şifre Belirle | ${site.name}`} description="Yeni şifreni belirle." noindex={true}>
+  <ResetPasswordForm client:load />
+</Layout>

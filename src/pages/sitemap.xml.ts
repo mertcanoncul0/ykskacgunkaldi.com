@@ -24,8 +24,15 @@ const staticRoutes = [
   '/rehberler',
 ];
 
-function urlEntry(path: string) {
-  return `  <url>\n    <loc>${site.url}${path}</loc>\n  </url>`;
+function urlEntry(path: string, lastmod?: string) {
+  const last = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : '';
+  return `  <url>\n    <loc>${site.url}${path}</loc>${last}\n  </url>`;
+}
+
+function toIsoDate(value?: string): string | undefined {
+  if (!value) return undefined;
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10);
 }
 
 export const GET: APIRoute = async () => {
@@ -34,6 +41,10 @@ export const GET: APIRoute = async () => {
     getPosts(),
     getAllPageSlugs(),
   ]);
+
+  // Blog yazıları için yayın tarihini lastmod olarak kullan.
+  const postLastmod = new Map<string, string | undefined>();
+  for (const p of posts) postLastmod.set(`/blog/${p.slug}`, toIsoDate(p.publishedAt));
 
   const urls = Array.from(new Set([
     ...staticRoutes,
@@ -46,7 +57,7 @@ export const GET: APIRoute = async () => {
   ]));
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-    .map(urlEntry)
+    .map((path) => urlEntry(path, postLastmod.get(path)))
     .join('\n')}\n</urlset>\n`;
 
   return new Response(body, {

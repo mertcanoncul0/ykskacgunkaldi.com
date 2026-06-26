@@ -66,8 +66,8 @@ const breadcrumbJsonLd = {
                   <span class="inline-block border border-primary text-primary px-2 py-1 font-label-sm text-label-sm uppercase">Sınav Haberi</span>
                 </div>
                 <div class="md:w-3/4 flex flex-col">
-                  <h2 class="font-headline-md text-headline-md text-primary mb-3 group-hover:underline decoration-1 underline-offset-4">
-                    <a href={`/blog/${n.slug}`}>{n.title}</a>
+                  <h2 class="font-headline-md text-headline-md text-primary mb-3">
+                    <a href={`/blog/${n.slug}`}><span class="title-underline">{n.title}</span></a>
                   </h2>
                   {n.excerpt && <p class="font-body-md text-body-md text-text-muted mb-6 line-clamp-3">{n.excerpt}</p>}
                   <a

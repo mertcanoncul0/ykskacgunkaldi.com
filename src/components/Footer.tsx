@@ -2,8 +2,8 @@ import { footerLinkGroups, site } from "../lib/site";
 
 export function Footer() {
   return (
-    <footer className="bg-surface-container-lowest border-t border-primary lg:ml-64">
-      <div className="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-start gap-gutter">
+    <footer className="app-main bg-surface-container-lowest border-t border-primary">
+      <div className="w-full py-16 max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-start gap-gutter">
         <div className="flex flex-col gap-4">
           <div className="font-headline-md text-headline-md text-primary font-bold tracking-tighter uppercase">
             {site.name}

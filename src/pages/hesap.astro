@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { AccountClient } from "../components/AccountClient";
+import { site } from "../lib/site";
+import { readUser } from "../lib/auth-server";
+
+export const prerender = false;
+
+const user = readUser(Astro.cookies);
+---
+
+<Layout title={`Hesabım | ${site.name}`} description="Hesap bilgilerini yönet." noindex={true}>
+  <AccountClient client:load initialUser={user} />
+</Layout>

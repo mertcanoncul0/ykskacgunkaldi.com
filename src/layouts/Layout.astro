@@ -57,6 +57,14 @@ const siteJsonLd = [
     name: site.name,
     url: site.url,
     inLanguage: "tr-TR",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${site.url}/arama?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   },
 ];
 
@@ -196,9 +204,21 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
   <body
     class="font-body-md text-body-md text-on-surface bg-surface overflow-x-hidden"
   >
+    <!-- Sidebar açık durumunu sayfa boyamadan önce uygula (flash'ı önler) -->
+    <script is:inline>
+      if (localStorage.getItem("sidebar-open") === "true") {
+        document.body.classList.add("sidebar-open");
+      }
+    </script>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:font-label-md"
+    >
+      İçeriğe atla
+    </a>
     <Header client:load exams={navExams} />
     <SideNav exams={navExams} />
-    <main class="lg:ml-64 pt-24">
+    <main id="main-content" class="app-main pt-16">
       <slot />
     </main>
     <Footer />
