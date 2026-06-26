@@ -219,6 +219,70 @@
   background-size: 100% 2px;
 }
 
+.prose-article {
+  overflow-wrap: break-word;
+}
+
+.prose-article table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin-block: 2rem;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-white-pure);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.prose-article thead,
+.prose-article tbody,
+.prose-article tr {
+  width: 100%;
+}
+
+.prose-article th,
+.prose-article td {
+  min-width: 160px;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border-subtle);
+  vertical-align: top;
+  text-align: left;
+}
+
+.prose-article th:first-child,
+.prose-article td:first-child {
+  min-width: 120px;
+  font-weight: 600;
+}
+
+.prose-article th {
+  background: var(--color-surface-container-low);
+  color: var(--color-black-pure);
+  font-weight: 700;
+}
+
+.prose-article tbody tr:nth-child(even) td {
+  background: var(--color-surface-container-lowest);
+}
+
+@media (max-width: 767px) {
+  .prose-article table {
+    margin-inline: calc(var(--spacing-margin-mobile) * -1);
+    max-width: calc(100% + (var(--spacing-margin-mobile) * 2));
+    width: calc(100% + (var(--spacing-margin-mobile) * 2));
+  }
+
+  .prose-article th,
+  .prose-article td {
+    min-width: 180px;
+    padding: 0.75rem 0.85rem;
+    font-size: 14px;
+  }
+}
+
 /*
  * Hareket azaltma tercihi olan kullanıcılar için animasyon/geçişleri kapat
  * (erişilebilirlik — vestibüler rahatsızlıkları olanlar için önemli).

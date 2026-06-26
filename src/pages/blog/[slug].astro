@@ -177,7 +177,7 @@ const structuredData = [
       </nav>
 
       <div class="lg:grid lg:grid-cols-12 gap-gutter">
-        <main class="lg:col-span-8">
+        <main class="lg:col-span-9">
           <article>
             <header class="mb-8">
               <div class="flex items-center gap-2 mb-6">
@@ -208,8 +208,8 @@ const structuredData = [
             </header>
 
             {post.coverImage ? (
-              <div class="w-full aspect-[16/9] mb-12 overflow-hidden bg-surface-container">
-                <img class="w-full h-full object-cover grayscale" src={post.coverImage} alt={post.coverImageAlt || post.title} loading="eager" decoding="async" fetchpriority="high" />
+              <div class="w-full aspect-[16/9] mb-12 overflow-hidden border border-border-subtle bg-white-pure">
+                <img class="w-full h-full object-cover object-top" src={post.coverImage} alt={post.coverImageAlt || post.title} loading="eager" decoding="async" fetchpriority="high" />
               </div>
             ) : (
               <div class="w-full aspect-[16/9] mb-12 overflow-hidden bg-surface-container border border-border-subtle flex items-center justify-center text-text-muted">
@@ -250,7 +250,7 @@ const structuredData = [
           </article>
         </main>
 
-        <aside class="lg:col-span-4 mt-16 lg:mt-0 space-y-8">
+        <aside class="lg:col-span-3 mt-16 lg:mt-0 space-y-8">
           {top.length > 0 && (
             <div class="bg-white-pure border border-border-subtle p-6">
               <h2 class="flex items-center gap-2 font-label-md uppercase mb-6">
