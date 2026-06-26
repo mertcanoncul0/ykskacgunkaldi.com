@@ -163,6 +163,7 @@ const structuredData = [
   publishedTime={post.publishedAt}
   author={post.authorName}
   ogImage={post.coverImage}
+  ogImageAlt={post.coverImageAlt}
   structuredData={structuredData}
 >
   <div class="px-margin-mobile md:px-margin-desktop">
@@ -208,7 +209,7 @@ const structuredData = [
 
             {post.coverImage ? (
               <div class="w-full aspect-[16/9] mb-12 overflow-hidden bg-surface-container">
-                <img class="w-full h-full object-cover grayscale" src={post.coverImage} alt={post.title} />
+                <img class="w-full h-full object-cover grayscale" src={post.coverImage} alt={post.coverImageAlt || post.title} loading="eager" decoding="async" fetchpriority="high" />
               </div>
             ) : (
               <div class="w-full aspect-[16/9] mb-12 overflow-hidden bg-surface-container border border-border-subtle flex items-center justify-center text-text-muted">
@@ -297,7 +298,7 @@ const structuredData = [
               <a class="group block" href={`/blog/${p.slug}`}>
                 <div class="aspect-[4/3] mb-4 border border-border-subtle bg-surface-container overflow-hidden">
                   {p.coverImage ? (
-                    <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.title} loading="lazy" />
+                    <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.coverImageAlt || p.title} loading="lazy" decoding="async" />
                   ) : (
                     <div class="w-full h-full flex items-center justify-center text-text-muted">
                       <Icon name="article" size={32} />
@@ -314,7 +315,7 @@ const structuredData = [
     </div>
   </div>
 
-  <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-black-pure z-[60] transition-all duration-150" style="width: 0%"></div>
+  <div id="progress-bar" class="fixed top-16 left-0 h-1 bg-black-pure z-[60] transition-all duration-150" style="width: 0%"></div>
   <script>
     function updateProgressBar() {
       const bar = document.getElementById('progress-bar');

@@ -97,7 +97,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
                     <img
                       className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700"
                       src={featured.coverImage}
-                      alt={featured.title}
+                      alt={featured.coverImageAlt || featured.title}
                       loading="lazy"
                       decoding="async"
                     />
@@ -141,7 +141,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
                     <img
                       className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
                       src={p.coverImage}
-                      alt={p.title}
+                      alt={p.coverImageAlt || p.title}
                       loading="lazy"
                       decoding="async"
                     />

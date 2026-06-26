@@ -192,7 +192,7 @@ const pageTitle = rawQuery ? `"${rawQuery}" için arama sonuçları` : "Arama";
                 <a href={`/blog/${p.slug}`} class="block">
                   <div class="aspect-[16/10] mb-5 border border-border-subtle bg-surface-container overflow-hidden">
                     {p.coverImage ? (
-                      <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.title} loading="lazy" decoding="async" />
+                      <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.coverImageAlt || p.title} loading="lazy" decoding="async" />
                     ) : (
                       <div class="w-full h-full flex items-center justify-center text-text-muted">
                         <Icon name="article" size={32} />

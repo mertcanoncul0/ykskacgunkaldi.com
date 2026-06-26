@@ -41,7 +41,7 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
                 <img
                   className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700"
                   src={major.coverImage}
-                  alt={major.title}
+                  alt={major.coverImageAlt || major.title}
                   loading="lazy"
                   decoding="async"
                 />
@@ -79,7 +79,7 @@ export function FeaturedPosts({ posts }: { posts: Post[] }) {
                     <img
                       className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
                       src={post.coverImage}
-                      alt={post.title}
+                      alt={post.coverImageAlt || post.title}
                       loading="lazy"
                       decoding="async"
                     />

@@ -134,7 +134,37 @@ export interface Post {
   authorName?: string;
   tags?: string[];
   coverImage?: string;
+  coverImageAlt?: string;
   publishedAt?: string;
+}
+
+function firstPocketBaseFile(value: unknown) {
+  if (Array.isArray(value)) {
+    return typeof value[0] === "string" && value[0] ? value[0] : undefined;
+  }
+  return typeof value === "string" && value ? value : undefined;
+}
+
+function resolvePocketBaseFileUrl(record: any, fieldName: string) {
+  const fileName = firstPocketBaseFile(record?.[fieldName]);
+  if (!fileName) return undefined;
+  if (/^(?:https?:)?\/\//i.test(fileName) || fileName.startsWith("/")) {
+    return fileName;
+  }
+
+  const collection = record.collectionName || record.collectionId;
+  if (!collection || !record.id) return fileName;
+
+  return `${PB_URL}/api/files/${collection}/${record.id}/${encodeURIComponent(fileName)}`;
+}
+
+function normalizeImageAlt(record: any) {
+  const explicitAlt =
+    record.coverImageAlt || record.imageAlt || record.coverAlt || record.alt;
+  if (typeof explicitAlt === "string" && explicitAlt.trim()) {
+    return explicitAlt.trim();
+  }
+  return record.title ? `${record.title} kapak görseli` : undefined;
 }
 
 function normalizeAuthorName(authorName?: string) {
@@ -161,7 +191,8 @@ export async function getPosts(): Promise<Post[]> {
       contentHtml: p.contentHtml || "",
       authorName: normalizeAuthorName(p.authorName),
       tags: p.tags || [],
-      coverImage: p.coverImage || undefined,
+      coverImage: resolvePocketBaseFileUrl(p, "coverImage"),
+      coverImageAlt: normalizeImageAlt(p),
       publishedAt: p.publishedAt || undefined,
     }),
   );
