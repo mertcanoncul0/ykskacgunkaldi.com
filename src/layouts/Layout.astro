@@ -7,6 +7,10 @@ import { site, socialLinks } from "../lib/site";
 import { getExams } from "../lib/pocketbase";
 
 const navExams = await getExams();
+const headerExams = navExams.map((exam) => ({
+  slug: exam.slug,
+  name: exam.name,
+}));
 
 interface Props {
   title: string;
@@ -221,7 +225,7 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
     >
       İçeriğe atla
     </a>
-    <Header client:load exams={navExams} />
+    <Header client:load exams={headerExams} />
     <SideNav exams={navExams} />
     <main id="main-content" class="app-main pt-16">
       <slot />

@@ -1,23 +1,7 @@
 import { useMemo, useState } from "react";
 import type { Post } from "../lib/pocketbase";
 import { Icon } from "../lib/icons";
-
-function readingTime(p: Post): number {
-  const text = (p?.contentHtml || p?.excerpt || "") as string;
-  const words = text.replace(/<[^>]+>/g, " ").trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(2, Math.round(words / 200));
-}
-
-function formatDate(d?: string) {
-  if (!d) return "";
-  try {
-    return new Date(d)
-      .toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" })
-      .toLocaleUpperCase("tr-TR");
-  } catch {
-    return "";
-  }
-}
+import { BlogPostCard } from "./BlogPostCard";
 
 const PAGE_SIZE = 9;
 
@@ -90,85 +74,11 @@ export function BlogClient({ posts }: { posts: Post[] }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-gutter gap-y-12">
           {featured && (
-            <article className="col-span-1 md:col-span-2 group">
-              <a href={`/blog/${featured.slug}`} className="block">
-                <div className="relative overflow-hidden aspect-[21/9] mb-6 border border-border-subtle bg-surface-container">
-                  {featured.coverImage ? (
-                    <img
-                      className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700"
-                      src={featured.coverImage}
-                      alt={featured.coverImageAlt || featured.title}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-text-muted">
-                      <Icon name="menu_book" size={48} />
-                    </div>
-                  )}
-                  {featured.category && (
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-primary text-on-primary px-3 py-1 font-label-sm uppercase">
-                        {featured.category}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="flex items-center gap-4 mb-3">
-                  {featured.publishedAt && (
-                    <time className="font-label-sm text-text-muted">{formatDate(featured.publishedAt)}</time>
-                  )}
-                  <span className="h-px w-8 bg-border-subtle" />
-                  <span className="font-label-sm text-primary">{readingTime(featured)} DK OKUMA</span>
-                </div>
-                <h2 className="font-headline-lg text-headline-lg mb-4">
-                  <span className="title-underline">
-                    {featured.title}
-                  </span>
-                </h2>
-                {featured.excerpt && (
-                  <p className="font-body-md text-text-muted line-clamp-2">{featured.excerpt}</p>
-                )}
-              </a>
-            </article>
+            <BlogPostCard post={featured} variant="wide" className="col-span-1 md:col-span-2" />
           )}
 
           {rest.map((p) => (
-            <article key={p.slug} className="group">
-              <a href={`/blog/${p.slug}`} className="block">
-                <div className="aspect-square mb-6 border border-border-subtle bg-surface-container overflow-hidden">
-                  {p.coverImage ? (
-                    <img
-                      className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
-                      src={p.coverImage}
-                      alt={p.coverImageAlt || p.title}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-text-muted">
-                      <Icon name="article" size={32} />
-                    </div>
-                  )}
-                </div>
-                {p.category && (
-                  <span className="border border-primary text-primary px-2 py-0.5 font-label-sm uppercase inline-block mb-3">
-                    {p.category}
-                  </span>
-                )}
-                {p.publishedAt && (
-                  <time className="block font-label-sm text-text-muted mb-2">{formatDate(p.publishedAt)}</time>
-                )}
-                <h3 className="font-headline-md text-headline-md mb-3">
-                  <span className="title-underline">
-                    {p.title}
-                  </span>
-                </h3>
-                {p.excerpt && (
-                  <p className="font-body-md text-text-muted text-sm line-clamp-3">{p.excerpt}</p>
-                )}
-              </a>
-            </article>
+            <BlogPostCard key={p.slug} post={p} variant="grid" />
           ))}
         </div>
 

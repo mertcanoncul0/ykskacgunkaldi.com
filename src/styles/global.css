@@ -221,15 +221,16 @@
 
 .prose-article {
   overflow-wrap: break-word;
+  overflow-x: auto;
 }
 
 .prose-article table {
-  display: block;
+  display: table;
+  table-layout: auto;
   width: 100%;
   max-width: 100%;
   min-width: 0;
   margin-block: 2rem;
-  overflow-x: auto;
   border-collapse: collapse;
   border: 1px solid var(--color-border-subtle);
   background: var(--color-white-pure);
@@ -270,9 +271,7 @@
 
 @media (max-width: 767px) {
   .prose-article table {
-    margin-inline: calc(var(--spacing-margin-mobile) * -1);
-    max-width: calc(100% + (var(--spacing-margin-mobile) * 2));
-    width: calc(100% + (var(--spacing-margin-mobile) * 2));
+    min-width: 520px;
   }
 
   .prose-article th,

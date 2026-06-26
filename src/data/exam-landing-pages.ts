@@ -36,6 +36,12 @@ export interface ExamLandingPageConfig {
   links: LandingLink[];
 }
 
+const yksSessionCountdowns: CountdownRef[] = [
+  { examSlug: "yks", sessionSlug: "tyt", label: "TYT 2027" },
+  { examSlug: "yks", sessionSlug: "ayt", label: "AYT 2027" },
+  { examSlug: "yks", sessionSlug: "ydt", label: "YDT 2027" },
+];
+
 export const examLandingPages: ExamLandingPageConfig[] = [
   {
     slug: "yks-kac-gun-kaldi",
@@ -49,11 +55,7 @@ export const examLandingPages: ExamLandingPageConfig[] = [
     sourceNote:
       "2027 YKS tarihi resmi olarak açıklanana kadar önceki yılların ÖSYM takvim düzenine göre tahmini gösterilir.",
     primaryCountdown: { examSlug: "yks", label: "YKS 2027" },
-    secondaryCountdowns: [
-      { examSlug: "yks", sessionSlug: "tyt", label: "TYT 2027" },
-      { examSlug: "yks", sessionSlug: "ayt", label: "AYT 2027" },
-      { examSlug: "yks", sessionSlug: "ydt", label: "YDT 2027" },
-    ],
+    secondaryCountdowns: yksSessionCountdowns,
     sections: [
       {
         title: "YKS planı nasıl okunmalı?",
@@ -96,9 +98,9 @@ export const examLandingPages: ExamLandingPageConfig[] = [
     slug: "tyt-kac-gun-kaldi",
     switchLabel: "TYT",
     h1: "2027 TYT'ye Kaç Gün Kaldı?",
-    metaTitle: "TYT Kaç Gün Kaldı? 2027 Canlı Sayaç",
+    metaTitle: "2027 TYT Kaç Gün Kaldı? Canlı Sayaç ve Tarih",
     metaDescription:
-      "TYT'ye kalan süreyi görün, TYT puan hesaplama ve konu dağılımı ile plan yapın.",
+      "2027 TYT'ye kaç gün kaldı? Canlı TYT sayacı, tahmini tarih bilgisi, puan hesaplama ve konu dağılımı bağlantılarıyla hazırlık planınızı takip edin.",
     intro:
       "TYT, YKS sürecinin ortak oturumudur ve temel yeterlilikleri ölçtüğü için erken dönemde düzenli takip gerektirir. Bu sayfa yalnızca kalan günü göstermek için değil; Türkçe, temel matematik, sosyal bilimler ve fen bilimleri çalışmalarını doğru araçlarla bağlamak için hazırlandı. Tarih resmi olarak açıklanana kadar tahmini ibaresi korunur.",
     sourceNote:
@@ -144,9 +146,9 @@ export const examLandingPages: ExamLandingPageConfig[] = [
     slug: "ayt-kac-gun-kaldi",
     switchLabel: "AYT",
     h1: "2027 AYT'ye Kaç Gün Kaldı?",
-    metaTitle: "AYT Kaç Gün Kaldı? 2027 Canlı Sayaç",
+    metaTitle: "2027 AYT Kaç Gün Kaldı? Canlı Sayaç ve Tarih",
     metaDescription:
-      "AYT'ye kalan gün, alan testleri ve hazırlık kaynaklarını tek sayfada görün.",
+      "2027 AYT'ye kaç gün kaldı? Canlı AYT sayacı, tahmini sınav tarihi, alan testleri, puan hesaplama ve konu dağılımı bağlantılarını takip edin.",
     intro:
       "AYT, hedef puan türünüzü belirleyen alan oturumudur. Sayısal, eşit ağırlık, sözel veya dil dışındaki alan hedeflerinde AYT netlerinin etkisi çok yüksek olduğu için kalan süreyi konu bitirme, alan denemesi ve tekrar döngüsüne ayırmak gerekir. Bu sayfa AYT tarihini, ilgili puan hesaplama aracını ve konu dağılımını birlikte sunar.",
     sourceNote:
@@ -192,9 +194,9 @@ export const examLandingPages: ExamLandingPageConfig[] = [
     slug: "ydt-kac-gun-kaldi",
     switchLabel: "YDT",
     h1: "2027 YDT'ye Kaç Gün Kaldı?",
-    metaTitle: "YDT Kaç Gün Kaldı? 2027 Canlı Sayaç",
+    metaTitle: "2027 YDT Kaç Gün Kaldı? Canlı Sayaç ve Tarih",
     metaDescription:
-      "YDT'ye kalan süreyi görün, dil puanı hedefiniz için YKS araçlarını ve hazırlık bağlantılarını takip edin.",
+      "2027 YDT'ye kaç gün kaldı? Canlı YDT sayacı, tahmini sınav tarihi, dil puanı hazırlığı ve YKS puan hesaplama bağlantılarıyla süreci takip edin.",
     intro:
       "YDT, dil puanı hedefleyen adayların belirleyici oturumudur. TYT ortak zemini oluştururken YDT netleri dil puanında yüksek ağırlık taşır; bu nedenle kelime, okuma, dil bilgisi ve deneme takibini ayrı bir ritimle planlamak gerekir. Bu sayfa YDT tarihini, YKS içindeki yerini ve kullanabileceğiniz temel hazırlık araçlarını tek noktada toplar.",
     sourceNote:
@@ -240,9 +242,9 @@ export const examLandingPages: ExamLandingPageConfig[] = [
     slug: "lgs-kac-gun-kaldi",
     switchLabel: "LGS",
     h1: "2027 LGS'ye Kaç Gün Kaldı?",
-    metaTitle: "LGS Kaç Gün Kaldı? 2027 Canlı Sayaç",
+    metaTitle: "2027 LGS Kaç Gün Kaldı? Canlı Sayaç ve Tarih",
     metaDescription:
-      "LGS'ye kalan süreyi takip edin, LGS puan hesaplama ve rehberlerle hazırlanın.",
+      "2027 LGS'ye kaç gün kaldı? Canlı LGS sayacı, tahmini sınav tarihi, puan hesaplama, konu dağılımı ve deneme takip bağlantılarıyla hazırlanın.",
     intro:
       "LGS hazırlığı, öğrencinin yanında velinin ve öğretmenin de düzenli takip ettiği bir süreçtir. Kalan gün sayısı; konu tekrarını, MEB örnek sorularını, süreli denemeleri ve tercih dönemi araştırmasını dengeli planlamak için kullanılmalıdır. 2027 tarihi resmi duyuruya kadar tahmini olarak gösterilir.",
     sourceNote:

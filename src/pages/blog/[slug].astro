@@ -5,6 +5,7 @@ import { getDaysLeft } from '../../lib/countdown';
 import { addMissingLinkTitles } from '../../lib/html';
 import { getPosts, getExams } from '../../lib/pocketbase';
 import { Icon } from '../../lib/icons';
+import { BlogPostCard } from '../../components/BlogPostCard';
 
 const { slug } = Astro.params;
 const [posts, exams] = await Promise.all([getPosts(), getExams()]);
@@ -295,19 +296,7 @@ const structuredData = [
           <h2 class="font-headline-lg text-headline-lg mb-8">İlginizi Çekebilir</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {related.map((p) => (
-              <a class="group block" href={`/blog/${p.slug}`}>
-                <div class="aspect-[4/3] mb-4 border border-border-subtle bg-surface-container overflow-hidden">
-                  {p.coverImage ? (
-                    <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.coverImageAlt || p.title} loading="lazy" decoding="async" />
-                  ) : (
-                    <div class="w-full h-full flex items-center justify-center text-text-muted">
-                      <Icon name="article" size={32} />
-                    </div>
-                  )}
-                </div>
-                {p.category && <span class="font-label-sm text-text-muted uppercase mb-2 block tracking-widest">{p.category}</span>}
-                <h3 class="font-headline-md text-headline-md"><span class="title-underline">{p.title}</span></h3>
-              </a>
+              <BlogPostCard post={p} variant="related" />
             ))}
           </div>
         </section>

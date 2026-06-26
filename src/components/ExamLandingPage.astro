@@ -4,6 +4,7 @@ import InternalLinkBlock from "./InternalLinkBlock.astro";
 import type { Exam } from "../lib/api";
 import { examLandingPages, type ExamLandingPageConfig } from "../data/exam-landing-pages";
 import { resolveCountdownRef, formatExamDate } from "../lib/exams";
+import { getDaysLeft } from "../lib/countdown";
 import { Icon } from "../lib/icons";
 
 interface Props {
@@ -16,11 +17,76 @@ const primary = resolveCountdownRef(exams, config.primaryCountdown);
 const secondary = (config.secondaryCountdowns || [])
   .map((ref) => resolveCountdownRef(exams, ref))
   .filter(Boolean);
+const showYksSessionSummary = config.slug === "yks-kac-gun-kaldi" && secondary.length > 0;
 const switchItems = examLandingPages.map((page) => ({
   href: `/${page.slug}`,
   label: page.switchLabel || page.h1.replace(/'?(ye|e) Kaç Gün Kaldı\??/i, ""),
   active: page.slug === config.slug,
 }));
+
+const sessionHrefBySlug: Record<string, string> = {
+  tyt: "/tyt-kac-gun-kaldi",
+  ayt: "/ayt-kac-gun-kaldi",
+  ydt: "/ydt-kac-gun-kaldi",
+};
+
+const sessionDateFormatter = new Intl.DateTimeFormat("tr-TR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "Europe/Istanbul",
+});
+
+const sessionTimeFormatter = new Intl.DateTimeFormat("tr-TR", {
+  hour: "2-digit",
+  minute: "2-digit",
+  timeZone: "Europe/Istanbul",
+});
+
+function formatSessionDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Tarih bekleniyor";
+  return sessionDateFormatter.format(date);
+}
+
+function formatSessionTime(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Saat bekleniyor";
+  return sessionTimeFormatter.format(date);
+}
+
+function formatDaysLabel(value: string) {
+  const days = getDaysLeft(value);
+  if (days === null) return "Tarih bekleniyor";
+  if (days === 0) return "Bugün";
+  return `${days} gün kaldı`;
+}
+
+function sessionShortLabel(slug?: string, fallback = "Oturum") {
+  return slug ? slug.toUpperCase() : fallback.replace(/\s*202\d$/, "");
+}
+
+function detailLabel(item: NonNullable<typeof primary>) {
+  return item.sessionSlug ? sessionShortLabel(item.sessionSlug, item.title) : item.title;
+}
+
+function detailTitle(item: NonNullable<typeof primary>) {
+  return item.sessionSlug
+    ? `${detailLabel(item)} oturum bilgisi`
+    : `${detailLabel(item)} sınav bilgisi`;
+}
+
+function detailDescription(item: NonNullable<typeof primary>) {
+  const label = detailLabel(item);
+  const date = formatSessionDate(item.targetDate);
+  const time = formatSessionTime(item.targetDate);
+
+  if (item.sessionSlug) {
+    return `${item.exam.name} kapsamındaki ${label} oturumu ${date} saat ${time} için takip ediliyor.`;
+  }
+
+  return `${label} sınavı ${date} saat ${time} için takip ediliyor.`;
+}
 ---
 
 <div class="px-margin-mobile md:px-margin-desktop">
@@ -64,6 +130,107 @@ const switchItems = examLandingPages.map((page) => ({
       </nav>
     </header>
 
+    {showYksSessionSummary && (
+      <section class="mb-12" aria-labelledby="hero-sessions-title">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-4">
+          <div>
+            <span class="font-label-sm text-label-sm uppercase text-text-muted block mb-1">
+              Oturum detayları
+            </span>
+            <h2 id="hero-sessions-title" class="font-headline-md text-headline-md text-primary">
+              YKS oturum takvimi
+            </h2>
+          </div>
+          <p class="font-body-md text-body-md text-text-muted max-w-xl">
+            TYT, AYT ve YDT oturumlarını ayrı ayrı takip et; her kart kendi özel sayaç sayfasına gider.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {secondary.map((item) => item && (
+            <a
+              href={sessionHrefBySlug[item.sessionSlug || ""] || `/?sinav=${item.sessionSlug || item.exam.slug}`}
+              class="border border-border-subtle bg-white-pure p-5 text-left transition-colors hover:border-black-pure hover:bg-surface-container-low"
+            >
+              <span class="font-label-sm text-label-sm uppercase text-text-muted block mb-2">
+                {formatDaysLabel(item.targetDate)}
+              </span>
+              <span class="font-headline-md text-headline-md text-primary block mb-3">
+                {sessionShortLabel(item.sessionSlug, item.title)}
+              </span>
+              <span class="font-body-md text-body-md text-text-muted block mb-4">
+                {item.exam.name} kapsamındaki {sessionShortLabel(item.sessionSlug, item.title)} oturumu {formatSessionDate(item.targetDate)} saat {formatSessionTime(item.targetDate)} için takip ediliyor.
+              </span>
+              <span class="grid grid-cols-2 gap-3 font-label-sm text-label-sm text-primary">
+                <span>
+                  <span class="text-text-muted">Tarih</span>
+                  <span class="block mt-1">{formatSessionDate(item.targetDate)}</span>
+                </span>
+                <span>
+                  <span class="text-text-muted">Saat</span>
+                  <span class="block mt-1">{formatSessionTime(item.targetDate)}</span>
+                </span>
+                <span>
+                  <span class="text-text-muted">Durum</span>
+                  <span class="block mt-1">{item.isEstimated ? "Tahmini" : "Resmi"}</span>
+                </span>
+                <span>
+                  <span class="text-text-muted">Sayaç</span>
+                  <span class="block mt-1">Özel sayfa</span>
+                </span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {primary && !showYksSessionSummary && (
+      <section class="mb-12" aria-labelledby="hero-detail-title">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-4">
+          <div>
+            <span class="font-label-sm text-label-sm uppercase text-text-muted block mb-1">
+              {primary.sessionSlug ? "Oturum detayları" : "Sınav detayları"}
+            </span>
+            <h2 id="hero-detail-title" class="font-headline-md text-headline-md text-primary">
+              {detailTitle(primary)}
+            </h2>
+          </div>
+          <p class="font-body-md text-body-md text-text-muted max-w-xl">
+            Tarih, saat, kaynak durumu ve canlı sayaç bu sayfada tek sınav odağıyla gösterilir.
+          </p>
+        </div>
+        <article class="border border-border-subtle bg-white-pure p-5">
+          <span class="font-label-sm text-label-sm uppercase text-text-muted block mb-2">
+            {formatDaysLabel(primary.targetDate)}
+          </span>
+          <span class="font-headline-md text-headline-md text-primary block mb-3">
+            {detailLabel(primary)}
+          </span>
+          <p class="font-body-md text-body-md text-text-muted mb-4">
+            {detailDescription(primary)}
+          </p>
+          <dl class="grid grid-cols-2 gap-3 font-label-sm text-label-sm text-primary md:grid-cols-4">
+            <div>
+              <dt class="text-text-muted">Tarih</dt>
+              <dd class="mt-1">{formatSessionDate(primary.targetDate)}</dd>
+            </div>
+            <div>
+              <dt class="text-text-muted">Saat</dt>
+              <dd class="mt-1">{formatSessionTime(primary.targetDate)}</dd>
+            </div>
+            <div>
+              <dt class="text-text-muted">Durum</dt>
+              <dd class="mt-1">{primary.isEstimated ? "Tahmini" : "Resmi"}</dd>
+            </div>
+            <div>
+              <dt class="text-text-muted">Sayaç</dt>
+              <dd class="mt-1">Bu sayfa</dd>
+            </div>
+          </dl>
+        </article>
+      </section>
+    )}
+
     {primary ? (
       <section class="mb-12">
         <CountdownTimer
@@ -79,7 +246,7 @@ const switchItems = examLandingPages.map((page) => ({
       </section>
     )}
 
-    {secondary.length > 0 && (
+    {secondary.length > 0 && !showYksSessionSummary && (
       <section class="mb-12" aria-labelledby="sessions-title">
         <h2 id="sessions-title" class="font-headline-md text-headline-md text-primary mb-6">Oturumlar</h2>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">

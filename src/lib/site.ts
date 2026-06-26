@@ -75,6 +75,7 @@ export const footerLinkGroups = [
   {
     title: "Kaynaklar",
     links: [
+      { label: "Pomodoro Sayacı", href: "/pomodoro" },
       { label: "YKS Çalışma Programı", href: "/yks-calisma-programi" },
       { label: "Deneme Net Takip", href: "/deneme-net-takip-tablosu" },
       { label: "Embed Sayaç", href: "/embed-sayac" },

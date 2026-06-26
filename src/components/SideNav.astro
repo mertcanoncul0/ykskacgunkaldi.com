@@ -36,6 +36,7 @@ const { pathname } = Astro.url;
 
 const items = [
   { key: 'yks-kac-gun-kaldi', href: '/yks-kac-gun-kaldi', label: 'YKS Sayacı', icon: 'timer' },
+  { key: 'pomodoro', href: '/pomodoro', label: 'Pomodoro', icon: 'schedule' },
   { key: '2027-yks-takvimi', href: '/2027-yks-takvimi', label: 'YKS Takvimi', icon: 'calendar_month' },
   { key: 'puan-hesaplama', href: '/puan-hesaplama/yks', label: 'Puan Hesaplama', icon: 'calculate' },
   { key: 'rehberler', href: '/rehberler', label: 'Sınav Rehberi', icon: 'school' },
@@ -44,6 +45,7 @@ const items = [
 function isActive(href: string) {
   if (href === '/yks-kac-gun-kaldi') return pathname === '/' || pathname.endsWith('-kac-gun-kaldi') || pathname.startsWith('/sayac') || pathname.startsWith('/sinavlar');
   if (href === '/puan-hesaplama/yks') return pathname.startsWith('/puan-hesaplama');
+  if (href === '/pomodoro') return pathname === '/pomodoro';
   return pathname.startsWith(href);
 }
 

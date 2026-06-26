@@ -6,6 +6,7 @@ export interface ResolvedCountdown {
   targetDate: string;
   countdownLabel: string;
   isEstimated?: boolean;
+  sessionSlug?: string;
   exam: Exam;
 }
 
@@ -69,6 +70,7 @@ export function resolveCountdownRef(
     targetDate: session?.targetDate || exam.targetDate,
     countdownLabel: ref.label || session?.countdownLabel || exam.countdownLabel,
     isEstimated: session?.isEstimated ?? exam.isEstimated,
+    sessionSlug: ref.sessionSlug,
     exam,
   };
 }

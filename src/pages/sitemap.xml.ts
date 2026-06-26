@@ -20,6 +20,7 @@ const staticRoutes = [
   '/konu-dagilimi/ayt',
   '/konu-dagilimi/lgs',
   '/populer-yazilar',
+  '/pomodoro',
   '/ilanlar',
   '/rehberler',
 ];

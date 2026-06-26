@@ -87,7 +87,7 @@ const breadcrumbJsonLd = {
           <div class="md:col-span-4 order-1 md:order-2">
             <div class="w-full aspect-[4/5] bg-surface-container border border-border-subtle relative overflow-hidden">
               {spotlight.coverImage ? (
-                <img class="w-full h-full object-cover grayscale" src={spotlight.coverImage} alt={spotlight.coverImageAlt || spotlight.title} loading="eager" decoding="async" fetchpriority="high" />
+                <img class="w-full h-full object-cover" src={spotlight.coverImage} alt={spotlight.coverImageAlt || spotlight.title} loading="eager" decoding="async" fetchpriority="high" />
               ) : (
                 <div class="w-full h-full flex items-center justify-center text-text-muted">
                   <Icon name="trending_up" size={48} />

@@ -49,6 +49,10 @@ const searchQuickLinks = [
 ] as const;
 
 type OpenMenu = null | "exams" | "calc" | "mobile" | "search" | "account";
+type HeaderExam = {
+  slug: string;
+  name: string;
+};
 
 // Soldan sağa büyüyen animasyonlu alt çizgi — hem <a> hem <button> için ortak.
 // Çizgi metnin hemen altında (-bottom-1) konumlanır; kutu yüksekliğini
@@ -115,7 +119,7 @@ function SocialIcon({ name, size = 18 }: { name: string; size?: number }) {
   }
 }
 
-export function Header({ exams = [] }: { exams?: any[] }) {
+export function Header({ exams = [] }: { exams?: HeaderExam[] }) {
   const [open, setOpen] = useState<OpenMenu>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -233,12 +237,15 @@ export function Header({ exams = [] }: { exams?: any[] }) {
 
   const close = () => setOpen(null);
   const show = (k: OpenMenu) => setOpen(k);
+  const closeHoverMenu = () => {
+    setOpen((cur) => (cur === "exams" || cur === "calc" ? null : cur));
+  };
 
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-border-subtle"
       ref={rootRef}
-      onMouseLeave={close}
+      onMouseLeave={closeHoverMenu}
     >
       <nav className="relative flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-[1440px] mx-auto h-16">
         {/* Sol: aside aç/kapa hamburgeri (yalnız masaüstü) + logo */}

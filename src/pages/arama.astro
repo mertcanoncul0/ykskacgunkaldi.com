@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { site } from "../lib/site";
 import { getPosts } from "../lib/pocketbase";
 import { Icon } from "../lib/icons";
+import { BlogPostCard } from "../components/BlogPostCard";
 
 export const prerender = false;
 
@@ -56,6 +57,7 @@ const tools = [
   { label: "Puan Hesaplama", href: "/puan-hesaplama/yks", desc: "TYT, AYT ve YDT puanını hesapla.", icon: "calculate", keywords: "puan hesaplama tyt ayt ydt net" },
   { label: "Konu Dağılımı", href: "/konu-dagilimi", desc: "Yıllara göre çıkan soru konularını incele.", icon: "bar_chart", keywords: "konu dagilimi soru analiz mufredat" },
   { label: "Sınav Takvimi", href: "/sinavlar", desc: "Tüm sınav tarihleri ve oturumlar.", icon: "calendar_month", keywords: "sinav takvimi tarih oturum yks tyt ayt lgs" },
+  { label: "Pomodoro Sayacı", href: "/pomodoro", desc: "25/5 odaklanma sayacıyla çalışma oturumlarını takip et.", icon: "timer", keywords: "pomodoro odaklanma sayaci ders calisma sayaci yks pomodoro verimli ders calisma" },
   { label: "Çalışma Programı", href: "/yks-calisma-programi", desc: "Haftalık çalışma planı oluştur.", icon: "school", keywords: "calisma programi plan haftalik ders" },
   { label: "Deneme Net Takip", href: "/deneme-net-takip-tablosu", desc: "Deneme netlerini tabloyla takip et.", icon: "trending_up", keywords: "deneme net takip tablo gelisim" },
   { label: "Blog & Rehber", href: "/blog", desc: "Çalışma teknikleri ve rehber yazıları.", icon: "article", keywords: "blog rehber yazi makale teknik" },
@@ -103,15 +105,6 @@ const popular = [
   "YKS çalışma programı",
   "Deneme net takip",
 ];
-
-function formatDate(d?: string) {
-  if (!d) return "";
-  try {
-    return new Date(d).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
-  } catch {
-    return "";
-  }
-}
 
 const pageTitle = rawQuery ? `"${rawQuery}" için arama sonuçları` : "Arama";
 ---
@@ -188,29 +181,7 @@ const pageTitle = rawQuery ? `"${rawQuery}" için arama sonuçları` : "Arama";
           <p class="font-label-sm uppercase tracking-widest text-text-muted mb-6">Yazılar</p>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-12">
             {postResults.map((p) => (
-              <article class="group">
-                <a href={`/blog/${p.slug}`} class="block">
-                  <div class="aspect-[16/10] mb-5 border border-border-subtle bg-surface-container overflow-hidden">
-                    {p.coverImage ? (
-                      <img class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" src={p.coverImage} alt={p.coverImageAlt || p.title} loading="lazy" decoding="async" />
-                    ) : (
-                      <div class="w-full h-full flex items-center justify-center text-text-muted">
-                        <Icon name="article" size={32} />
-                      </div>
-                    )}
-                  </div>
-                  {p.category && (
-                    <span class="border border-primary text-primary px-2 py-0.5 font-label-sm uppercase inline-block mb-3">{p.category}</span>
-                  )}
-                  {p.publishedAt && (
-                    <time class="block font-label-sm text-text-muted mb-2">{formatDate(p.publishedAt)}</time>
-                  )}
-                  <h3 class="font-headline-md text-headline-md mb-2">
-                    <span class="title-underline" set:html={highlight(p.title)} />
-                  </h3>
-                  {p.excerpt && <p class="font-body-md text-text-muted text-sm line-clamp-3" set:html={highlight(p.excerpt)} />}
-                </a>
-              </article>
+              <BlogPostCard post={p} variant="search" titleHtml={highlight(p.title)} excerptHtml={p.excerpt ? highlight(p.excerpt) : undefined} />
             ))}
           </div>
         </section>

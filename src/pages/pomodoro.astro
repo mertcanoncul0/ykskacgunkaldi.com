@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { PomodoroClient } from '../components/PomodoroClient';
+import { Icon } from '../lib/icons';
+import { site } from '../lib/site';
+
+const title = 'Pomodoro Tekniği ile Çalış | YKS Pomodoro Sayacı';
+const description = 'Pomodoro tekniği ile YKS’ye daha verimli çalış. 25 dakika odaklan, 5 dakika mola ver, çalışma oturumlarını takip et.';
+
+const faqItems = [
+  {
+    question: 'Pomodoro tekniği YKS için işe yarar mı?',
+    answer: 'Evet. Pomodoro tekniği uzun YKS hazırlığını küçük ve ölçülebilir odak bloklarına ayırır; özellikle paragraf, problem, konu testi ve tekrar çalışmalarında sürdürülebilir tempo kurmaya yardımcı olur.',
+  },
+  {
+    question: 'Kaç pomodoro bir ders çalışma oturumu sayılır?',
+    answer: 'Genellikle 2 veya 4 pomodoro tek bir ders çalışma oturumu gibi düşünülebilir. Zor konularda 2 pomodoro, deneme analizi ve tekrar günlerinde 4 pomodoro daha uygundur.',
+  },
+  {
+    question: '25 dakika odaklanma süresi yeterli mi?',
+    answer: '25 dakika çoğu öğrenci için iyi bir başlangıçtır. Dikkatin daha uzun süre korunuyorsa odak süresini 35 veya 45 dakikaya çıkarabilir, zorlandığın günlerde 20 dakikaya indirebilirsin.',
+  },
+  {
+    question: 'Molalarda ne yapılmalı?',
+    answer: 'Molalarda ekrana bakmadan su içmek, kısa yürümek, esneme yapmak veya gözleri dinlendirmek daha verimlidir. Mola süresini yeni bir dikkat dağıtıcıya çevirmemek önemlidir.',
+  },
+  {
+    question: 'Pomodoro deneme çözümünde kullanılır mı?',
+    answer: 'Tam denemeyi gerçek sınav süresiyle çözmek daha doğrudur; ancak deneme sonrası yanlış analizi, eksik konu taraması ve benzer soru çözümü için pomodoro çok iyi çalışır.',
+  },
+  {
+    question: 'Giriş yapmadan çalışma sürem kaydedilir mi?',
+    answer: 'Evet. Misafir kullanıcıların ayarları ve kısa oturum geçmişi tarayıcıdaki localStorage alanında tutulur. Tarayıcı verilerini silersen bu kayıtlar da silinebilir.',
+  },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: site.url },
+      { '@type': 'ListItem', position: 2, name: 'Pomodoro Tekniği ile Çalış', item: `${site.url}/pomodoro` },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'YKS Pomodoro Sayacı',
+    url: `${site.url}/pomodoro`,
+    applicationCategory: 'EducationalApplication',
+    operatingSystem: 'Web',
+    inLanguage: 'tr-TR',
+    description,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  },
+];
+---
+
+<Layout title={title} description={description} path="/pomodoro" structuredData={structuredData}>
+  <div class="px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-container-max mx-auto py-section-gap">
+      <header class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-gutter items-end mb-section-gap">
+        <div>
+          <div class="inline-flex items-center gap-2 border border-border-subtle bg-white-pure px-3 py-2 font-label-sm text-label-sm uppercase tracking-widest text-text-muted mb-6">
+            <Icon name="timer" size={16} />
+            YKS Pomodoro
+          </div>
+          <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">
+            Pomodoro Tekniği ile Çalış
+          </h1>
+          <p class="font-body-lg text-body-lg text-text-muted max-w-2xl mb-8">
+            25 dakika odaklan, 5 dakika mola ver. YKS hazırlığında çalışma süreni takip et ve verimini artır.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#pomodoro-app" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3.5 font-label-md text-label-md uppercase hover:opacity-90 transition-opacity">
+              Sayaçla Çalışmaya Başla
+              <Icon name="arrow_forward" size={18} />
+            </a>
+            <a href="#pomodoro-nedir" class="inline-flex items-center gap-2 border border-border-subtle px-6 py-3.5 font-label-md text-label-md uppercase hover:border-primary transition-colors">
+              Pomodoro Tekniği Nedir?
+            </a>
+          </div>
+        </div>
+        <div class="border border-border-subtle bg-white-pure p-6">
+          <p class="font-label-sm text-label-sm uppercase tracking-widest text-text-muted mb-3">Varsayılan çalışma ritmi</p>
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="border border-border-subtle p-4">
+              <strong class="block font-headline-lg text-headline-lg text-primary">25</strong>
+              <span class="font-label-sm text-label-sm text-text-muted uppercase">Odak</span>
+            </div>
+            <div class="border border-border-subtle p-4">
+              <strong class="block font-headline-lg text-headline-lg text-primary">5</strong>
+              <span class="font-label-sm text-label-sm text-text-muted uppercase">Mola</span>
+            </div>
+            <div class="border border-border-subtle p-4">
+              <strong class="block font-headline-lg text-headline-lg text-primary">4</strong>
+              <span class="font-label-sm text-label-sm text-text-muted uppercase">Döngü</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <PomodoroClient client:load />
+
+      <section id="pomodoro-nedir" class="mt-section-gap pt-section-gap border-t border-border-subtle">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+          <div class="lg:col-span-4">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-text-muted mb-3">Rehber</p>
+            <h2 class="font-headline-lg text-headline-lg text-primary">Pomodoro Tekniği Nedir?</h2>
+          </div>
+          <div class="lg:col-span-8 grid gap-10 font-body-lg text-body-lg text-on-surface">
+            <section>
+              <p class="text-text-muted leading-relaxed">
+                Pomodoro tekniği, çalışma süresini kısa odak bloklarına ve bilinçli molalara bölen basit bir zaman yönetimi yöntemidir. Bu sayfadaki ders çalışma sayacı ile 25/5 ritmini kullanabilir, odak süreni kendi tempona göre değiştirebilir ve YKS çalışma sayacı gibi günlük toplamını takip edebilirsin.
+              </p>
+            </section>
+
+            <section>
+              <h3 class="font-headline-md text-headline-md text-primary mb-3">YKS Çalışırken Pomodoro Nasıl Kullanılır?</h3>
+              <p class="text-text-muted leading-relaxed">
+                Bir pomodoroya başlamadan önce tek bir hedef seç: paragraf çözmek, problemlerden 20 soru bitirmek, AYT matematik konu testi yapmak veya deneme yanlışlarını sınıflandırmak. Sayaç çalışırken sadece o hedefe odaklan; mola geldiğinde notlarını hızlıca kapat ve zihni dinlendir.
+              </p>
+            </section>
+
+            <section>
+              <h3 class="font-headline-md text-headline-md text-primary mb-3">25/5 Pomodoro Her Öğrenci İçin Uygun mu?</h3>
+              <p class="text-text-muted leading-relaxed">
+                25 dakika odak ve 5 dakika mola iyi bir başlangıçtır, ama tek doğru değildir. TYT temel çalışmalarında kısa bloklar, AYT konu derinleşmesinde 35 veya 45 dakikalık bloklar daha verimli olabilir. Bu yüzden odaklanma sayacı ayarlanabilir tutuldu.
+              </p>
+            </section>
+
+            <section>
+              <h3 class="font-headline-md text-headline-md text-primary mb-3">TYT ve AYT İçin Örnek Pomodoro Programı</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="border border-border-subtle bg-white-pure p-5">
+                  <h4 class="font-label-md text-label-md uppercase text-primary mb-3">TYT çalışma programı</h4>
+                  <ul class="grid gap-2 text-text-muted">
+                    <li>1 pomodoro paragraf</li>
+                    <li>1 pomodoro problemler</li>
+                    <li>1 pomodoro sosyal veya fen tekrar</li>
+                    <li>1 pomodoro yanlış analizi</li>
+                  </ul>
+                </div>
+                <div class="border border-border-subtle bg-white-pure p-5">
+                  <h4 class="font-label-md text-label-md uppercase text-primary mb-3">AYT çalışma programı</h4>
+                  <ul class="grid gap-2 text-text-muted">
+                    <li>1 pomodoro konu anlatımı</li>
+                    <li>2 pomodoro alan testi</li>
+                    <li>1 pomodoro TYT koruma çalışması</li>
+                    <li>1 pomodoro tekrar notu</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h3 class="font-headline-md text-headline-md text-primary mb-3">Pomodoro ile Deneme Analizi Nasıl Yapılır?</h3>
+              <p class="text-text-muted leading-relaxed">
+                Denemeyi gerçek sınav süresiyle çözdükten sonra pomodoro tekniğini analiz için kullan. İlk blokta yanlışları konuya göre ayır, ikinci blokta boşları incele, üçüncü blokta benzer soru çöz. Bu düzen verimli ders çalışma alışkanlığını ölçülebilir hale getirir.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-section-gap pt-section-gap border-t border-border-subtle" aria-labelledby="pomodoro-faq-title">
+        <div class="flex items-end justify-between gap-6 mb-8">
+          <div>
+            <p class="font-label-md text-label-md uppercase tracking-widest text-text-muted mb-3">FAQ</p>
+            <h2 id="pomodoro-faq-title" class="font-headline-lg text-headline-lg text-primary">Sık Sorulan Sorular</h2>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {faqItems.map((item) => (
+            <article class="border border-border-subtle bg-white-pure p-6">
+              <h3 class="font-headline-md text-headline-md text-primary mb-3">{item.question}</h3>
+              <p class="font-body-md text-body-md text-text-muted leading-relaxed">{item.answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
