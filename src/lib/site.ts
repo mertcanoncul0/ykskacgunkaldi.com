@@ -15,10 +15,22 @@ export const site = {
 // Header/footer'da gösterilen sosyal medya bağlantıları. URL'ler gerçek
 // hesaplar bağlanınca güncellenecek.
 export const socialLinks = [
-  { label: "Facebook", href: "https://facebook.com/ykskacgunkaldi", icon: "facebook" },
-  { label: "Twitter", href: "https://twitter.com/ykskacgunkaldi", icon: "twitter" },
-  { label: "Instagram", href: "https://instagram.com/ykskacgunkaldi", icon: "instagram" },
-  { label: "YouTube", href: "https://youtube.com/@ykskacgunkaldi", icon: "youtube" },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61591596322729",
+    icon: "facebook",
+  },
+  { label: "Twitter", href: "https://x.com/ykskacgunkaldii", icon: "twitter" },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/ykskacgunkaldii/",
+    icon: "instagram",
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@ykskacgunkaldi",
+    icon: "youtube",
+  },
 ] as const;
 
 // Not: Daha önce burada ayrı bir `headerLinks` listesi de vardı ama hiçbir
