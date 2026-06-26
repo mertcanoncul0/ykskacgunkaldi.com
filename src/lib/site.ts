@@ -9,22 +9,30 @@ export const site = {
   logo: "/logo.png",
   themeColor: "#000000",
   locale: "tr_TR",
-  twitterHandle: "@ykskacgunkaldi",
+  twitterHandle: "@ykskacgunkaldii",
 } as const;
 
-// Header/footer'da gösterilen sosyal medya bağlantıları. URL'ler gerçek
-// hesaplar bağlanınca güncellenecek.
+// Header, sidebar ve SEO structured data için tek sosyal medya kaynağı.
 export const socialLinks = [
   {
     label: "Facebook",
     href: "https://www.facebook.com/profile.php?id=61591596322729",
     icon: "facebook",
   },
-  { label: "Twitter", href: "https://x.com/ykskacgunkaldii", icon: "twitter" },
+  {
+    label: "Twitter",
+    href: "https://x.com/ykskacgunkaldii",
+    icon: "twitter",
+  },
   {
     label: "Instagram",
     href: "https://www.instagram.com/ykskacgunkaldii/",
     icon: "instagram",
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@ykskacgunkaldi",
+    icon: "tiktok",
   },
   {
     label: "YouTube",

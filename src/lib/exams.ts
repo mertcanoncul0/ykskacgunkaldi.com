@@ -9,6 +9,50 @@ export interface ResolvedCountdown {
   exam: Exam;
 }
 
+export interface QuickActionCard {
+  title: string;
+  body: string;
+  href: string;
+  icon: string;
+  external?: boolean;
+}
+
+const calculatorSlugByExamSlug: Record<string, string> = {
+  kpss: "kpss-lisans",
+  ydt: "yds",
+};
+
+export function getQuickActionCards(exam: Exam): QuickActionCard[] {
+  const calculatorSlug = calculatorSlugByExamSlug[exam.slug] || exam.slug;
+
+  return [
+    {
+      title: "Sınav Takvimi",
+      body: `${exam.name} tarihi ve yaklaşan sınav oturumlarını incele.`,
+      href: "/sinavlar",
+      icon: "calendar_month",
+    },
+    {
+      title: "Puan Hesaplama",
+      body: `${exam.name} netlerinle tahmini puanını hızlıca hesapla.`,
+      href: `/puan-hesaplama/${calculatorSlug}`,
+      icon: "calculate",
+    },
+    {
+      title: "Sınav Rehberi",
+      body: `${exam.name} hazırlığı için rehber yazıları ve çalışma önerilerini oku.`,
+      href: "/rehberler",
+      icon: "school",
+    },
+    {
+      title: "Çıkmış Sorular",
+      body: `${exam.name} çıkmış sorularıyla ilgili içerikleri ara.`,
+      href: `/arama?q=${encodeURIComponent(`${exam.name} çıkmış sorular`)}`,
+      icon: "quiz",
+    },
+  ];
+}
+
 export function resolveCountdownRef(
   exams: Exam[],
   ref: CountdownRef,

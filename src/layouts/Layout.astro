@@ -3,7 +3,7 @@ import "../styles/global.css";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import SideNav from "../components/SideNav.astro";
-import { site } from "../lib/site";
+import { site, socialLinks } from "../lib/site";
 import { getExams } from "../lib/pocketbase";
 
 const navExams = await getExams();
@@ -41,6 +41,7 @@ const resolvedOgImage = ogImage
     ? ogImage
     : `${site.url}${ogImage}`
   : `${site.url}${site.ogImage}`;
+const sameAs = socialLinks.map((link) => link.href);
 
 const siteJsonLd = [
   {
@@ -49,13 +50,14 @@ const siteJsonLd = [
     name: site.name,
     url: site.url,
     logo: `${site.url}${site.logo}`,
-    sameAs: [`https://twitter.com/${site.twitterHandle.replace("@", "")}`],
+    sameAs,
   },
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: site.name,
     url: site.url,
+    sameAs,
     inLanguage: "tr-TR",
     potentialAction: {
       "@type": "SearchAction",
