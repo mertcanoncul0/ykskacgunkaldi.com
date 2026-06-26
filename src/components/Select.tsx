@@ -138,7 +138,7 @@ export function Select({
       <button
         ref={buttonRef}
         type="button"
-        className={`flex items-center gap-2 w-full border ${open ? "border-black-pure" : "border-border-subtle"} bg-white-pure ${sizeClasses} font-body-md text-body-md text-on-surface hover:border-black-pure transition-colors`}
+        className={`group flex items-center gap-2 w-full border ${open ? "border-black-pure bg-surface-container-low" : "border-border-subtle bg-white-pure"} ${sizeClasses} font-body-md text-body-md text-on-surface hover:border-black-pure hover:bg-surface-container-low transition-colors duration-200`}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
@@ -147,7 +147,11 @@ export function Select({
         onClick={() => !disabled && setOpen((o) => !o)}
         onKeyDown={handleKey}
       >
-        {icon ? <Icon name={icon} size={20} className="text-text-muted" /> : null}
+        {icon ? (
+          <span className={`inline-flex h-7 w-7 items-center justify-center border transition-colors duration-200 ${open ? "border-black-pure bg-black-pure text-white-pure" : "border-border-subtle text-text-muted group-hover:border-black-pure group-hover:text-primary"}`}>
+            <Icon name={icon} size={18} />
+          </span>
+        ) : null}
         <span
           className={`flex-1 text-left truncate${selected ? "" : " text-text-muted"}`}
         >
@@ -156,7 +160,7 @@ export function Select({
         <Icon
           name="expand_more"
           size={20}
-          className={`text-text-muted transition-transform${open ? " rotate-180" : ""}`}
+          className={`text-text-muted transition-transform duration-200${open ? " rotate-180 text-primary" : ""}`}
         />
       </button>
       {open ? (
@@ -164,7 +168,7 @@ export function Select({
           ref={listRef}
           id={listId}
           role="listbox"
-          className="absolute z-20 mt-1 w-full border border-black-pure bg-white-pure max-h-64 overflow-auto"
+          className="absolute z-20 mt-1 w-full origin-top border border-black-pure bg-white-pure max-h-64 overflow-auto animate-in fade-in slide-in-from-top-1 duration-150"
           tabIndex={-1}
         >
           {options.map((opt, idx) => {
@@ -178,9 +182,12 @@ export function Select({
                 aria-selected={isSelected}
                 aria-disabled={opt.disabled || undefined}
                 className={[
-                  "flex items-center justify-between gap-2 px-4 py-3 font-body-md text-body-md cursor-pointer border-b border-border-subtle last:border-0",
-                  isSelected ? "bg-surface-container-high" : "",
-                  isActive ? "bg-surface-container" : "",
+                  "relative flex items-center justify-between gap-3 px-4 py-3 font-body-md text-body-md cursor-pointer border-b border-border-subtle last:border-0 transition-colors duration-150",
+                  isSelected
+                    ? "bg-black-pure text-white-pure"
+                    : isActive
+                    ? "bg-surface-container-high text-primary"
+                    : "text-on-surface hover:bg-surface-container-low",
                   opt.disabled ? "opacity-50 pointer-events-none" : "",
                 ]
                   .filter(Boolean)
@@ -194,11 +201,16 @@ export function Select({
                   buttonRef.current?.focus();
                 }}
               >
-                <span className="truncate">{opt.label}</span>
+                <span className="flex min-w-0 items-center gap-3">
+                  <span className={`h-2 w-2 shrink-0 border border-current transition-colors duration-150 ${isSelected ? "bg-white-pure" : "bg-transparent"}`} />
+                  <span className="truncate">{opt.label}</span>
+                </span>
                 {opt.hint ? (
-                  <span className="font-label-sm text-label-sm text-text-muted">{opt.hint}</span>
+                  <span className={`font-label-sm text-label-sm ${isSelected ? "text-white-pure/80" : "text-text-muted"}`}>
+                    {opt.hint}
+                  </span>
                 ) : null}
-                {isSelected ? <Icon name="check" size={18} /> : null}
+                {isSelected ? <Icon name="check" size={18} className="shrink-0 text-white-pure" /> : null}
               </li>
             );
           })}

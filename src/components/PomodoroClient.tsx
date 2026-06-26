@@ -485,84 +485,115 @@ function PomodoroTimer({
   const percent = Math.max(0, Math.min(100, timer.progress * 100));
   const canFinish = timer.state !== "idle";
   return (
-    <div className="border border-black-pure bg-white-pure p-6 md:p-8 rounded-card shadow-card">
-      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-8">
-        <div>
-          <p className="font-label-sm text-label-sm uppercase tracking-widest text-text-muted mb-2">Aktif mod</p>
-          <h2 className="font-headline-lg text-headline-lg text-primary">{modeLabel(timer.mode)}</h2>
+    <div className="overflow-hidden border-2 border-black-pure bg-white-pure">
+      <div className="flex min-h-[420px] flex-col bg-black-pure p-6 text-white-pure md:min-h-[500px] md:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="font-label-sm text-label-sm uppercase text-white-pure/65">Aktif mod</p>
+            <h2 className="mt-2 font-headline-lg text-headline-lg text-white-pure">
+              {modeLabel(timer.mode)}
+            </h2>
+          </div>
+          <span className="inline-flex items-center gap-2 border border-white-pure/30 px-3 py-2 font-label-sm text-label-sm uppercase text-white-pure/80">
+            <Icon name={timer.state === "running" ? "play_arrow" : timer.state === "paused" ? "pause" : "timer"} size={16} />
+            {timer.state === "running" ? "Çalışıyor" : timer.state === "paused" ? "Durakladı" : "Hazır"}
+          </span>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {modeOptions.map((option) => (
-            <button
-              key={option.mode}
-              type="button"
-              disabled={timer.state === "running"}
-              onClick={() => onModeChange(option.mode)}
-              className={`border px-4 py-3 text-left transition-colors disabled:opacity-50 ${
-                timer.mode === option.mode
-                  ? "border-black-pure bg-black-pure text-white-pure"
-                  : "border-border-subtle bg-white-pure text-text-muted hover:border-black-pure"
-              }`}
-              aria-pressed={timer.mode === option.mode}
-            >
-              <span className="block font-label-md text-label-md uppercase">{option.label}</span>
-              <span className="block font-body-md text-xs">{option.body}</span>
-            </button>
-          ))}
+
+        <div className="flex flex-1 flex-col justify-center py-10 md:py-12" aria-live="polite">
+          <div className="font-display-lg text-[74px] leading-none tracking-normal text-white-pure tabular-nums sm:text-[104px] md:text-[138px]">
+            {timer.formattedTime}
+          </div>
+          <p className="mt-4 font-label-md text-label-md uppercase text-white-pure/70">
+            {modeDurationMinutes(timer.mode, settings)} dk · {Math.round(percent)}% tamamlandı
+          </p>
+        </div>
+
+        <div>
+          <div className="h-3 w-full border border-white-pure/30 bg-white-pure/10">
+            <div className="h-full bg-white-pure transition-[width]" style={{ width: `${percent}%` }} />
+          </div>
+          <p className="mt-4 border border-white-pure/20 bg-white-pure/10 p-4 font-body-md text-body-md text-white-pure/80">
+            {toast}
+          </p>
         </div>
       </div>
 
-      <div className="grid justify-items-center gap-6 py-8" aria-live="polite">
-        <div
-          className="relative grid h-64 w-64 place-items-center rounded-full"
-          style={{
-            background: `conic-gradient(var(--color-primary) ${percent}%, var(--color-surface-container-high) ${percent}% 100%)`,
-          }}
-        >
-          <div className="grid h-[calc(100%-18px)] w-[calc(100%-18px)] place-items-center rounded-full bg-white-pure border border-border-subtle">
-            <div className="text-center">
-              <div className="font-display-lg text-[64px] leading-none text-primary">{timer.formattedTime}</div>
-              <p className="font-label-sm text-label-sm uppercase tracking-widest text-text-muted mt-3">
-                {timer.state === "running" ? "Çalışıyor" : timer.state === "paused" ? "Duraklatıldı" : `${modeDurationMinutes(timer.mode, settings)} dk`}
-              </p>
+      <div className="grid gap-6 border-t-2 border-black-pure bg-white-pure p-5 md:grid-cols-[minmax(0,1fr)_260px] md:p-6">
+        <div>
+          <p className="mb-3 font-label-sm text-label-sm uppercase text-text-muted">Mod seçimi</p>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {modeOptions.map((option) => (
+              <button
+                key={option.mode}
+                type="button"
+                disabled={timer.state === "running"}
+                onClick={() => onModeChange(option.mode)}
+                className={`min-h-16 border px-4 py-3 text-left transition-colors disabled:opacity-50 ${
+                  timer.mode === option.mode
+                    ? "border-black-pure bg-black-pure text-white-pure"
+                    : "border-border-subtle bg-white-pure text-on-surface hover:border-black-pure"
+                }`}
+                aria-pressed={timer.mode === option.mode}
+              >
+                <span className="block font-label-md text-label-md uppercase">{option.label}</span>
+                <span className={`mt-1 block font-body-md text-xs ${timer.mode === option.mode ? "text-white-pure/75" : "text-text-muted"}`}>
+                  {option.body}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <p className="mb-3 font-label-sm text-label-sm uppercase text-text-muted">Kontrol</p>
+          <div className="grid gap-2">
+            {timer.state === "idle" && (
+              <button type="button" onClick={onStart} className="inline-flex min-h-12 items-center justify-center gap-2 bg-primary px-5 py-3 font-label-md text-label-md uppercase text-on-primary hover:opacity-90" aria-label="Pomodoro sayacını başlat">
+                <Icon name="timer" />
+                Başlat
+              </button>
+            )}
+            {timer.state === "running" && (
+              <button type="button" onClick={onPause} className="inline-flex min-h-12 items-center justify-center gap-2 border border-black-pure px-5 py-3 font-label-md text-label-md uppercase hover:bg-surface-container-high" aria-label="Pomodoro sayacını duraklat">
+                <Icon name="schedule" />
+                Duraklat
+              </button>
+            )}
+            {timer.state === "paused" && (
+              <button type="button" onClick={onResume} className="inline-flex min-h-12 items-center justify-center gap-2 bg-primary px-5 py-3 font-label-md text-label-md uppercase text-on-primary hover:opacity-90" aria-label="Pomodoro sayacına devam et">
+                <Icon name="timer" />
+                Devam Et
+              </button>
+            )}
+            <div className="grid grid-cols-2 gap-2">
+              <button type="button" onClick={onReset} className="inline-flex min-h-12 items-center justify-center gap-2 border border-border-subtle px-4 py-3 font-label-md text-label-md uppercase hover:border-black-pure" aria-label="Pomodoro sayacını sıfırla">
+                <Icon name="refresh" />
+                Sıfırla
+              </button>
+              <button type="button" disabled={!canFinish} onClick={onFinish} className="inline-flex min-h-12 items-center justify-center gap-2 border border-border-subtle px-4 py-3 font-label-md text-label-md uppercase hover:border-primary disabled:opacity-40" aria-label="Aktif oturumu bitir">
+                <Icon name="check_circle" />
+                Bitir
+              </button>
             </div>
           </div>
         </div>
-        <div className="h-2 w-full max-w-xl bg-surface-container-high border border-border-subtle">
-          <div className="h-full bg-primary transition-[width]" style={{ width: `${percent}%` }} />
+
+        <div className="grid grid-cols-3 border border-border-subtle text-center md:col-span-2">
+          <div className="border-r border-border-subtle p-3">
+            <strong className="block font-headline-md text-headline-md text-primary">{settings.focusMinutes}</strong>
+            <span className="font-label-sm text-label-sm uppercase text-text-muted">Odak</span>
+          </div>
+          <div className="border-r border-border-subtle p-3">
+            <strong className="block font-headline-md text-headline-md text-primary">{settings.shortBreakMinutes}</strong>
+            <span className="font-label-sm text-label-sm uppercase text-text-muted">Mola</span>
+          </div>
+          <div className="p-3">
+            <strong className="block font-headline-md text-headline-md text-primary">{settings.longBreakInterval}</strong>
+            <span className="font-label-sm text-label-sm uppercase text-text-muted">Döngü</span>
+          </div>
         </div>
       </div>
-
-      <div className="flex flex-wrap justify-center gap-3 mb-6">
-        {timer.state === "idle" && (
-          <button type="button" onClick={onStart} className="inline-flex min-h-12 items-center gap-2 bg-primary text-on-primary px-6 py-3 font-label-md text-label-md uppercase hover:opacity-90" aria-label="Pomodoro sayacını başlat">
-            <Icon name="timer" />
-            Başlat
-          </button>
-        )}
-        {timer.state === "running" && (
-          <button type="button" onClick={onPause} className="inline-flex min-h-12 items-center gap-2 border border-black-pure px-6 py-3 font-label-md text-label-md uppercase hover:bg-surface-container-high" aria-label="Pomodoro sayacını duraklat">
-            <Icon name="schedule" />
-            Duraklat
-          </button>
-        )}
-        {timer.state === "paused" && (
-          <button type="button" onClick={onResume} className="inline-flex min-h-12 items-center gap-2 bg-primary text-on-primary px-6 py-3 font-label-md text-label-md uppercase hover:opacity-90" aria-label="Pomodoro sayacına devam et">
-            <Icon name="timer" />
-            Devam Et
-          </button>
-        )}
-        <button type="button" onClick={onReset} className="inline-flex min-h-12 items-center gap-2 border border-border-subtle px-6 py-3 font-label-md text-label-md uppercase hover:border-black-pure" aria-label="Pomodoro sayacını sıfırla">
-          <Icon name="refresh" />
-          Sıfırla
-        </button>
-        <button type="button" disabled={!canFinish} onClick={onFinish} className="inline-flex min-h-12 items-center gap-2 border border-border-subtle px-6 py-3 font-label-md text-label-md uppercase hover:border-primary disabled:opacity-40" aria-label="Aktif oturumu bitir">
-          <Icon name="check_circle" />
-          Oturumu Bitir
-        </button>
-      </div>
-
-      <p className="border border-border-subtle bg-surface p-4 text-center font-body-md text-body-md text-text-muted">{toast}</p>
     </div>
   );
 }
@@ -581,19 +612,27 @@ function SubjectSelector({
   onCustomSubjectChange: (value: string) => void;
 }) {
   return (
-    <div className="border border-border-subtle bg-white-pure p-6 rounded-card">
-      <h2 className="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-5">
-        <Icon name="subject" />
-        Ders / Etiket
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="border border-border-subtle bg-surface-container-low p-5 md:p-6">
+      <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="font-label-sm text-label-sm uppercase text-text-muted">Oturum hedefi</p>
+          <h2 className="mt-1 flex items-center gap-2 font-headline-md text-headline-md text-primary">
+            <Icon name="subject" />
+            Ders / Etiket
+          </h2>
+        </div>
+        <span className="font-label-sm text-label-sm uppercase text-text-muted">
+          {disabled ? "Sayaç çalışırken kilitli" : "Başlamadan seç"}
+        </span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,280px)_minmax(0,1fr)] gap-4">
         <label className="grid gap-2 font-label-sm text-label-sm uppercase text-text-muted">
           Hazır dersler
           <select
             disabled={disabled}
             value={subject}
             onChange={(event) => onSubjectChange(event.target.value)}
-            className="border border-border-subtle bg-white-pure px-4 py-3 font-body-md text-body-md text-on-surface focus:border-black-pure outline-none disabled:opacity-50"
+            className="min-h-12 border border-border-subtle bg-white-pure px-4 py-3 font-body-md text-body-md text-on-surface outline-none focus:border-black-pure disabled:opacity-50"
           >
             {POMODORO_SUBJECTS.map((item) => (
               <option key={item} value={item}>{item}</option>
@@ -607,7 +646,7 @@ function SubjectSelector({
             value={customSubject}
             onChange={(event) => onCustomSubjectChange(event.target.value)}
             placeholder="Örn. Paragraf, Problemler, Organik..."
-            className="border border-border-subtle bg-white-pure px-4 py-3 font-body-md text-body-md text-on-surface focus:border-black-pure outline-none disabled:opacity-50"
+            className="min-h-12 border border-border-subtle bg-white-pure px-4 py-3 font-body-md text-body-md text-on-surface outline-none focus:border-black-pure disabled:opacity-50"
           />
         </label>
       </div>
@@ -642,42 +681,44 @@ function PomodoroSettingsPanel({
   );
 
   return (
-    <div className="border border-border-subtle bg-white-pure p-6 rounded-card">
-      <h2 className="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-5">
+    <div className="overflow-hidden border-2 border-black-pure bg-white-pure">
+      <div className="flex items-center gap-2 border-b-2 border-black-pure bg-black-pure px-5 py-4 text-white-pure">
         <Icon name="edit_note" />
-        Ayarlar
-      </h2>
-      <div className="grid grid-cols-2 gap-4 mb-5">
-        {numberField("focusMinutes", "Odak", 1, 180)}
-        {numberField("shortBreakMinutes", "Kısa mola", 1, 60)}
-        {numberField("longBreakMinutes", "Uzun mola", 1, 90)}
-        {numberField("longBreakInterval", "Uzun mola döngüsü", 2, 12)}
+        <h2 className="font-headline-md text-headline-md">Ayarlar</h2>
       </div>
-      <div className="grid gap-3">
-        {[
-          ["autoStartBreaks", "Molaları otomatik başlat"],
-          ["autoStartFocus", "Odağı otomatik başlat"],
-          ["soundEnabled", "Sesli uyarı"],
-        ].map(([key, label]) => (
-          <label key={key} className="flex items-center justify-between gap-4 border border-border-subtle p-3 font-body-md text-body-md">
-            <span>{label}</span>
+      <div className="p-5">
+        <div className="grid grid-cols-2 gap-4 mb-5">
+          {numberField("focusMinutes", "Odak", 1, 180)}
+          {numberField("shortBreakMinutes", "Kısa mola", 1, 60)}
+          {numberField("longBreakMinutes", "Uzun mola", 1, 90)}
+          {numberField("longBreakInterval", "Döngü", 2, 12)}
+        </div>
+        <div className="grid gap-3">
+          {[
+            ["autoStartBreaks", "Molaları otomatik başlat"],
+            ["autoStartFocus", "Odağı otomatik başlat"],
+            ["soundEnabled", "Sesli uyarı"],
+          ].map(([key, label]) => (
+            <label key={key} className="flex min-h-12 items-center justify-between gap-4 border border-border-subtle bg-white-pure p-3 font-body-md text-body-md transition-colors hover:border-black-pure">
+              <span>{label}</span>
+              <input
+                type="checkbox"
+                checked={Boolean(settings[key as keyof PomodoroSettings])}
+                onChange={(event) => onChange({ [key]: event.target.checked } as Partial<PomodoroSettings>)}
+                className="h-5 w-5 accent-black-pure"
+              />
+            </label>
+          ))}
+          <label className="flex min-h-12 items-center justify-between gap-4 border border-border-subtle bg-white-pure p-3 font-body-md text-body-md transition-colors hover:border-black-pure">
+            <span>Tarayıcı bildirimi</span>
             <input
               type="checkbox"
-              checked={Boolean(settings[key as keyof PomodoroSettings])}
-              onChange={(event) => onChange({ [key]: event.target.checked } as Partial<PomodoroSettings>)}
-              className="h-5 w-5"
+              checked={settings.notificationsEnabled}
+              onChange={(event) => onNotificationsChange(event.target.checked)}
+              className="h-5 w-5 accent-black-pure"
             />
           </label>
-        ))}
-        <label className="flex items-center justify-between gap-4 border border-border-subtle p-3 font-body-md text-body-md">
-          <span>Tarayıcı bildirimi</span>
-          <input
-            type="checkbox"
-            checked={settings.notificationsEnabled}
-            onChange={(event) => onNotificationsChange(event.target.checked)}
-            className="h-5 w-5"
-          />
-        </label>
+        </div>
       </div>
     </div>
   );
@@ -713,9 +754,12 @@ function PomodoroStats({ sessions }: { sessions: PomodoroSession[] }) {
         ["Bu hafta", formatMinutes(stats.weekMinutes)],
         ["Seri", `${stats.streak} gün`],
       ].map(([label, value]) => (
-        <div key={label} className="border border-border-subtle bg-white-pure p-5 rounded-card">
-          <div className="font-label-sm text-label-sm uppercase text-text-muted mb-2">{label}</div>
-          <div className="font-headline-lg text-headline-lg text-primary">{value}</div>
+        <div
+          key={label}
+          className={`border p-5 ${label === "Bugünkü odak" ? "border-black-pure bg-black-pure text-white-pure" : "border-border-subtle bg-white-pure"}`}
+        >
+          <div className={`font-label-sm text-label-sm uppercase mb-2 ${label === "Bugünkü odak" ? "text-white-pure/70" : "text-text-muted"}`}>{label}</div>
+          <div className={`font-headline-lg text-headline-lg ${label === "Bugünkü odak" ? "text-white-pure" : "text-primary"}`}>{value}</div>
         </div>
       ))}
     </div>
@@ -725,7 +769,7 @@ function PomodoroStats({ sessions }: { sessions: PomodoroSession[] }) {
 function PomodoroSessionHistory({ sessions }: { sessions: PomodoroSession[] }) {
   const recent = sessions.slice(0, 10);
   return (
-    <div className="border border-border-subtle bg-white-pure p-6 rounded-card">
+    <div className="border border-border-subtle bg-white-pure p-5 md:p-6">
       <h2 className="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-5">
         <Icon name="history" />
         Son Oturumlar
@@ -771,7 +815,7 @@ function PomodoroSessionHistory({ sessions }: { sessions: PomodoroSession[] }) {
 function AccountNotice({ user }: { user: AuthUser | null }) {
   if (user) {
     return (
-      <div className="border border-border-subtle bg-surface p-6 rounded-card">
+      <div className="border border-border-subtle bg-surface-container-low p-5">
         <h2 className="font-headline-md text-headline-md text-primary mb-3">Hesap modu</h2>
         <p className="font-body-md text-body-md text-text-muted">
           Oturumların bu cihazda hesabına özel saklanıyor. PocketBase pomodoro collection'ı açıldığında aynı servis uzak kayda bağlanacak.
@@ -780,7 +824,7 @@ function AccountNotice({ user }: { user: AuthUser | null }) {
     );
   }
   return (
-    <div className="border border-border-subtle bg-surface p-6 rounded-card">
+    <div className="border border-border-subtle bg-surface-container-low p-5">
       <h2 className="font-headline-md text-headline-md text-primary mb-3">Misafir kullanım</h2>
       <p className="font-body-md text-body-md text-text-muted mb-5">
         Giriş yaparsan çalışma oturumların hesabına kaydedilir ve farklı cihazlarda da takip edebilirsin.

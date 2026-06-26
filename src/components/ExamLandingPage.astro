@@ -18,11 +18,21 @@ const secondary = (config.secondaryCountdowns || [])
   .map((ref) => resolveCountdownRef(exams, ref))
   .filter(Boolean);
 const showYksSessionSummary = config.slug === "yks-kac-gun-kaldi" && secondary.length > 0;
-const switchItems = examLandingPages.map((page) => ({
-  href: `/${page.slug}`,
-  label: page.switchLabel || page.h1.replace(/'?(ye|e) Kaç Gün Kaldı\??/i, ""),
-  active: page.slug === config.slug,
-}));
+const yksSessionPageSlugs = new Set([
+  "tyt-kac-gun-kaldi",
+  "ayt-kac-gun-kaldi",
+  "ydt-kac-gun-kaldi",
+]);
+const activeSwitchSlug = yksSessionPageSlugs.has(config.slug)
+  ? "yks-kac-gun-kaldi"
+  : config.slug;
+const switchItems = examLandingPages
+  .filter((page) => !yksSessionPageSlugs.has(page.slug))
+  .map((page) => ({
+    href: `/${page.slug}`,
+    label: page.switchLabel || page.h1.replace(/'?(ye|e) Kaç Gün Kaldı\??/i, ""),
+    active: page.slug === activeSwitchSlug,
+  }));
 
 const sessionHrefBySlug: Record<string, string> = {
   tyt: "/tyt-kac-gun-kaldi",
@@ -238,6 +248,7 @@ function detailDescription(item: NonNullable<typeof primary>) {
           targetDate={primary.targetDate}
           label={primary.countdownLabel}
           isEstimated={primary.isEstimated}
+          fullWidth
         />
       </section>
     ) : (
@@ -292,12 +303,12 @@ function detailDescription(item: NonNullable<typeof primary>) {
             </h2>
             <div class="flex flex-col">
               {config.faqs.map((faq) => (
-                <details class="group border-b border-border-subtle py-4 last:border-0">
-                  <summary class="flex items-center justify-between gap-4 cursor-pointer font-label-md text-label-md text-on-surface list-none [&::-webkit-details-marker]:hidden">
+                <details class="faq-details group">
+                  <summary class="faq-summary flex items-center justify-between gap-4 cursor-pointer px-5 py-4 font-label-md text-label-md text-on-surface list-none hover:text-primary [&::-webkit-details-marker]:hidden">
                     {faq.question}
-                    <Icon name="expand_more" className="text-text-muted shrink-0 transition-transform group-open:rotate-180" />
+                    <Icon name="expand_more" className="text-text-muted shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:text-primary" />
                   </summary>
-                  <p class="font-body-md text-body-md text-text-muted mt-4 leading-relaxed">{faq.answer}</p>
+                  <p class="faq-panel border-t border-border-subtle px-5 py-4 font-body-md text-body-md text-text-muted leading-relaxed">{faq.answer}</p>
                 </details>
               ))}
             </div>

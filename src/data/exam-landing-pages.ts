@@ -102,7 +102,7 @@ export const examLandingPages: ExamLandingPageConfig[] = [
     metaDescription:
       "2027 TYT'ye kaç gün kaldı? Canlı TYT sayacı, tahmini tarih bilgisi, puan hesaplama ve konu dağılımı bağlantılarıyla hazırlık planınızı takip edin.",
     intro:
-      "TYT, YKS sürecinin ortak oturumudur ve temel yeterlilikleri ölçtüğü için erken dönemde düzenli takip gerektirir. Bu sayfa yalnızca kalan günü göstermek için değil; Türkçe, temel matematik, sosyal bilimler ve fen bilimleri çalışmalarını doğru araçlarla bağlamak için hazırlandı. Tarih resmi olarak açıklanana kadar tahmini ibaresi korunur.",
+      "TYT, YKS'nin ortak temel oturumudur. Kalan süreyi konu eksikleri, süreli deneme ve yanlış analizi planı için takip edin.",
     sourceNote:
       "2027 TYT tarihi resmi ÖSYM takvimi yayımlanana kadar tahmini olarak gösterilir.",
     primaryCountdown: { examSlug: "yks", sessionSlug: "tyt", label: "TYT 2027" },
@@ -150,7 +150,7 @@ export const examLandingPages: ExamLandingPageConfig[] = [
     metaDescription:
       "2027 AYT'ye kaç gün kaldı? Canlı AYT sayacı, tahmini sınav tarihi, alan testleri, puan hesaplama ve konu dağılımı bağlantılarını takip edin.",
     intro:
-      "AYT, hedef puan türünüzü belirleyen alan oturumudur. Sayısal, eşit ağırlık, sözel veya dil dışındaki alan hedeflerinde AYT netlerinin etkisi çok yüksek olduğu için kalan süreyi konu bitirme, alan denemesi ve tekrar döngüsüne ayırmak gerekir. Bu sayfa AYT tarihini, ilgili puan hesaplama aracını ve konu dağılımını birlikte sunar.",
+      "AYT, YKS içinde alan puanını belirleyen oturumdur. Kalan süreyi alan dersleri, deneme analizi ve tekrar planı için takip edin.",
     sourceNote:
       "2027 AYT tarihi resmi ÖSYM takvimi yayımlanana kadar tahmini olarak gösterilir.",
     primaryCountdown: { examSlug: "yks", sessionSlug: "ayt", label: "AYT 2027" },
@@ -198,7 +198,7 @@ export const examLandingPages: ExamLandingPageConfig[] = [
     metaDescription:
       "2027 YDT'ye kaç gün kaldı? Canlı YDT sayacı, tahmini sınav tarihi, dil puanı hazırlığı ve YKS puan hesaplama bağlantılarıyla süreci takip edin.",
     intro:
-      "YDT, dil puanı hedefleyen adayların belirleyici oturumudur. TYT ortak zemini oluştururken YDT netleri dil puanında yüksek ağırlık taşır; bu nedenle kelime, okuma, dil bilgisi ve deneme takibini ayrı bir ritimle planlamak gerekir. Bu sayfa YDT tarihini, YKS içindeki yerini ve kullanabileceğiniz temel hazırlık araçlarını tek noktada toplar.",
+      "YDT, dil puanı hedefleyen adayların belirleyici YKS oturumudur. Kalan süreyi kelime, okuma, dil bilgisi ve deneme takibi için planlayın.",
     sourceNote:
       "2027 YDT tarihi resmi ÖSYM takvimi yayımlanana kadar tahmini olarak gösterilir.",
     primaryCountdown: { examSlug: "yks", sessionSlug: "ydt", label: "YDT 2027" },

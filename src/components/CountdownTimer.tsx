@@ -6,9 +6,10 @@ interface Props {
   targetDate: string;
   label: string;
   isEstimated?: boolean;
+  fullWidth?: boolean;
 }
 
-export function CountdownTimer({ targetDate, label, isEstimated }: Props) {
+export function CountdownTimer({ targetDate, label, isEstimated, fullWidth }: Props) {
   const [remaining, setRemaining] = useState<ReturnType<typeof getCountdown> | null>(null);
   const headingId = useId();
 
@@ -39,7 +40,14 @@ export function CountdownTimer({ targetDate, label, isEstimated }: Props) {
 
   return (
     <section className="w-full" aria-labelledby={headingId}>
-      <div className="w-full max-w-5xl mx-auto overflow-hidden border-2 border-black-pure bg-white-pure">
+      <div
+        className={[
+          "w-full overflow-hidden border-2 border-black-pure bg-white-pure",
+          fullWidth ? "" : "max-w-5xl mx-auto",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <div className="grid min-h-[72px] grid-cols-1 border-b-2 border-black-pure bg-black-pure text-on-primary md:grid-cols-[1fr_auto]">
           <h2
             id={headingId}

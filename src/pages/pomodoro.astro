@@ -70,43 +70,47 @@ const structuredData = [
 
 <Layout title={title} description={description} path="/pomodoro" structuredData={structuredData}>
   <div class="px-margin-mobile md:px-margin-desktop">
-    <div class="max-w-container-max mx-auto py-section-gap">
-      <header class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-gutter items-end mb-section-gap">
-        <div>
-          <div class="inline-flex items-center gap-2 border border-border-subtle bg-white-pure px-3 py-2 font-label-sm text-label-sm uppercase tracking-widest text-text-muted mb-6">
-            <Icon name="timer" size={16} />
-            YKS Pomodoro
-          </div>
-          <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">
-            Pomodoro Tekniği ile Çalış
-          </h1>
-          <p class="font-body-lg text-body-lg text-text-muted max-w-2xl mb-8">
-            25 dakika odaklan, 5 dakika mola ver. YKS hazırlığında çalışma süreni takip et ve verimini artır.
-          </p>
-          <div class="flex flex-wrap gap-3">
-            <a href="#pomodoro-app" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3.5 font-label-md text-label-md uppercase hover:opacity-90 transition-opacity">
-              Sayaçla Çalışmaya Başla
-              <Icon name="arrow_forward" size={18} />
-            </a>
-            <a href="#pomodoro-nedir" class="inline-flex items-center gap-2 border border-border-subtle px-6 py-3.5 font-label-md text-label-md uppercase hover:border-primary transition-colors">
-              Pomodoro Tekniği Nedir?
-            </a>
-          </div>
-        </div>
-        <div class="border border-border-subtle bg-white-pure p-6">
-          <p class="font-label-sm text-label-sm uppercase tracking-widest text-text-muted mb-3">Varsayılan çalışma ritmi</p>
-          <div class="grid grid-cols-3 gap-3 text-center">
-            <div class="border border-border-subtle p-4">
-              <strong class="block font-headline-lg text-headline-lg text-primary">25</strong>
-              <span class="font-label-sm text-label-sm text-text-muted uppercase">Odak</span>
+    <div class="max-w-container-max mx-auto py-8 md:py-10">
+      <header class="mb-8 border-b border-border-subtle pb-6">
+        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-gutter items-end">
+          <div>
+            <div class="inline-flex items-center gap-2 border border-border-subtle bg-white-pure px-3 py-2 font-label-sm text-label-sm uppercase tracking-widest text-text-muted mb-4">
+              <Icon name="timer" size={16} />
+              YKS Pomodoro
             </div>
-            <div class="border border-border-subtle p-4">
-              <strong class="block font-headline-lg text-headline-lg text-primary">5</strong>
-              <span class="font-label-sm text-label-sm text-text-muted uppercase">Mola</span>
+            <h1 class="font-headline-lg text-headline-lg text-primary mb-4 md:text-[44px]">
+              Pomodoro Tekniği ile Çalış
+            </h1>
+            <p class="font-body-md text-body-md text-text-muted max-w-2xl mb-5">
+              25 dakika odaklan, 5 dakika mola ver. YKS hazırlığında çalışma süreni takip et ve verimini artır.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <a href="#pomodoro-app" class="inline-flex items-center gap-2 bg-primary text-on-primary px-5 py-3 font-label-md text-label-md uppercase hover:opacity-90 transition-opacity">
+                Sayaçla Çalışmaya Başla
+                <Icon name="arrow_forward" size={18} />
+              </a>
+              <a href="#pomodoro-nedir" class="inline-flex items-center gap-2 border border-border-subtle px-5 py-3 font-label-md text-label-md uppercase hover:border-primary transition-colors">
+                Pomodoro Tekniği Nedir?
+              </a>
             </div>
-            <div class="border border-border-subtle p-4">
-              <strong class="block font-headline-lg text-headline-lg text-primary">4</strong>
-              <span class="font-label-sm text-label-sm text-text-muted uppercase">Döngü</span>
+          </div>
+          <div class="border-2 border-black-pure bg-white-pure">
+            <div class="border-b-2 border-black-pure bg-black-pure px-5 py-3 font-label-md text-label-md uppercase text-white-pure">
+              Varsayılan ritim
+            </div>
+            <div class="grid grid-cols-3 text-center">
+              <div class="border-r border-border-subtle p-4">
+                <strong class="block font-headline-lg text-headline-lg text-primary">25</strong>
+                <span class="font-label-sm text-label-sm text-text-muted uppercase">Odak</span>
+              </div>
+              <div class="border-r border-border-subtle p-4">
+                <strong class="block font-headline-lg text-headline-lg text-primary">5</strong>
+                <span class="font-label-sm text-label-sm text-text-muted uppercase">Mola</span>
+              </div>
+              <div class="p-4">
+                <strong class="block font-headline-lg text-headline-lg text-primary">4</strong>
+                <span class="font-label-sm text-label-sm text-text-muted uppercase">Döngü</span>
+              </div>
             </div>
           </div>
         </div>
@@ -126,7 +130,6 @@ const structuredData = [
                 Pomodoro tekniği, çalışma süresini kısa odak bloklarına ve bilinçli molalara bölen basit bir zaman yönetimi yöntemidir. Bu sayfadaki ders çalışma sayacı ile 25/5 ritmini kullanabilir, odak süreni kendi tempona göre değiştirebilir ve YKS çalışma sayacı gibi günlük toplamını takip edebilirsin.
               </p>
             </section>
-
             <section>
               <h3 class="font-headline-md text-headline-md text-primary mb-3">YKS Çalışırken Pomodoro Nasıl Kullanılır?</h3>
               <p class="text-text-muted leading-relaxed">
