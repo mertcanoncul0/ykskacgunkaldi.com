@@ -149,7 +149,7 @@ export function KonuDagilimiClient({
   const subjectDist = useMemo(
     () =>
       distributions.filter(
-        (d) => d.examSlug === examSlug && (!activeSubject || d.subjectName === activeSubject.name)
+        (d) => d.examSlug === examSlug && (!activeSubject || d.subjectSlug === activeSubject.slug)
       ),
     [distributions, activeSubject, examSlug]
   );

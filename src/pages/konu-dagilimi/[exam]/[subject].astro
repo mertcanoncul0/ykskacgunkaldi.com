@@ -1,0 +1,70 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { KonuDagilimiClient } from "../../../components/KonuDagilimiClient";
+import { getExams, getSubjects, getTopicDistributions } from "../../../lib/pocketbase";
+import { breadcrumbJsonLd, webPageJsonLd } from "../../../lib/schema";
+
+export const prerender = false;
+
+const { exam, subject } = Astro.params;
+
+// /konu-dagilimi/tyt/matematik  ve  /konu-dagilimi/ayt/fizik gibi ders bazlı
+// gerçek URL'ler. AYT dersleri PB'de "ayt-" önekli slug ile tutulduğu için
+// URL'deki temiz segment ("fizik") önekle eşlenir.
+const examMap: Record<string, { focusMode: "tyt" | "ayt"; label: string; prefix: string }> = {
+  tyt: { focusMode: "tyt", label: "TYT", prefix: "" },
+  ayt: { focusMode: "ayt", label: "AYT", prefix: "ayt-" },
+};
+
+const cfg = exam ? examMap[exam] : undefined;
+if (!cfg || !subject) {
+  return new Response("Not found", { status: 404 });
+}
+
+const subjectSlug = `${cfg.prefix}${subject}`;
+
+const [exams, subjects, distributions] = await Promise.all([
+  getExams(),
+  getSubjects(),
+  getTopicDistributions(),
+]);
+
+const subjectRec = subjects.find((s) => s.slug === subjectSlug && s.examSlug === "yks");
+if (!subjectRec) {
+  return new Response("Not found", { status: 404 });
+}
+
+const subjName = subjectRec.name;
+const title = `${cfg.label} ${subjName} Çıkan Konular ve Soru Dağılımı`;
+const description = `${cfg.label} ${subjName} dersinde yıllara göre çıkan konular ve soru sayısı dağılımı. Soru metni olmadan, konu ağırlıklarına göre çalışma önceliği belirleyin.`;
+const path = `/konu-dagilimi/${exam}/${subject}`;
+
+const structuredData = [
+  breadcrumbJsonLd([
+    { name: "Ana Sayfa", path: "/" },
+    { name: "Konu Dağılımı", path: "/konu-dagilimi" },
+    { name: `${cfg.label} Konu Dağılımı`, path: `/konu-dagilimi/${exam}` },
+    { name: subjName, path },
+  ]),
+  webPageJsonLd({ title, description, path }),
+];
+---
+
+<Layout
+  title={`${title} | YKS Kaç Gün Kaldı`}
+  description={description}
+  path={path}
+  structuredData={structuredData}
+>
+  <KonuDagilimiClient
+    client:load
+    exams={exams}
+    subjects={subjects}
+    distributions={distributions}
+    initialExamSlug="yks"
+    focusMode={cfg.focusMode}
+    initialSubjectSlug={subjectSlug}
+    titleOverride={title}
+    descriptionOverride={description}
+  />
+</Layout>
