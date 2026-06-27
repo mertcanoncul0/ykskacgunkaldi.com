@@ -1,6 +1,7 @@
 ---
 import type { Exam } from "../lib/api";
 import type { ToolPageConfig } from "../data/tool-pages";
+import FaqAccordion from "./FaqAccordion.astro";
 import InternalLinkBlock from "./InternalLinkBlock.astro";
 import { StudyPlannerClient } from "./StudyPlannerClient";
 import { TrialTrackerClient } from "./TrialTrackerClient";
@@ -126,25 +127,7 @@ const embedCodes = [
           </section>
         ))}
 
-        {config.faqs.length > 0 && (
-          <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="tool-faq-title">
-            <h2 id="tool-faq-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">
-              <Icon name="help" />
-              Sıkça Sorulan Sorular
-            </h2>
-            <div class="flex flex-col">
-              {config.faqs.map((faq) => (
-                <details class="faq-details group">
-                  <summary class="faq-summary flex items-center justify-between gap-4 cursor-pointer px-5 py-4 font-label-md text-label-md text-on-surface list-none hover:text-primary [&::-webkit-details-marker]:hidden">
-                    {faq.question}
-                    <Icon name="expand_more" className="text-text-muted shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:text-primary" />
-                  </summary>
-                  <p class="faq-panel border-t border-border-subtle px-5 py-4 font-body-md text-body-md text-text-muted leading-relaxed">{faq.answer}</p>
-                </details>
-              ))}
-            </div>
-          </section>
-        )}
+        <FaqAccordion faqs={config.faqs} title="Sıkça Sorulan Sorular" idPrefix={`tool-faq-${config.slug}`} variant="card" />
       </main>
 
       <aside class="lg:col-span-4 flex flex-col gap-6">

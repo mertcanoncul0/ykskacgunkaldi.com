@@ -42,8 +42,8 @@ export const socialLinks = [
 ] as const;
 
 // Not: Daha önce burada ayrı bir `headerLinks` listesi de vardı ama hiçbir
-// dosyada import edilmiyordu (Header.tsx kendi `mainLinks` dizisini ve
-// aşağıdaki `hubLinks`'i kullanıyor) — ölü kod olduğu için kaldırıldı.
+// dosyada import edilmiyordu; header kendi ana gezinme listesini yerel tutuyor.
+// Ölü kod olduğu için kaldırıldı.
 export const hubLinks = [
   { label: "Sınav Takvimi", href: "/sinavlar", icon: "calendar_month" },
   { label: "Popüler Yazılar", href: "/populer-yazilar", icon: "trending_up" },
@@ -51,13 +51,8 @@ export const hubLinks = [
   { label: "İlanlar", href: "/ilanlar", icon: "ads_click" },
 ] as const;
 
-// "Sınavlar" grubu: header'daki mobil hamburger menü (ve içindeki açılır
-// panel) kullanıcı talebiyle kaldırıldığı için, küçük ekranlarda (<768px)
-// header artık sadece logo gösteriyor — Sınavlar/Puan Hesaplama/Blog/
-// Sınav Rehberi gibi birincil gezinme hedeflerine mobilde ulaşmanın tek yolu
-// bu footer grubu (footer her sayfada, her breakpoint'te görünür, bkz.
-// Footer.tsx — `hidden` sınıfı yok). Masaüstü/tablet (≥768px) zaten üst
-// menüden, ≥1024px ayrıca SideNav'dan da bu sayfalara ulaşabiliyor.
+// Footer her sayfada, her breakpoint'te görünür; header ve SideNav dışında
+// birincil gezinme hedefleri için ek, düz bir yol sağlar.
 export const footerLinkGroups = [
   {
     title: "Sınavlar",

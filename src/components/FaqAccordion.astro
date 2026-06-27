@@ -1,0 +1,329 @@
+---
+import { addMissingLinkTitles } from "../lib/html";
+import { Icon } from "../lib/icons";
+
+type FaqItem = {
+  id?: string | number;
+  question?: string;
+  answer?: string;
+  q?: string;
+  a?: string;
+};
+
+interface Props {
+  faqs: FaqItem[];
+  title?: string;
+  eyebrow?: string;
+  idPrefix?: string;
+  variant?: "page" | "card";
+  class?: string;
+  initiallyOpen?: number;
+  allowMultiple?: boolean;
+}
+
+const {
+  faqs = [],
+  title = "Sıkça Sorulan Sorular",
+  eyebrow,
+  idPrefix = "faq",
+  variant = "page",
+  class: className = "",
+  initiallyOpen = 0,
+  allowMultiple = false,
+} = Astro.props;
+
+const items = faqs
+  .map((faq, index) => ({
+    id: faq.id ?? index,
+    question: faq.question ?? faq.q ?? "",
+    answer: addMissingLinkTitles(faq.answer ?? faq.a ?? ""),
+  }))
+  .filter((faq) => faq.question && faq.answer);
+
+const sectionClass =
+  variant === "card"
+    ? `faq-accordion faq-accordion-card border border-border-subtle bg-white-pure p-8 ${className}`
+    : `faq-accordion mb-section-gap ${className}`;
+
+const titleClass =
+  variant === "card"
+    ? "flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6"
+    : "font-headline-lg text-headline-lg uppercase tracking-normal mb-12 border-b border-black-pure pb-4";
+---
+
+{items.length > 0 && (
+  <section
+    class={sectionClass}
+    aria-labelledby={`${idPrefix}-title`}
+    data-faq-accordion
+    data-allow-multiple={allowMultiple ? "true" : "false"}
+  >
+    {eyebrow && <p class="font-label-md text-label-md uppercase tracking-widest text-text-muted mb-3">{eyebrow}</p>}
+    <h2 id={`${idPrefix}-title`} class={titleClass}>
+      {variant === "card" && <Icon name="help" className="shrink-0" />}
+      {title}
+    </h2>
+
+    <ul class="faq-list flex flex-col gap-2">
+      {items.map((faq, index) => {
+        const isOpen = index === initiallyOpen;
+        const itemId = `${idPrefix}-${String(faq.id).replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+        const buttonId = `${itemId}-button`;
+        const panelId = `${itemId}-panel`;
+
+        return (
+          <li class="faq-item" data-faq-item data-open={isOpen ? "true" : "false"}>
+            <button
+              id={buttonId}
+              type="button"
+              class="faq-trigger"
+              aria-expanded={isOpen ? "true" : "false"}
+              aria-controls={panelId}
+              data-faq-trigger
+            >
+              <span class="faq-trigger-copy">
+                <span class="faq-marker" aria-hidden="true" />
+                <span>{faq.question}</span>
+              </span>
+              <span class="faq-icon" aria-hidden="true">
+                <Icon name="expand_more" />
+              </span>
+            </button>
+
+            <div
+              id={panelId}
+              class="faq-panel"
+              role="region"
+              aria-labelledby={buttonId}
+              data-faq-panel
+              hidden={!isOpen}
+              inert={!isOpen ? true : undefined}
+            >
+              <div class="faq-panel-inner">
+                <div set:html={faq.answer} />
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+
+    <script is:inline>
+      (() => {
+        const accordions = document.querySelectorAll("[data-faq-accordion]:not([data-faq-bound])");
+
+        const animationMs = 240;
+        const schedule = (panel, callback) => {
+          window.clearTimeout(panel.faqTimer);
+          panel.faqTimer = window.setTimeout(callback, animationMs);
+        };
+
+        const openItem = (item) => {
+          const button = item.querySelector("[data-faq-trigger]");
+          const panel = item.querySelector("[data-faq-panel]");
+          if (!button || !panel || button.getAttribute("aria-expanded") === "true") return;
+
+          panel.hidden = false;
+          panel.inert = false;
+          item.dataset.open = "true";
+          button.setAttribute("aria-expanded", "true");
+
+          panel.style.height = "0px";
+          panel.style.opacity = "0";
+
+          requestAnimationFrame(() => {
+            panel.style.height = `${panel.scrollHeight}px`;
+            panel.style.opacity = "1";
+          });
+
+          schedule(panel, () => {
+            if (button.getAttribute("aria-expanded") !== "true") return;
+            panel.style.height = "auto";
+            panel.style.opacity = "";
+          });
+        };
+
+        const closeItem = (item) => {
+          const button = item.querySelector("[data-faq-trigger]");
+          const panel = item.querySelector("[data-faq-panel]");
+          if (!button || !panel || button.getAttribute("aria-expanded") !== "true") return;
+
+          item.dataset.open = "false";
+          button.setAttribute("aria-expanded", "false");
+          panel.style.height = `${panel.scrollHeight}px`;
+          panel.style.opacity = "1";
+
+          requestAnimationFrame(() => {
+            panel.style.height = "0px";
+            panel.style.opacity = "0";
+          });
+
+          schedule(panel, () => {
+            if (button.getAttribute("aria-expanded") !== "false") return;
+            panel.hidden = true;
+            panel.inert = true;
+            panel.style.height = "";
+            panel.style.opacity = "";
+          });
+        };
+
+        accordions.forEach((accordion) => {
+          accordion.dataset.faqBound = "true";
+          const allowMultiple = accordion.dataset.allowMultiple === "true";
+
+          accordion.addEventListener("click", (event) => {
+            const button = event.target.closest("[data-faq-trigger]");
+            if (!button || !accordion.contains(button)) return;
+
+            const item = button.closest("[data-faq-item]");
+            if (!item) return;
+
+            const isOpen = button.getAttribute("aria-expanded") === "true";
+            if (isOpen) {
+              closeItem(item);
+              return;
+            }
+
+            if (!allowMultiple) {
+              accordion.querySelectorAll("[data-faq-item]").forEach((otherItem) => {
+                if (otherItem !== item) closeItem(otherItem);
+              });
+            }
+
+            openItem(item);
+          });
+        });
+      })();
+    </script>
+  </section>
+)}
+
+<style>
+  .faq-accordion {
+    text-align: left;
+  }
+
+  .faq-item {
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-white-pure);
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .faq-item:hover,
+  .faq-item[data-open="true"] {
+    border-color: var(--color-black-pure);
+  }
+
+  .faq-item[data-open="true"] {
+    background: var(--color-surface-container-low);
+  }
+
+  .faq-trigger {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 0;
+    background: transparent;
+    color: var(--color-on-surface);
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    transition: color 180ms ease;
+  }
+
+  .faq-trigger:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-trigger-copy {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-label-md);
+    font-size: var(--text-label-md);
+    font-weight: var(--text-label-md--font-weight);
+    line-height: var(--text-label-md--line-height);
+    text-transform: uppercase;
+  }
+
+  .faq-marker {
+    width: 0.625rem;
+    height: 0.625rem;
+    flex: 0 0 auto;
+    border: 1px solid var(--color-black-pure);
+    background: transparent;
+    transition: background-color 180ms ease;
+  }
+
+  .faq-item[data-open="true"] .faq-marker {
+    background: var(--color-black-pure);
+  }
+
+  .faq-icon {
+    display: inline-flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border-subtle);
+    color: var(--color-text-muted);
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .faq-item[data-open="true"] .faq-icon {
+    border-color: var(--color-black-pure);
+    background: var(--color-black-pure);
+    color: var(--color-white-pure);
+    transform: rotate(180deg);
+  }
+
+  .faq-panel {
+    height: auto;
+    overflow: hidden;
+    transition:
+      height 220ms ease,
+      opacity 180ms ease;
+  }
+
+  .faq-panel-inner {
+    margin: 0 1.25rem;
+    padding: 1rem 0 1.25rem;
+    border-top: 1px solid var(--color-border-subtle);
+    color: var(--color-text-muted);
+    font-family: var(--font-body-md);
+    font-size: var(--text-body-md);
+    font-weight: var(--font-body-md--font-weight);
+    line-height: var(--text-body-md--line-height);
+  }
+
+  .faq-panel-inner :global(a) {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .faq-panel-inner :global(p + p) {
+    margin-top: 0.75rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item,
+    .faq-trigger,
+    .faq-marker,
+    .faq-icon,
+    .faq-panel {
+      transition: none;
+    }
+  }
+</style>

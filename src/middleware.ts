@@ -49,7 +49,7 @@ const CONTENT_SECURITY_POLICY = [
   // artık hiç ihtiyaç yok — font-src 'self' yeterli.
   "font-src 'self'",
   "img-src 'self' data: https:",
-  "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://static.cloudflareinsights.com",
+  "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://static.cloudflareinsights.com",
   "form-action 'self'",
   "upgrade-insecure-requests",
 ].join("; ");

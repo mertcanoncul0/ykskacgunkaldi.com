@@ -1,10 +1,14 @@
 ---
 import "../styles/global.css";
-import { Header } from "../components/Header";
+import Header from "../components/Header.astro";
 import { Footer } from "../components/Footer";
 import SideNav from "../components/SideNav.astro";
 import { site, socialLinks } from "../lib/site";
 import { getExams } from "../lib/pocketbase";
+import hepta400Latin from "@fontsource/hepta-slab/files/hepta-slab-latin-400-normal.woff2?url";
+import hepta400LatinExt from "@fontsource/hepta-slab/files/hepta-slab-latin-ext-400-normal.woff2?url";
+import hepta600Latin from "@fontsource/hepta-slab/files/hepta-slab-latin-600-normal.woff2?url";
+import hepta600LatinExt from "@fontsource/hepta-slab/files/hepta-slab-latin-ext-600-normal.woff2?url";
 
 const navExams = await getExams();
 const headerExams = navExams.map((exam) => ({
@@ -139,19 +143,64 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
     <!-- Yandex -->
     <meta name="yandex-verification" content="df7cdb4351ae6da7" />
 
-    <!-- Google tag (gtag.js) -->
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-Q7MC7YC7WJ"></script>
+    <link
+      rel="preload"
+      href={hepta400Latin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={hepta400LatinExt}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={hepta600Latin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={hepta600LatinExt}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Google tag (gtag.js): dataLayer early, network script after idle -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag("js", new Date());
+      window.gtag = window.gtag || gtag;
 
-      gtag("config", "G-Q7MC7YC7WJ");
+      const loadGoogleTag = () => {
+        if (window.__gtagLoaded) return;
+        window.__gtagLoaded = true;
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-Q7MC7YC7WJ";
+        document.head.appendChild(script);
+        gtag("js", new Date());
+        gtag("config", "G-Q7MC7YC7WJ", {
+          allow_google_signals: false,
+          allow_ad_personalization_signals: false,
+        });
+      };
+
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(loadGoogleTag, { timeout: 3500 });
+      } else {
+        window.addEventListener("load", () => window.setTimeout(loadGoogleTag, 1200), {
+          once: true,
+        });
+      }
     </script>
 
     <!-- Open Graph -->
@@ -225,7 +274,7 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
     >
       İçeriğe atla
     </a>
-    <Header client:load exams={headerExams} />
+    <Header exams={headerExams} />
     <SideNav exams={navExams} />
     <main id="main-content" class="app-main pt-16">
       <slot />

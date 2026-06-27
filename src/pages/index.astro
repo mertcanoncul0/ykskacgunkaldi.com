@@ -1,8 +1,15 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { HomeClient } from '../components/HomeClient';
-import { getHomeSeo } from '../lib/home-seo';
-import { getExams, getFaqs, getSettings, getPosts } from '../lib/pocketbase';
+import Layout from "../layouts/Layout.astro";
+import StaticCountdown from "../components/StaticCountdown.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import { InfoCards } from "../components/InfoCards";
+import { FeatureGrid } from "../components/FeatureGrid";
+import { TrustNotice } from "../components/TrustNotice";
+import { FeaturedPosts } from "../components/FeaturedPosts";
+import { QuickLinks } from "../components/QuickLinks";
+import { Icon } from "../lib/icons";
+import { getHomeSeo, resolveHomeSelection } from "../lib/home-seo";
+import { getExams, getFaqs, getSettings, getPosts } from "../lib/pocketbase";
 
 const [exams, faqs, settings, posts] = await Promise.all([
   getExams(),
@@ -11,19 +18,59 @@ const [exams, faqs, settings, posts] = await Promise.all([
   getPosts(),
 ]);
 
-const stripHtml = (s: string) => s.replace(/<[^>]+>/g, '').trim();
-const selectedExamSlug = Astro.url.searchParams.get('sinav');
+const stripHtml = (s: string) => s.replace(/<[^>]+>/g, "").trim();
+const selectedExamSlug = Astro.url.searchParams.get("sinav");
 const homeSeo = getHomeSeo(settings, exams, selectedExamSlug);
+const selection = resolveHomeSelection(exams, homeSeo.selectionSlug || selectedExamSlug);
+const activeExamSlug = selection?.examSlug || exams[0]?.slug || "";
+const exam = exams.find((e) => e.slug === activeExamSlug) || exams[0];
+
+const SESSION_H1_BY_SLUG: Record<string, string> = {
+  tyt: "2027 TYT'ye Kaç Gün Kaldı?",
+  ayt: "2027 AYT'ye Kaç Gün Kaldı?",
+  ydt: "2027 YDT'ye Kaç Gün Kaldı?",
+  "genel-yetenek": "2026 KPSS Genel Yetenek - Genel Kültür'e Kaç Gün Kaldı?",
+  "egitim-bilimleri": "2026 KPSS Eğitim Bilimleri'ne Kaç Gün Kaldı?",
+  oabt: "2026 KPSS ÖABT'ye Kaç Gün Kaldı?",
+};
+
+function getDefaultSessionSlug(activeExam: any) {
+  return (
+    activeExam?.sessions?.find((s: any) => new Date(s.targetDate).getTime() > Date.now())?.slug ||
+    activeExam?.sessions?.[0]?.slug ||
+    null
+  );
+}
+
+function selectionHref(slug: string) {
+  return `/?sinav=${encodeURIComponent(slug)}`;
+}
+
+const activeSessionSlug = selection?.sessionSlug || getDefaultSessionSlug(exam);
+const activeSession =
+  exam?.sessions?.find((s: any) => s.slug === activeSessionSlug) || exam?.sessions?.[0];
+const displayH1 =
+  selection?.selectionSlug && selection.selectionSlug === activeSession?.slug
+    ? SESSION_H1_BY_SLUG[activeSession.slug] || `${exam.name} ${activeSession.name} Kaç Gün Kaldı?`
+    : exam?.h1;
+const targetDate = activeSession?.targetDate || exam?.targetDate;
+const countdownLabel = activeSession?.countdownLabel || exam?.countdownLabel;
+
+const guideFaqs = exam?.guideParagraphs?.map((g: any, i: number) => ({
+  id: `guide-${exam.slug}-${i}`,
+  question: g.heading?.trim() || `${exam.name} Hazırlık Notu ${i + 1}`,
+  answer: g.body,
+})) || [];
 
 const faqJsonLd = faqs?.length
   ? {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
       mainEntity: faqs.map((f) => ({
-        '@type': 'Question',
+        "@type": "Question",
         name: f.question,
         acceptedAnswer: {
-          '@type': 'Answer',
+          "@type": "Answer",
           text: stripHtml(f.answer),
         },
       })),
@@ -37,12 +84,106 @@ const faqJsonLd = faqs?.length
   path={homeSeo.canonicalPath}
   structuredData={faqJsonLd ? [faqJsonLd] : []}
 >
-  <HomeClient
-    client:load
-    exams={exams}
-    faqs={faqs}
-    posts={posts.slice(0, 3)}
-    defaultSeo={settings}
-    initialSelectionSlug={homeSeo.selectionSlug}
-  />
+  {exam ? (
+    <div class="px-margin-mobile md:px-margin-desktop">
+      <div class="max-w-container-max mx-auto">
+        <section class="pt-8 mb-section-gap">
+          <div class="flex flex-col items-center text-center">
+            {exams.length > 1 && (
+              <div
+                class="inline-flex flex-wrap justify-center gap-1 border border-border-subtle mb-12 bg-white-pure p-1.5"
+                role="tablist"
+                aria-label="Sınav seçimi"
+              >
+                {exams.map((e) => (
+                  <a
+                    href={selectionHref(e.slug)}
+                    role="tab"
+                    aria-selected={e.slug === exam.slug ? "true" : "false"}
+                    class:list={[
+                      "px-5 py-2 font-label-md text-label-md transition-colors",
+                      e.slug === exam.slug
+                        ? "bg-primary text-on-primary"
+                        : "hover:bg-surface-container-low text-text-muted",
+                    ]}
+                  >
+                    {e.name}
+                  </a>
+                ))}
+              </div>
+            )}
+
+            <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-6 uppercase tracking-normal">
+              {displayH1}
+            </h1>
+
+            {exam.sessions && exam.sessions.length > 1 && (
+              <div
+                class="flex flex-wrap justify-center gap-2 mb-8"
+                role="tablist"
+                aria-label="Sınav oturumu seçimi"
+              >
+                {exam.sessions.map((s: any) => (
+                  <a
+                    href={selectionHref(s.slug)}
+                    role="tab"
+                    aria-selected={s.slug === activeSession?.slug ? "true" : "false"}
+                    class:list={[
+                      "px-5 py-1.5 font-label-sm text-label-sm uppercase tracking-widest border transition-colors",
+                      s.slug === activeSession?.slug
+                        ? "border-primary bg-primary text-on-primary"
+                        : "border-border-subtle text-text-muted hover:border-primary",
+                    ]}
+                  >
+                    {s.name}
+                  </a>
+                ))}
+              </div>
+            )}
+
+            <StaticCountdown
+              targetDate={targetDate}
+              label={countdownLabel}
+              isEstimated={activeSession?.isEstimated ?? exam.isEstimated}
+            />
+
+            <p class="font-body-lg text-body-lg max-w-2xl text-text-muted mt-12">
+              {exam.heroDescription}
+            </p>
+
+            <a
+              class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 mt-8 font-label-md text-label-md uppercase tracking-widest border border-primary hover:bg-surface-container-highest hover:text-primary transition-colors duration-300"
+              href="https://www.osym.gov.tr/tr%2C15164/yks-cikmis-sorular.html"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+            >
+              Çıkmış Soruları Çöz
+              <Icon name="north_east" size={18} />
+            </a>
+          </div>
+        </section>
+
+        <InfoCards exam={exam} />
+        <FeatureGrid exam={exam} />
+        <TrustNotice />
+
+        <FaqAccordion
+          faqs={guideFaqs}
+          title={exam.guideTitle || `${exam.name} Bilinmesi Gerekenler`}
+          idPrefix={`seo-guide-${exam.slug}`}
+        />
+
+        <FaqAccordion faqs={faqs} idPrefix="faq" />
+
+        {posts?.length > 0 && <FeaturedPosts posts={posts.slice(0, 3)} />}
+
+        <QuickLinks />
+      </div>
+    </div>
+  ) : (
+    <section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap text-center">
+      <h1 class="font-headline-lg text-headline-lg mb-4">Yayınlanmış sınav bulunamadı.</h1>
+      <p class="text-text-muted">Sınav listesi yüklenirken bir sorun oluştu.</p>
+    </section>
+  )}
 </Layout>

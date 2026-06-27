@@ -1,6 +1,7 @@
 import type { ElementType } from "react";
 import type { Post } from "../lib/pocketbase";
 import { Icon } from "../lib/icons";
+import { pocketBaseThumb, responsivePocketBaseSrcSet } from "../lib/images";
 
 type BlogPostCardVariant = "wide" | "grid" | "major" | "side" | "related" | "search";
 
@@ -139,6 +140,19 @@ export function BlogPostCard({ post, variant = "grid", className = "", titleHtml
   };
   const TitleTag = s.titleTag as ElementType;
   const date = formatDate(post.publishedAt, s.uppercaseDate);
+  const imageWidths =
+    variant === "major" || variant === "wide"
+      ? [420, 720, 960, 1320]
+      : [240, 420, 640, 840];
+  const imageSrc = pocketBaseThumb(post.coverImage, imageWidths[1]);
+  const imageSrcSet = responsivePocketBaseSrcSet(post.coverImage, imageWidths);
+  const imageSizes =
+    variant === "major"
+      ? "(min-width: 768px) 66vw, 100vw"
+      : variant === "wide"
+        ? "(min-width: 768px) 70vw, 100vw"
+        : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
+  const eagerImage = variant === "major" || variant === "wide";
 
   return (
     <article className={`group ${className}`}>
@@ -147,10 +161,15 @@ export function BlogPostCard({ post, variant = "grid", className = "", titleHtml
           {post.coverImage ? (
             <img
               className={`w-full h-full object-cover group-hover:scale-105 transition-transform ${s.imageDuration}`}
-              src={post.coverImage}
+              src={imageSrc || post.coverImage}
+              srcSet={imageSrcSet}
+              sizes={imageSrcSet ? imageSizes : undefined}
               alt={post.coverImageAlt || post.title}
-              loading={variant === "major" || variant === "wide" ? "eager" : "lazy"}
+              loading={eagerImage ? "eager" : "lazy"}
+              fetchPriority={eagerImage ? "high" : "auto"}
               decoding="async"
+              width={variant === "major" || variant === "wide" ? 1320 : 640}
+              height={variant === "wide" ? 566 : variant === "major" ? 743 : 640}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-text-muted">

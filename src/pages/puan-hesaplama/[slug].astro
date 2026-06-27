@@ -4,6 +4,7 @@ import { getScoreCalculatorConfig, getCalculatorFaqs, scoreCalculatorMenu } from
 import { homeSelectionLandingPaths } from '../../data/exam-landing-pages';
 import { ScoreCalculatorForm } from '../../components/ScoreCalculatorForm';
 import { CalcExamCountdown } from '../../components/CalcExamCountdown';
+import FaqAccordion from '../../components/FaqAccordion.astro';
 import { site } from '../../lib/site';
 import { getExams } from '../../lib/pocketbase';
 import { Icon } from '../../lib/icons';
@@ -140,25 +141,7 @@ const structuredData = [
             <p class="font-body-md text-body-md text-text-muted leading-relaxed">{config.formulaNote}</p>
           </article>
 
-          {faqs.length > 0 && (
-            <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="calc-faq-title">
-              <h2 id="calc-faq-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">
-                <Icon name="help" />
-                Sıkça Sorulan Sorular
-              </h2>
-              <div class="flex flex-col">
-                {faqs.map((f) => (
-                  <details class="faq-details group">
-                    <summary class="faq-summary flex items-center justify-between gap-4 cursor-pointer px-5 py-4 font-label-md text-label-md text-on-surface list-none hover:text-primary [&::-webkit-details-marker]:hidden">
-                      {f.q}
-                      <Icon name="expand_more" className="text-text-muted shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:text-primary" />
-                    </summary>
-                    <p class="faq-panel border-t border-border-subtle px-5 py-4 font-body-md text-body-md text-text-muted leading-relaxed">{f.a}</p>
-                  </details>
-                ))}
-              </div>
-            </section>
-          )}
+          <FaqAccordion faqs={faqs} title="Sıkça Sorulan Sorular" idPrefix={`calc-faq-${slug}`} variant="card" />
 
           <section class="border border-border-subtle bg-white-pure p-8" aria-labelledby="calc-related-title">
             <h2 id="calc-related-title" class="flex items-center gap-2 font-headline-md text-headline-md text-primary mb-6">

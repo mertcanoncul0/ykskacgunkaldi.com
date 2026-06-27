@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { PomodoroClient } from '../components/PomodoroClient';
+import FaqAccordion from '../components/FaqAccordion.astro';
 import { Icon } from '../lib/icons';
 import { site } from '../lib/site';
 
@@ -178,22 +179,13 @@ const structuredData = [
         </div>
       </section>
 
-      <section class="mt-section-gap pt-section-gap border-t border-border-subtle" aria-labelledby="pomodoro-faq-title">
-        <div class="flex items-end justify-between gap-6 mb-8">
-          <div>
-            <p class="font-label-md text-label-md uppercase tracking-widest text-text-muted mb-3">FAQ</p>
-            <h2 id="pomodoro-faq-title" class="font-headline-lg text-headline-lg text-primary">Sık Sorulan Sorular</h2>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {faqItems.map((item) => (
-            <article class="border border-border-subtle bg-white-pure p-6">
-              <h3 class="font-headline-md text-headline-md text-primary mb-3">{item.question}</h3>
-              <p class="font-body-md text-body-md text-text-muted leading-relaxed">{item.answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <FaqAccordion
+        faqs={faqItems}
+        title="Sık Sorulan Sorular"
+        eyebrow="FAQ"
+        idPrefix="pomodoro-faq"
+        class="mt-section-gap pt-section-gap border-t border-border-subtle"
+      />
     </div>
   </div>
 </Layout>
