@@ -1,7 +1,7 @@
 import type { ElementType } from "react";
 import type { Post } from "../lib/pocketbase";
 import { Icon } from "../lib/icons";
-import { pocketBaseCroppedThumb, pocketBaseThumb, responsivePocketBaseSrcSet } from "../lib/images";
+import { optimizedImageSrcSet, optimizedImageUrl } from "../lib/images";
 
 type BlogPostCardVariant = "wide" | "grid" | "major" | "side" | "related" | "search";
 
@@ -160,12 +160,8 @@ export function BlogPostCard({ post, variant = "grid", className = "", titleHtml
           : [200, 320, 420];
   const fallbackWidth = imageWidths[imageWidths.length - 1];
   const fallbackHeight = Math.round(fallbackWidth / imageRatio);
-  const imageSrc = post.coverImage
-    ? imageRatio
-      ? pocketBaseCroppedThumb(post.coverImage, fallbackWidth, fallbackHeight)
-      : pocketBaseThumb(post.coverImage, imageWidths[1])
-    : undefined;
-  const imageSrcSet = responsivePocketBaseSrcSet(post.coverImage, imageWidths, imageRatio);
+  const imageSrc = optimizedImageUrl(post.coverImage, fallbackWidth, fallbackHeight);
+  const imageSrcSet = optimizedImageSrcSet(post.coverImage, imageWidths, imageRatio);
   const imageSizes =
     variant === "major"
       ? "(min-width: 1024px) 680px, 100vw"

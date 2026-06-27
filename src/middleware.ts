@@ -113,15 +113,30 @@ export const onRequest = defineMiddleware(async (context, next) => {
     isEmbed ? EMBED_CONTENT_SECURITY_POLICY : CONTENT_SECURITY_POLICY
   );
 
-  if (HASHED_ASSET_RE.test(pathname)) {
+  if (pathname === "/api/optimized-image") {
     response.headers.set("Cache-Control", "public, max-age=31536000, immutable");
+    response.headers.set("Cloudflare-CDN-Cache-Control", "public, max-age=31536000, immutable");
+  } else if (response.headers.has("Set-Cookie") || pathname.startsWith("/api/")) {
+    response.headers.set("Cache-Control", "private, no-store");
+    response.headers.delete("Cloudflare-CDN-Cache-Control");
+  } else if (HASHED_ASSET_RE.test(pathname)) {
+    response.headers.set("Cache-Control", "public, max-age=31536000, immutable");
+    response.headers.set("Cloudflare-CDN-Cache-Control", "public, max-age=31536000, immutable");
   } else if (STATIC_FILE_RE.test(pathname)) {
     response.headers.set("Cache-Control", "public, max-age=86400");
+    response.headers.set("Cloudflare-CDN-Cache-Control", "public, max-age=86400");
+  } else if (hasToken) {
+    response.headers.set("Cache-Control", "private, no-store");
+    response.headers.delete("Cloudflare-CDN-Cache-Control");
   } else {
-    // SSR HTML sayfaları: içerik PocketBase'den her istekte taze çekiliyor
-    // (geri sayım/sınav/blog verisi sık değişebilir), agresif cache yerine
-    // her zaman yeniden doğrulama yapılır.
-    response.headers.set("Cache-Control", "public, max-age=0, must-revalidate");
+    // Anonymous SSR HTML: tarayıcıda kısa, Cloudflare edge'de daha uzun
+    // tutulabilir. Geri sayım client tarafında hedef tarihten güncellendiği
+    // için birkaç dakikalık HTML cache sayaç doğruluğunu bozmaz.
+    response.headers.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+    response.headers.set(
+      "Cloudflare-CDN-Cache-Control",
+      "public, max-age=600, stale-while-revalidate=86400",
+    );
   }
 
   return response;

@@ -22,23 +22,23 @@ const PB_URL = (
 ).replace(/\/$/, "");
 
 // Aynı süreç içinde tekrarlanan istekleri PocketBase'e tekrar göndermemek için
-// kısa ömürlü bir bellek-içi cache. Node adapter "standalone" modda sürekli
-// çalışan tek bir process olduğundan, bu cache istekler arasında paylaşılır.
-const CACHE_TTL_MS = 30_000;
+// bellek-içi stale-while-revalidate cache. Node adapter "standalone" modda
+// sürekli çalışan tek bir process olduğundan, bu cache istekler arasında
+// paylaşılır. Süre dolduğunda ilk kullanıcıyı PocketBase yanıtına bekletmek
+// yerine eski veriyi hemen döndürüp yenilemeyi arkada yapar; PageSpeed'in
+// soğuk origin TTFB zıplamalarını azaltır.
+const CACHE_TTL_MS = 5 * 60_000;
+const CACHE_STALE_MS = 24 * 60 * 60_000;
 
 type CacheEntry = { data: unknown; expires: number };
 const cache = new Map<string, CacheEntry>();
+const refreshes = new Map<string, Promise<unknown>>();
 
 export function clearPocketBaseCache() {
   cache.clear();
 }
 
-async function pbFetch<T = unknown>(pathname: string): Promise<T> {
-  const cached = cache.get(pathname);
-  if (cached && cached.expires > Date.now()) {
-    return cached.data as T;
-  }
-
+async function fetchFresh<T = unknown>(pathname: string): Promise<T> {
   const res = await fetch(`${PB_URL}${pathname}`);
   if (!res.ok) {
     const body = await res.text().catch(() => "");
@@ -49,6 +49,39 @@ async function pbFetch<T = unknown>(pathname: string): Promise<T> {
   const data = (await res.json()) as T;
   cache.set(pathname, { data, expires: Date.now() + CACHE_TTL_MS });
   return data;
+}
+
+function refreshInBackground(pathname: string) {
+  if (refreshes.has(pathname)) return;
+  const refresh = fetchFresh(pathname)
+    .catch((error) => {
+      console.warn(`[PocketBase cache] refresh failed for ${pathname}:`, error);
+    })
+    .finally(() => {
+      refreshes.delete(pathname);
+    });
+  refreshes.set(pathname, refresh);
+}
+
+async function pbFetch<T = unknown>(pathname: string): Promise<T> {
+  const cached = cache.get(pathname);
+  const now = Date.now();
+  if (cached && cached.expires > now) {
+    return cached.data as T;
+  }
+  if (cached && cached.expires + CACHE_STALE_MS > now) {
+    refreshInBackground(pathname);
+    return cached.data as T;
+  }
+
+  const inflight = refreshes.get(pathname);
+  if (inflight) return inflight as Promise<T>;
+
+  const fresh = fetchFresh<T>(pathname).finally(() => {
+    refreshes.delete(pathname);
+  });
+  refreshes.set(pathname, fresh);
+  return fresh;
 }
 
 interface PbListResponse<T> {
