@@ -9,6 +9,9 @@ import node from '@astrojs/node';
 export default defineConfig({
   site: 'https://ykskacgunkaldi.com',
   output: 'server',
+  build: {
+    inlineStylesheets: 'always',
+  },
   adapter: node({
     mode: 'standalone',
   }),

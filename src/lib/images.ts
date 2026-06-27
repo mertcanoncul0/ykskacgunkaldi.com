@@ -20,9 +20,23 @@ export function pocketBaseThumb(url: string | undefined, width: number, height =
   return appendQuery(url, { thumb: `${width}x${height}` });
 }
 
-export function responsivePocketBaseSrcSet(url: string | undefined, widths: number[]) {
+export function pocketBaseCroppedThumb(url: string | undefined, width: number, height: number) {
+  if (!url) return undefined;
+  if (!PB_FILE_RE.test(url)) return url;
+  return appendQuery(url, { thumb: `${width}x${height}f` });
+}
+
+export function responsivePocketBaseSrcSet(
+  url: string | undefined,
+  widths: number[],
+  aspectRatio?: number,
+) {
   if (!url || !PB_FILE_RE.test(url)) return undefined;
   return widths
-    .map((width) => `${pocketBaseThumb(url, width)} ${width}w`)
+    .map((width) => {
+      const height = aspectRatio ? Math.round(width / aspectRatio) : 0;
+      const src = aspectRatio ? pocketBaseCroppedThumb(url, width, height) : pocketBaseThumb(url, width);
+      return `${src} ${width}w`;
+    })
     .join(", ");
 }

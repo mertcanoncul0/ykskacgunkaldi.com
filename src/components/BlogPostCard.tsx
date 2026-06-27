@@ -1,7 +1,7 @@
 import type { ElementType } from "react";
 import type { Post } from "../lib/pocketbase";
 import { Icon } from "../lib/icons";
-import { pocketBaseThumb, responsivePocketBaseSrcSet } from "../lib/images";
+import { pocketBaseCroppedThumb, pocketBaseThumb, responsivePocketBaseSrcSet } from "../lib/images";
 
 type BlogPostCardVariant = "wide" | "grid" | "major" | "side" | "related" | "search";
 
@@ -140,18 +140,38 @@ export function BlogPostCard({ post, variant = "grid", className = "", titleHtml
   };
   const TitleTag = s.titleTag as ElementType;
   const date = formatDate(post.publishedAt, s.uppercaseDate);
+  const imageRatio =
+    variant === "wide"
+      ? 21 / 9
+      : variant === "side" || variant === "related"
+        ? 4 / 3
+        : variant === "search"
+          ? 16 / 10
+          : variant === "grid"
+            ? 1
+            : 16 / 9;
   const imageWidths =
-    variant === "major" || variant === "wide"
-      ? [420, 720, 960, 1320]
-      : [240, 420, 640, 840];
-  const imageSrc = pocketBaseThumb(post.coverImage, imageWidths[1]);
-  const imageSrcSet = responsivePocketBaseSrcSet(post.coverImage, imageWidths);
+    variant === "major"
+      ? [360, 520, 680]
+      : variant === "wide"
+        ? [420, 640, 760]
+        : variant === "grid"
+          ? [220, 360, 480]
+          : [200, 320, 420];
+  const fallbackWidth = imageWidths[imageWidths.length - 1];
+  const fallbackHeight = Math.round(fallbackWidth / imageRatio);
+  const imageSrc = post.coverImage
+    ? imageRatio
+      ? pocketBaseCroppedThumb(post.coverImage, fallbackWidth, fallbackHeight)
+      : pocketBaseThumb(post.coverImage, imageWidths[1])
+    : undefined;
+  const imageSrcSet = responsivePocketBaseSrcSet(post.coverImage, imageWidths, imageRatio);
   const imageSizes =
     variant === "major"
-      ? "(min-width: 768px) 66vw, 100vw"
+      ? "(min-width: 1024px) 680px, 100vw"
       : variant === "wide"
-        ? "(min-width: 768px) 70vw, 100vw"
-        : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
+        ? "(min-width: 1024px) 760px, 100vw"
+        : "(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw";
   const eagerImage = variant === "major" || variant === "wide";
 
   return (
@@ -168,8 +188,8 @@ export function BlogPostCard({ post, variant = "grid", className = "", titleHtml
               loading={eagerImage ? "eager" : "lazy"}
               fetchPriority={eagerImage ? "high" : "auto"}
               decoding="async"
-              width={variant === "major" || variant === "wide" ? 1320 : 640}
-              height={variant === "wide" ? 566 : variant === "major" ? 743 : 640}
+              width={fallbackWidth}
+              height={fallbackHeight}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-text-muted">

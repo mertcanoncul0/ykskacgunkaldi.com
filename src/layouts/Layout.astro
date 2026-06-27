@@ -172,13 +172,18 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
       crossorigin
     />
 
-    <!-- Google tag (gtag.js): dataLayer early, network script after idle -->
+    <!-- Google tag (gtag.js): dataLayer early, network script after interaction/load delay -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       window.gtag = window.gtag || gtag;
+      gtag("js", new Date());
+      gtag("config", "G-Q7MC7YC7WJ", {
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false,
+      });
 
       const loadGoogleTag = () => {
         if (window.__gtagLoaded) return;
@@ -187,20 +192,19 @@ const allJsonLd = [...siteJsonLd, ...extraJsonLd];
         script.async = true;
         script.src = "https://www.googletagmanager.com/gtag/js?id=G-Q7MC7YC7WJ";
         document.head.appendChild(script);
-        gtag("js", new Date());
-        gtag("config", "G-Q7MC7YC7WJ", {
-          allow_google_signals: false,
-          allow_ad_personalization_signals: false,
-        });
       };
 
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(loadGoogleTag, { timeout: 3500 });
-      } else {
-        window.addEventListener("load", () => window.setTimeout(loadGoogleTag, 1200), {
-          once: true,
-        });
-      }
+      const interactionEvents = ["pointerdown", "keydown", "touchstart", "scroll"];
+      interactionEvents.forEach((eventName) => {
+        window.addEventListener(eventName, loadGoogleTag, { once: true, passive: true });
+      });
+      window.addEventListener("pagehide", loadGoogleTag, { once: true });
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") loadGoogleTag();
+      });
+      window.addEventListener("load", () => window.setTimeout(loadGoogleTag, 12000), {
+        once: true,
+      });
     </script>
 
     <!-- Open Graph -->
